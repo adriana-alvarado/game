@@ -3,28 +3,28 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Which One Are You?</title>
+<title>The Read — Which One Are You?</title>
 <style>
   :root {
     --bg: #f7f1ec;
     --ink: #211a1e;
     --muted: #7c6f75;
-    --line: #e3d7ce;
+    --line: #e6dad1;
     --card: #fffdfb;
     --accent: #c04a72;
-    --accent-soft: #f3d9e2;
+    --accent-soft: #f6dde5;
     --shadow: 0 18px 50px -22px rgba(60, 20, 40, 0.45);
     --carrie: #d24b7a;
-    --samantha: #b8434a;
-    --charlotte: #4b8f8c;
-    --miranda: #5a6bb0;
+    --samantha: #c0433f;
+    --charlotte: #3f8f86;
+    --miranda: #5566b8;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { height: 100%; }
   body {
     background:
-      radial-gradient(1200px 600px at 80% -10%, #fbe6ec 0%, transparent 60%),
-      radial-gradient(900px 500px at -10% 110%, #e9e2f5 0%, transparent 55%),
+      radial-gradient(1100px 560px at 82% -10%, #fbe6ec 0%, transparent 60%),
+      radial-gradient(900px 500px at -10% 110%, #e8e2f6 0%, transparent 55%),
       var(--bg);
     color: var(--ink);
     font-family: "Georgia", "Iowan Old Style", "Palatino", serif;
@@ -32,298 +32,124 @@
     -webkit-font-smoothing: antialiased;
     min-height: 100%;
   }
-  .wrap {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 40px 22px 80px;
-  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 34px 20px 90px; }
+  .sans { font-family: "Helvetica Neue", Arial, sans-serif; }
 
-  /* ---------- Screens ---------- */
   .screen { display: none; animation: rise .5s cubic-bezier(.2,.7,.3,1); }
   .screen.active { display: block; }
-  @keyframes rise {
-    from { opacity: 0; transform: translateY(14px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes pop { 0% { transform: scale(.6); opacity: 0; } 60% { transform: scale(1.12); } 100% { transform: scale(1); opacity: 1; } }
 
-  /* ---------- Intro ---------- */
-  .kicker {
-    font-family: "Helvetica Neue", Arial, sans-serif;
-    text-transform: uppercase;
-    letter-spacing: .32em;
-    font-size: 12px;
-    color: var(--accent);
-    font-weight: 700;
-  }
-  h1 {
-    font-size: clamp(38px, 8vw, 66px);
-    line-height: 1.02;
-    font-weight: 400;
-    margin: 14px 0 18px;
-    letter-spacing: -0.5px;
-  }
+  /* Intro */
+  .kicker { font-family:"Helvetica Neue",Arial,sans-serif; text-transform:uppercase; letter-spacing:.32em; font-size:12px; color:var(--accent); font-weight:700; }
+  h1 { font-size: clamp(40px, 8.5vw, 72px); line-height:1.0; font-weight:400; margin:14px 0 18px; letter-spacing:-0.5px; }
   h1 em { font-style: italic; color: var(--accent); }
-  .lede {
-    font-size: 19px;
-    color: var(--muted);
-    max-width: 34em;
-    margin-bottom: 30px;
-  }
-  .lede strong { color: var(--ink); font-weight: 400; font-style: italic; }
+  .lede { font-size:19px; color:var(--muted); max-width:36em; margin-bottom:24px; }
+  .lede strong { color:var(--ink); font-weight:400; font-style:italic; }
+  .how { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin:26px 0 30px; }
+  .how div { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px 16px; }
+  .how h4 { font-family:"Helvetica Neue",Arial,sans-serif; font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); margin-bottom:5px; }
+  .how p { font-size:14.5px; color:var(--muted); line-height:1.4; }
 
-  .btn {
-    font-family: "Helvetica Neue", Arial, sans-serif;
-    font-weight: 700;
-    letter-spacing: .06em;
-    font-size: 14px;
-    text-transform: uppercase;
-    background: var(--ink);
-    color: #fff;
-    border: none;
-    padding: 16px 30px;
-    border-radius: 40px;
-    cursor: pointer;
-    transition: transform .15s ease, box-shadow .15s ease, background .2s;
-    box-shadow: var(--shadow);
-  }
-  .btn:hover { transform: translateY(-2px); background: var(--accent); }
-  .btn:active { transform: translateY(0); }
-  .btn.ghost {
-    background: transparent;
-    color: var(--ink);
-    box-shadow: none;
-    border: 1.5px solid var(--line);
-    padding: 13px 24px;
-  }
-  .btn.ghost:hover { background: #fff; border-color: var(--accent); color: var(--accent); }
+  .btn { font-family:"Helvetica Neue",Arial,sans-serif; font-weight:700; letter-spacing:.06em; font-size:14px; text-transform:uppercase; background:var(--ink); color:#fff; border:none; padding:16px 30px; border-radius:40px; cursor:pointer; transition:transform .15s ease, box-shadow .15s ease, background .2s; box-shadow:var(--shadow); }
+  .btn:hover { transform:translateY(-2px); background:var(--accent); }
+  .btn:active { transform:translateY(0); }
+  .btn.ghost { background:transparent; color:var(--ink); box-shadow:none; border:1.5px solid var(--line); padding:13px 24px; }
+  .btn.ghost:hover { background:#fff; border-color:var(--accent); color:var(--accent); }
+  .note { font-family:"Helvetica Neue",Arial,sans-serif; font-size:12.5px; color:var(--muted); margin-top:20px; letter-spacing:.02em; }
 
-  .cast {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin: 32px 0 34px;
-  }
-  .chip {
-    font-family: "Helvetica Neue", Arial, sans-serif;
-    font-size: 12.5px;
-    letter-spacing: .04em;
-    padding: 7px 14px;
-    border-radius: 30px;
-    border: 1px solid var(--line);
-    background: #fff;
-    color: var(--muted);
-  }
-  .note {
-    font-family: "Helvetica Neue", Arial, sans-serif;
-    font-size: 12.5px;
-    color: var(--muted);
-    margin-top: 22px;
-    letter-spacing: .02em;
-  }
+  /* Meters panel (live during play) */
+  .meters { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:16px 16px 8px; margin-bottom:22px; box-shadow:0 10px 30px -24px rgba(60,20,40,.5); }
+  .meters-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+  .meters-head .lbl { font-family:"Helvetica Neue",Arial,sans-serif; font-size:10.5px; letter-spacing:.24em; text-transform:uppercase; color:var(--muted); font-weight:700; }
+  .mgrid { display:grid; grid-template-columns:repeat(2,1fr); gap:9px 22px; }
+  @media (max-width:560px){ .mgrid{ grid-template-columns:1fr; } }
+  .m { position:relative; }
+  .m-top { display:flex; justify-content:space-between; align-items:baseline; font-family:"Helvetica Neue",Arial,sans-serif; font-size:11.5px; letter-spacing:.02em; margin-bottom:4px; }
+  .m-top .name { color:var(--ink); font-weight:700; }
+  .m-top .delta { font-size:11px; font-weight:700; opacity:0; transition:opacity .25s; }
+  .m-top .delta.up { color:#2b8a5c; }
+  .m-top .delta.down { color:#c0433f; }
+  .m-top .delta.show { opacity:1; }
+  .m-bar { height:6px; background:var(--line); border-radius:6px; overflow:hidden; }
+  .m-bar > i { display:block; height:100%; width:50%; border-radius:6px; background:linear-gradient(90deg,var(--accent),#e28fa8); transition:width .55s cubic-bezier(.2,.7,.3,1); }
 
-  /* ---------- Progress ---------- */
-  .progress-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 12px;
-    font-family: "Helvetica Neue", Arial, sans-serif;
-  }
-  .progress-head .step {
-    text-transform: uppercase;
-    letter-spacing: .22em;
-    font-size: 11px;
-    color: var(--accent);
-    font-weight: 700;
-  }
-  .progress-head .count { font-size: 13px; color: var(--muted); }
-  .bar {
-    height: 4px;
-    background: var(--line);
-    border-radius: 4px;
-    overflow: hidden;
-    margin-bottom: 34px;
-  }
-  .bar > i {
-    display: block;
-    height: 100%;
-    width: 0;
-    background: linear-gradient(90deg, var(--accent), #e08aa5);
-    border-radius: 4px;
-    transition: width .45s cubic-bezier(.2,.7,.3,1);
-  }
+  /* Round intro */
+  .round-card { text-align:center; padding:40px 10px; }
+  .round-no { font-family:"Helvetica Neue",Arial,sans-serif; letter-spacing:.34em; text-transform:uppercase; font-size:12px; color:var(--accent); font-weight:700; }
+  .round-title { font-size:clamp(32px,6.5vw,50px); font-style:italic; margin:10px 0 12px; }
+  .round-sub { color:var(--muted); font-size:17px; max-width:30em; margin:0 auto 26px; }
 
-  /* ---------- Question ---------- */
-  .q {
-    font-size: clamp(23px, 4.6vw, 30px);
-    line-height: 1.28;
-    font-weight: 400;
-    margin-bottom: 8px;
-  }
-  .q-sub {
-    font-family: "Helvetica Neue", Arial, sans-serif;
-    font-size: 13.5px;
-    color: var(--muted);
-    margin-bottom: 24px;
-    letter-spacing: .01em;
-  }
-  .options { display: flex; flex-direction: column; gap: 12px; }
-  .opt {
-    text-align: left;
-    background: var(--card);
-    border: 1.5px solid var(--line);
-    border-radius: 16px;
-    padding: 17px 19px;
-    font-family: inherit;
-    font-size: 17px;
-    color: var(--ink);
-    cursor: pointer;
-    transition: border-color .18s, transform .12s, box-shadow .18s, background .18s;
-    position: relative;
-    line-height: 1.4;
-  }
-  .opt:hover {
-    border-color: var(--accent);
-    transform: translateX(3px);
-    box-shadow: 0 10px 24px -16px rgba(120,30,70,.5);
-  }
-  .opt.selected {
-    border-color: var(--accent);
-    background: var(--accent-soft);
-  }
-  .opt .tick {
-    position: absolute;
-    right: 16px; top: 50%;
-    transform: translateY(-50%) scale(.4);
-    opacity: 0;
-    width: 22px; height: 22px;
-    border-radius: 50%;
-    background: var(--accent);
-    color: #fff;
-    display: grid; place-items: center;
-    font-family: "Helvetica Neue", Arial, sans-serif;
-    font-size: 13px;
-    transition: .2s;
-  }
-  .opt.selected .tick { opacity: 1; transform: translateY(-50%) scale(1); }
+  /* Progress */
+  .progress-head { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px; font-family:"Helvetica Neue",Arial,sans-serif; }
+  .progress-head .step { text-transform:uppercase; letter-spacing:.2em; font-size:11px; color:var(--accent); font-weight:700; }
+  .progress-head .count { font-size:13px; color:var(--muted); }
+  .bar { height:4px; background:var(--line); border-radius:4px; overflow:hidden; margin-bottom:26px; }
+  .bar > i { display:block; height:100%; width:0; background:linear-gradient(90deg,var(--accent),#e08aa5); border-radius:4px; transition:width .45s cubic-bezier(.2,.7,.3,1); }
 
-  .nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 30px;
-  }
-  .nav .back {
-    font-family: "Helvetica Neue", Arial, sans-serif;
-    background: none; border: none;
-    color: var(--muted); cursor: pointer;
-    font-size: 14px; letter-spacing: .04em;
-    padding: 8px 4px;
-  }
-  .nav .back:hover { color: var(--ink); }
-  .nav .back[disabled] { opacity: 0; pointer-events: none; }
+  /* Question */
+  .q { font-size:clamp(22px,4.4vw,29px); line-height:1.3; font-weight:400; margin-bottom:8px; }
+  .q-sub { font-family:"Helvetica Neue",Arial,sans-serif; font-size:13.5px; color:var(--muted); margin-bottom:22px; }
+  .options { display:flex; flex-direction:column; gap:11px; }
+  .opt { text-align:left; background:var(--card); border:1.5px solid var(--line); border-radius:15px; padding:16px 18px; font-family:inherit; font-size:16.5px; color:var(--ink); cursor:pointer; transition:border-color .18s, transform .12s, box-shadow .18s, background .18s; position:relative; line-height:1.4; }
+  .opt:hover { border-color:var(--accent); transform:translateX(3px); box-shadow:0 10px 24px -16px rgba(120,30,70,.5); }
+  .opt.selected { border-color:var(--accent); background:var(--accent-soft); }
+  .opt[disabled] { cursor:default; }
 
-  /* ---------- Result ---------- */
-  .result-hero {
-    text-align: center;
-    padding: 6px 0 8px;
-  }
-  .result-kicker {
-    font-family: "Helvetica Neue", Arial, sans-serif;
-    text-transform: uppercase;
-    letter-spacing: .3em;
-    font-size: 11.5px;
-    color: var(--muted);
-    font-weight: 700;
-  }
-  .result-name {
-    font-size: clamp(46px, 11vw, 82px);
-    line-height: 1;
-    margin: 10px 0 6px;
-    font-style: italic;
-  }
-  .result-tag {
-    font-family: "Helvetica Neue", Arial, sans-serif;
-    font-size: 15px;
-    letter-spacing: .04em;
-    color: var(--muted);
-    margin-bottom: 6px;
-  }
-  .result-card {
-    background: var(--card);
-    border: 1.5px solid var(--line);
-    border-radius: 22px;
-    padding: 30px 26px;
-    box-shadow: var(--shadow);
-    margin-top: 24px;
-  }
-  .result-card h3 {
-    font-family: "Helvetica Neue", Arial, sans-serif;
-    text-transform: uppercase;
-    letter-spacing: .2em;
-    font-size: 11.5px;
-    color: var(--accent);
-    font-weight: 700;
-    margin: 0 0 10px;
-  }
-  .result-card p { font-size: 17px; margin-bottom: 16px; color: #33282d; }
-  .result-card p:last-child { margin-bottom: 0; }
-  .divider { height: 1px; background: var(--line); margin: 24px 0; border: 0; }
+  /* Tell popup */
+  .tell { margin-top:16px; background:var(--ink); color:#fff; border-radius:14px; padding:14px 18px; font-family:"Helvetica Neue",Arial,sans-serif; font-size:14.5px; line-height:1.45; display:none; align-items:flex-start; gap:10px; animation:pop .4s ease; }
+  .tell.show { display:flex; }
+  .tell .eye { font-size:16px; }
+  .tell b { color:#f3b6c8; font-weight:700; letter-spacing:.06em; text-transform:uppercase; font-size:11px; display:block; margin-bottom:3px; }
 
-  /* Trait bars */
-  .traits { margin-top: 4px; }
-  .trait { margin-bottom: 15px; }
-  .trait-top {
-    display: flex; justify-content: space-between;
-    font-family: "Helvetica Neue", Arial, sans-serif;
-    font-size: 12.5px; margin-bottom: 6px;
-    letter-spacing: .03em;
-  }
-  .trait-top .val { color: var(--muted); }
-  .trait-bar { height: 7px; background: var(--line); border-radius: 6px; overflow: hidden; }
-  .trait-bar > i {
-    display: block; height: 100%; width: 0;
-    border-radius: 6px;
-    transition: width 1s cubic-bezier(.2,.7,.3,1);
-  }
+  .nav { display:flex; justify-content:space-between; align-items:center; margin-top:26px; }
+  .nav .back { font-family:"Helvetica Neue",Arial,sans-serif; background:none; border:none; color:var(--muted); cursor:pointer; font-size:14px; letter-spacing:.04em; padding:8px 4px; }
+  .nav .back:hover { color:var(--ink); }
+  .nav .back[disabled] { opacity:0; pointer-events:none; }
 
-  /* Runner-up */
-  .also {
-    font-family: "Helvetica Neue", Arial, sans-serif;
-    font-size: 13.5px;
-    color: var(--muted);
-    margin-top: 22px;
-    text-align: center;
-    letter-spacing: .01em;
-  }
-  .also b { color: var(--ink); font-weight: 700; }
+  /* Analyzing */
+  .analyzing { text-align:center; padding:70px 10px; }
+  .analyzing .dot-name { font-style:italic; font-size:clamp(30px,7vw,52px); transition:.35s; }
+  .analyzing .sub { font-family:"Helvetica Neue",Arial,sans-serif; color:var(--muted); font-size:14px; letter-spacing:.16em; text-transform:uppercase; margin-top:16px; }
 
-  .mix { display: flex; gap: 6px; margin: 18px 0 4px; height: 10px; border-radius: 6px; overflow: hidden; }
-  .mix > span { display: block; height: 100%; }
+  /* Result */
+  .result-hero { text-align:center; padding:6px 0 4px; }
+  .result-kicker { font-family:"Helvetica Neue",Arial,sans-serif; text-transform:uppercase; letter-spacing:.3em; font-size:11.5px; color:var(--muted); font-weight:700; }
+  .result-name { font-size:clamp(46px,11vw,84px); line-height:1; margin:8px 0 6px; font-style:italic; }
+  .result-tag { font-family:"Helvetica Neue",Arial,sans-serif; font-size:15px; letter-spacing:.02em; color:var(--muted); margin-bottom:2px; }
+  .headline { font-size:19px; font-style:italic; color:#33282d; max-width:30em; margin:12px auto 0; }
 
-  .result-actions {
-    display: flex; gap: 12px; justify-content: center;
-    margin-top: 30px; flex-wrap: wrap;
-  }
+  .mix { display:flex; gap:5px; margin:22px 0 8px; height:11px; border-radius:6px; overflow:hidden; }
+  .mix > span { display:block; height:100%; }
+  .mix-legend { display:flex; flex-wrap:wrap; gap:14px; justify-content:center; font-family:"Helvetica Neue",Arial,sans-serif; font-size:12.5px; color:var(--muted); }
+  .mix-legend b { color:var(--ink); }
+  .dotc { display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:5px; vertical-align:middle; }
 
-  .footer {
-    text-align: center;
-    font-family: "Helvetica Neue", Arial, sans-serif;
-    font-size: 12px;
-    color: var(--muted);
-    margin-top: 40px;
-    letter-spacing: .02em;
-  }
-  .toast {
-    position: fixed; left: 50%; bottom: 26px;
-    transform: translateX(-50%) translateY(20px);
-    background: var(--ink); color: #fff;
-    font-family: "Helvetica Neue", Arial, sans-serif;
-    font-size: 13.5px; padding: 12px 20px; border-radius: 30px;
-    opacity: 0; pointer-events: none; transition: .3s;
-    z-index: 20;
-  }
-  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .card { background:var(--card); border:1.5px solid var(--line); border-radius:22px; padding:28px 26px; box-shadow:var(--shadow); margin-top:22px; }
+  .card h3 { font-family:"Helvetica Neue",Arial,sans-serif; text-transform:uppercase; letter-spacing:.18em; font-size:11.5px; color:var(--accent); font-weight:700; margin:0 0 12px; }
+  .card p { font-size:16.5px; margin-bottom:14px; color:#33282d; }
+  .card p:last-child { margin-bottom:0; }
+  .divider { height:1px; background:var(--line); margin:22px 0; border:0; }
+
+  /* badges */
+  .badges { display:grid; grid-template-columns:1fr; gap:10px; }
+  .badge { border:1px solid var(--line); border-radius:13px; padding:13px 15px; background:#fffaf7; }
+  .badge .k { font-family:"Helvetica Neue",Arial,sans-serif; font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); font-weight:700; margin-bottom:3px; }
+  .badge .v { font-size:16px; }
+
+  /* profile meters */
+  .pm { margin-bottom:14px; }
+  .pm-top { display:flex; justify-content:space-between; font-family:"Helvetica Neue",Arial,sans-serif; font-size:12.5px; margin-bottom:6px; letter-spacing:.02em; }
+  .pm-top .val { color:var(--muted); }
+  .pm-bar { position:relative; height:8px; background:var(--line); border-radius:6px; overflow:visible; }
+  .pm-bar > i { display:block; height:100%; width:0; border-radius:6px; transition:width 1s cubic-bezier(.2,.7,.3,1); }
+  .pm-bar > .mark { position:absolute; top:-4px; width:2px; height:16px; background:var(--ink); opacity:.5; border-radius:2px; transition:left 1s cubic-bezier(.2,.7,.3,1); }
+  .pm-note { font-family:"Helvetica Neue",Arial,sans-serif; font-size:11px; color:var(--muted); margin-top:14px; text-align:center; letter-spacing:.02em; }
+
+  .result-actions { display:flex; gap:12px; justify-content:center; margin-top:28px; flex-wrap:wrap; }
+  .footer { text-align:center; font-family:"Helvetica Neue",Arial,sans-serif; font-size:12px; color:var(--muted); margin-top:36px; letter-spacing:.02em; line-height:1.6; }
+  .toast { position:fixed; left:50%; bottom:26px; transform:translateX(-50%) translateY(20px); background:var(--ink); color:#fff; font-family:"Helvetica Neue",Arial,sans-serif; font-size:13.5px; padding:12px 20px; border-radius:30px; opacity:0; pointer-events:none; transition:.3s; z-index:20; }
+  .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
 </style>
 </head>
 <body>
@@ -331,38 +157,66 @@
 
   <!-- INTRO -->
   <section class="screen active" id="intro">
-    <div class="kicker">A Psychological Field Guide</div>
-    <h1>Which one<br />are <em>you?</em></h1>
+    <div class="kicker">A Trait-Psychology Game · 6 rounds</div>
+    <h1>The <em>Read</em></h1>
     <p class="lede">
-      Four women. Four ways of keeping the world at a safe distance.
-      Answer honestly and this game won't tell you who you'd <strong>date</strong> —
-      it'll tell you which of them you <strong>are</strong>, by reading the
-      machinery underneath: your attachment pattern, your favorite defense,
-      and the thing you're quietly protecting.
+      Four women, four temperaments. This isn't a quiz that asks who you'd
+      <strong>date</strong> — it's a game that <strong>reads you</strong>. Every choice you
+      make moves six live trait meters, and the game quietly clocks the subtle
+      stuff: how you argue, how you fight, what your jokes are really doing, and
+      what it takes to actually change your mind.
     </p>
-    <div class="cast">
-      <span class="chip">The Anxious Narrator</span>
-      <span class="chip">The Fortress</span>
-      <span class="chip">The Perfect Script</span>
-      <span class="chip">The Armored Cynic</span>
+    <div class="how">
+      <div><h4>Play a day</h4><p>Six rounds of real situations — the mind, the wallet, the night out, the friction, the blow, the update.</p></div>
+      <div><h4>Watch your profile form</h4><p>Your Big-Five-style meters fill in real time. No black box — you see the read happening.</p></div>
+      <div><h4>Get clocked</h4><p>The game surfaces "tells" — the diagnostic reads underneath your answers.</p></div>
+      <div><h4>Meet your type</h4><p>A facet-level profile: your humor style, conflict style, and what moves you.</p></div>
     </div>
-    <button class="btn" onclick="Game.start()">Begin the read →</button>
-    <p class="note">12 scenarios · no wrong answers · nobody is watching but you</p>
+    <button class="btn" onclick="Game.start()">Start the read →</button>
+    <p class="note">14 choices · nothing saved · nobody watching but you</p>
+  </section>
+
+  <!-- ROUND INTRO -->
+  <section class="screen" id="roundIntro">
+    <div class="round-card">
+      <div class="round-no" id="riNo"></div>
+      <div class="round-title" id="riTitle"></div>
+      <div class="round-sub" id="riSub"></div>
+      <button class="btn" onclick="Game.enterRound()" id="riBtn">Continue →</button>
+    </div>
   </section>
 
   <!-- QUIZ -->
   <section class="screen" id="quiz">
+    <div class="meters">
+      <div class="meters-head">
+        <span class="lbl">Your profile · forming</span>
+        <span class="lbl" id="mHint" style="color:var(--accent)"></span>
+      </div>
+      <div class="mgrid" id="mGrid"></div>
+    </div>
+
     <div class="progress-head">
-      <span class="step" id="stepLabel">Scenario 01</span>
-      <span class="count" id="countLabel">1 / 12</span>
+      <span class="step" id="stepLabel"></span>
+      <span class="count" id="countLabel"></span>
     </div>
     <div class="bar"><i id="barFill"></i></div>
     <div class="q" id="qText"></div>
     <div class="q-sub" id="qSub"></div>
     <div class="options" id="opts"></div>
+    <div class="tell" id="tell"><span class="eye">👁</span><span><b>The read</b><span id="tellText"></span></span></div>
     <div class="nav">
       <button class="back" id="backBtn" onclick="Game.back()">← back</button>
       <span></span>
+    </div>
+  </section>
+
+  <!-- ANALYZING -->
+  <section class="screen" id="analyzing">
+    <div class="analyzing">
+      <div class="result-kicker">Reading you</div>
+      <div class="dot-name" id="anName">—</div>
+      <div class="sub" id="anSub">cross-referencing the trait space…</div>
     </div>
   </section>
 
@@ -372,23 +226,36 @@
       <div class="result-kicker">You are</div>
       <div class="result-name" id="rName"></div>
       <div class="result-tag" id="rTag"></div>
+      <div class="headline" id="rHead"></div>
     </div>
-    <div class="mix" id="rMix"></div>
-    <div class="also" id="rAlso"></div>
 
-    <div class="result-card">
-      <h3>The pattern underneath</h3>
+    <div class="mix" id="rMix"></div>
+    <div class="mix-legend" id="rLegend"></div>
+
+    <div class="card">
+      <h3>The trait profile</h3>
       <div id="rBody"></div>
-      <hr class="divider" />
-      <h3>How you're wired</h3>
-      <div class="traits" id="rTraits"></div>
+    </div>
+
+    <div class="card">
+      <h3>Your signature moves</h3>
+      <div class="badges" id="rBadges"></div>
+    </div>
+
+    <div class="card">
+      <h3>How you scored · you vs the archetype</h3>
+      <div id="rMeters"></div>
+      <div class="pm-note">Filled bar = you. Vertical mark = the type you landed closest to.</div>
     </div>
 
     <div class="result-actions">
-      <button class="btn" onclick="Game.copy()">Copy my result</button>
-      <button class="btn ghost" onclick="Game.restart()">Take it again</button>
+      <button class="btn" onclick="Game.copy()">Copy my read</button>
+      <button class="btn ghost" onclick="Game.restart()">Play again</button>
     </div>
-    <p class="footer">Attachment, defenses, and Big Five — none of it is destiny. It's just the shape of the armor.</p>
+    <p class="footer">
+      Openness · Composure · Restraint · Boldness · Diplomacy · Logic.<br />
+      Traits aren't destiny — they're just the shape of the armor, and the shape of the gift.
+    </p>
   </section>
 
 </div>
@@ -398,337 +265,480 @@
 (function () {
   "use strict";
 
-  // Characters keyed by short id
   const C = {
-    carrie:   { name: "Carrie",   color: "#d24b7a" },
-    samantha: { name: "Samantha", color: "#b8434a" },
-    charlotte:{ name: "Charlotte",color: "#4b8f8c" },
-    miranda:  { name: "Miranda",  color: "#5a6bb0" },
+    carrie:   { name:"Carrie",    color:"#d24b7a" },
+    samantha: { name:"Samantha",  color:"#c0433f" },
+    charlotte:{ name:"Charlotte", color:"#3f8f86" },
+    miranda:  { name:"Miranda",   color:"#5566b8" },
   };
 
-  // Each option carries weights toward characters. The weights encode the
-  // psychology in the brief: attachment style, core defense, Big Five slant.
-  const QUESTIONS = [
-    {
-      step: "Attachment",
-      q: "Think of the person who has pulled at you hardest. What made them magnetic?",
-      sub: "Not who was good for you — who you couldn't stop thinking about.",
-      opts: [
-        { t: "I could never quite tell where I stood. The not-knowing was the whole feeling.", w: { carrie: 3 } },
-        { t: "They were a challenge, and nobody was going to have any claim on me. That was the point.", w: { samantha: 3 } },
-        { t: "They fit the life I'd always pictured. On paper, everything was finally right.", w: { charlotte: 3 } },
-        { t: "They were solid and self-sufficient. Honestly, a little unimpressed by me — which I respected.", w: { miranda: 2, samantha: 1 } },
-      ],
-    },
-    {
-      step: "Security",
-      q: "Someone offers you steady, uncomplicated, no-games devotion. Your gut reaction?",
-      sub: "The real reaction, before the polite one.",
-      opts: [
-        { t: "A faint claustrophobia. Where's the spark if I don't have to win it?", w: { carrie: 3 } },
-        { t: "Nice, but I'd feel the walls going up. I don't do 'owing' anyone.", w: { samantha: 2, miranda: 1 } },
-        { t: "Relief — this is what I've been trying to build all along. I'd hold on tight.", w: { charlotte: 3 } },
-        { t: "Suspicion. Care with no strings feels like a bill that hasn't arrived yet.", w: { miranda: 3 } },
-      ],
-    },
-    {
-      step: "Defense",
-      q: "Something genuinely wounds you. What do you actually do with the pain?",
-      sub: "Your first move, not your therapist's suggestion.",
-      opts: [
-        { t: "Turn it into a story — a clever line, a question I can hold at arm's length.", w: { carrie: 3 } },
-        { t: "Regain control fast: my body, my schedule, my next move. Onward.", w: { samantha: 3 } },
-        { t: "Assume I did something wrong. If I'd done it right, this wouldn't be happening.", w: { charlotte: 3 } },
-        { t: "Get sharp and dry about it. If I saw it coming, it can't really land.", w: { miranda: 3 } },
-      ],
-    },
-    {
-      step: "Self-worth",
-      q: "Finish the sentence: 'I feel safe and lovable when…'",
-      sub: "",
-      opts: [
-        { t: "…someone I'm not sure of finally chooses me.", w: { carrie: 3 } },
-        { t: "…I'm the one who could walk away first.", w: { samantha: 3 } },
-        { t: "…I've done everything correctly and it's all in its proper place.", w: { charlotte: 3 } },
-        { t: "…I don't actually need anyone to make it work. I've got it handled.", w: { miranda: 3 } },
-      ],
-    },
-    {
-      step: "Money",
-      q: "Your relationship with money, in one honest confession:",
-      sub: "",
-      opts: [
-        { t: "I'd rather not look. If the story of my life is good, the numbers can wait.", w: { carrie: 3 } },
-        { t: "I earn well and I spend like I earned it. My money, my terms.", w: { samantha: 2, miranda: 1 } },
-        { t: "There's a right way to handle it, and I like knowing everything's in order.", w: { charlotte: 2 } },
-        { t: "I bought my own place. The look on their faces when they assumed a man was involved — never forgot it.", w: { miranda: 3 } },
-      ],
-    },
-    {
-      step: "The group",
-      q: "In your closest circle of friends, what role do you play?",
-      sub: "Be generous but be real.",
-      opts: [
-        { t: "I'm often the main character — I process my life out loud and they help me narrate it.", w: { carrie: 3 } },
-        { t: "The one who says the thing nobody else will, and dares them to want more.", w: { samantha: 3 } },
-        { t: "The believer — I carry the hope the others are too guarded to admit they still have.", w: { charlotte: 3 } },
-        { t: "The reality-check. Someone has to keep the group honest, and I've got the receipts.", w: { miranda: 3 } },
-      ],
-    },
-    {
-      step: "Being seen",
-      q: "You're at your lowest — frightened, not okay, no armor left. Who gets to see it?",
-      sub: "",
-      opts: [
-        { t: "Everyone, eventually. My mess is kind of public; I think out loud even when it hurts.", w: { carrie: 2 } },
-        { t: "Almost no one. Being witnessed weak is the one thing I've built my whole life to avoid.", w: { samantha: 3 } },
-        { t: "I try to hold it together and keep up appearances — falling apart feels like failing.", w: { charlotte: 2, miranda: 1 } },
-        { t: "I organize, I function, I handle the logistics — and only collapse once my people are in the room.", w: { miranda: 3 } },
-      ],
-    },
-    {
-      step: "Rules",
-      q: "How do you feel about doing things 'the right way'?",
-      sub: "Manners, timelines, the proper order of things.",
-      opts: [
-        { t: "I'll break every rule if the moment's romantic enough. Feeling beats form.", w: { carrie: 2, samantha: 1 } },
-        { t: "Rules are for people who need permission. I write my own.", w: { samantha: 3 } },
-        { t: "They matter to me more than I like to admit. There's comfort in doing it properly.", w: { charlotte: 3 } },
-        { t: "I follow the ones that work and I'm quietly contemptuous of the rest.", w: { miranda: 2 } },
-      ],
-    },
-    {
-      step: "Sincerity",
-      q: "Someone near you is being earnest and hopeful and totally unguarded. You feel…",
-      sub: "",
-      opts: [
-        { t: "Moved, and a little envious of how openly they want things.", w: { carrie: 2, charlotte: 1 } },
-        { t: "Amused. Sweet, but I wouldn't hand anyone that kind of power over me.", w: { samantha: 2 } },
-        { t: "At home. That's my native language — I want things out loud and unashamed.", w: { charlotte: 3 } },
-        { t: "Weirdly irritated. Like they're doing something I've forbidden myself to do.", w: { miranda: 3 } },
-      ],
-    },
-    {
-      step: "The fear",
-      q: "The fear that runs quietest and deepest:",
-      sub: "",
-      opts: [
-        { t: "That I'll be left — that the person I love will drift and I won't be enough to hold them.", w: { carrie: 3 } },
-        { t: "That my body, my vitality, the things that make me me will fade and can't be controlled.", w: { samantha: 3 } },
-        { t: "That I'll do everything right and the promised good life still won't arrive.", w: { charlotte: 3 } },
-        { t: "That if I ever really needed someone, I've made myself into a person who can't be reached.", w: { miranda: 3 } },
-      ],
-    },
-    {
-      step: "Growth",
-      q: "What would actually be growth for you — the hard, real kind?",
-      sub: "The thing you avoid because it's the thing.",
-      opts: [
-        { t: "Sitting with a feeling instead of instantly turning it into a clever narrative.", w: { carrie: 3 } },
-        { t: "Letting someone witness me without armor — and not fleeing the intimacy.", w: { samantha: 3 } },
-        { t: "Building worth that doesn't depend on getting the whole checklist right.", w: { charlotte: 3 } },
-        { t: "Practicing dependence on purpose. Letting myself be held, not just useful.", w: { miranda: 3 } },
-      ],
-    },
-    {
-      step: "Temperament",
-      q: "Last one. Pick the phrase that fits you like a glove:",
-      sub: "",
-      opts: [
-        { t: "Built for experience, hopeless at maintenance. Open, restless, feeling everything.", w: { carrie: 3 } },
-        { t: "Unshakable and appetite-forward — until the one system I never insured gets breached.", w: { samantha: 3 } },
-        { t: "Earnest, exacting, loyal to the point of steel when it counts.", w: { charlotte: 3 } },
-        { t: "Competent to a fault, cynical on the surface, fiercely loyal where nobody sees.", w: { miranda: 3 } },
-      ],
-    },
+  // Six live meters. Keys used everywhere.
+  const METERS = [
+    { k:"im", name:"Imagination", note:"aesthetic & fantasy openness" },
+    { k:"co", name:"Composure",   note:"emotional stability" },
+    { k:"re", name:"Restraint",   note:"deliberation & impulse control" },
+    { k:"bo", name:"Boldness",    note:"extraversion & approach" },
+    { k:"di", name:"Diplomacy",   note:"politeness & decorum" },
+    { k:"lo", name:"Logic",       note:"evidence-driven reasoning" },
   ];
 
+  // Canonical trait vectors (the archetypes' target scores).
+  const ARCHETYPE = {
+    carrie:   { im:95, co:24, re:22, bo:45, di:52, lo:15 },
+    samantha: { im:42, co:92, re:55, bo:96, di:12, lo:58 },
+    charlotte:{ im:58, co:55, re:92, bo:48, di:95, lo:34 },
+    miranda:  { im:44, co:38, re:80, bo:70, di:26, lo:95 },
+  };
+
+  const ROUNDS = [
+    { no:"Round 1", title:"The Mind", sub:"How you think, argue, and take the world in. This is where openness shows itself." },
+    { no:"Round 2", title:"The Wallet", sub:"Impulse, order, and what you do when something you didn't plan for is right in front of you." },
+    { no:"Round 3", title:"The Night", sub:"Where your battery charges, and what your sense of humor is actually for." },
+    { no:"Round 4", title:"The Friction", sub:"Someone crosses a line. Politeness, compassion, and the exact shape of your conflict." },
+    { no:"Round 5", title:"The Blow", sub:"Bad news lands. This is your neuroticism — its flavor, its calibration, its recovery." },
+    { no:"Round 6", title:"The Update", sub:"Values, and the rarest trait of all: what it actually takes to change your mind." },
+  ];
+
+  // Each option: t text, r round index, d meter deltas, tell?, tag?{k,v}, own(intended type, for balance only)
+  const QUESTIONS = [
+    // ---- Round 1: The Mind ----
+    { r:0, q:"You're describing a person you just met. What actually comes out of your mouth?", sub:"First instinct, not the edited version.",
+      opts:[
+        { t:"A metaphor — “she's like a Sunday that thinks it's a Monday.”", d:{im:18,lo:-12}, tell:"You reach for image before analysis. A genuinely divergent, associative mind.", own:"carrie" },
+        { t:"A crisp read of what they want and how they'll get it.", d:{lo:16,bo:6,im:-6}, own:"samantha" },
+        { t:"Whether they seemed proper, put-together, doing things the right way.", d:{di:14,re:8,im:-4}, own:"charlotte" },
+        { t:"A skeptical footnote — “seemed nice. We'll see.”", d:{lo:14,co:-8,di:-6}, tell:"Optimism treated as an error to be corrected. Trust set low by default.", own:"miranda" },
+      ]},
+    { r:0, q:"An argument breaks out. How do you actually win it?", sub:"",
+      opts:[
+        { t:"Reframes, analogies, a better story. Never evidence.", d:{im:16,lo:-14}, tell:"You argue in images, not logic. Persuasion by association.", own:"carrie" },
+        { t:"I demand the evidence and dismantle the errors, point by point.", d:{lo:20,di:-6}, tell:"You reason the way you argue — analytical, sequential, evidence-demanding.", own:"miranda" },
+        { t:"I say the blunt, unsayable thing first and let the room laugh.", d:{bo:16,di:-14,co:6}, own:"samantha" },
+        { t:"I don't “win.” I keep the peace, then bring it up sideways later.", d:{di:10,bo:-10,co:-4}, tag:{k:"conflict",v:"avoid"}, own:"charlotte" },
+      ]},
+    { r:0, q:"You walk into a room you've never been in. The first thing you clock is…", sub:"",
+      opts:[
+        { t:"The light, the mood, the story the space is quietly telling.", d:{im:16,lo:-8}, own:"carrie" },
+        { t:"Whether it's tasteful, correct, done properly.", d:{di:12,re:6,im:2}, own:"charlotte" },
+        { t:"The room's energy — and the most interesting person in it.", d:{bo:14,co:8,im:-6}, own:"samantha" },
+        { t:"What's overpriced, pretentious, or trying too hard about it.", d:{lo:10,co:-6,di:-6}, own:"miranda" },
+      ]},
+
+    // ---- Round 2: The Wallet ----
+    { r:1, q:"$500 you didn't plan to spend is burning a hole. The shoes are perfect.", sub:"",
+      opts:[
+        { t:"Already wearing them. I'll look at the finances… never.", d:{re:-20,im:8,co:-4}, tell:"Low deliberation, and threat-detection that ignores the practical. Diagnostic.", own:"carrie" },
+        { t:"Bought — I earned it, my money, my terms.", d:{re:-4,bo:12,co:8}, tell:"Impulse indulged, but bounded. Licensed hedonism inside a well-run system.", own:"samantha" },
+        { t:"I'd agonize, then buy the sensible version instead.", d:{re:14,di:8,im:-2}, own:"charlotte" },
+        { t:"The math says no. I close the tab.", d:{re:18,lo:10,co:-2}, own:"miranda" },
+      ]},
+    { r:1, q:"Be honest about the state of your home right now.", sub:"",
+      opts:[
+        { t:"A beautiful, curated mess I'd call “a mood.”", d:{im:12,re:-10}, own:"carrie" },
+        { t:"Immaculate. Everything has a correct and permanent place.", d:{re:18,di:12,im:-2}, tell:"Conscientiousness loaded on orderliness. Routines, etiquette, follow-through.", own:"charlotte" },
+        { t:"Takeout boxes and chaos — but my work is absolutely airtight.", d:{re:6,lo:10,di:-8,im:-4}, tell:"Not tidiness — discipline where it counts. Industriousness over orderliness.", own:"miranda" },
+        { t:"Minimal, controlled, expensive. Curated like my image.", d:{re:10,bo:8,co:6}, own:"samantha" },
+      ]},
+
+    // ---- Round 3: The Night ----
+    { r:2, q:"It's 9pm. The ideal version of tonight is…", sub:"",
+      opts:[
+        { t:"A room full of new people I get to charge straight through.", d:{bo:20,co:10,im:2}, tell:"Approach-motivated to an almost physiological degree. Where others deliberate, you move.", own:"samantha" },
+        { t:"One good audience — even an audience of one.", d:{bo:4,im:10,co:-4}, tell:"You don't need a crowd. You need to be witnessed.", own:"carrie" },
+        { t:"Takeout and TV, alone, blissfully off-duty.", d:{bo:-18,di:-4,lo:4}, tell:"Verbally dominant, but solitude is what restores you. High-assertiveness introvert.", own:"miranda" },
+        { t:"A small, proper dinner with the people I trust most.", d:{di:12,bo:-4,re:6}, own:"charlotte" },
+      ]},
+    { r:2, q:"Your sense of humor, told on you, is…", sub:"What are your jokes actually doing?",
+      opts:[
+        { t:"Self-deprecating — I get the first laugh at my own expense.", d:{im:8,di:6,co:-8}, tag:{k:"humor",v:"affiliative"}, tell:"Self-deprecation that preempts criticism and quietly invites reassurance.", own:"carrie" },
+        { t:"Filthy and offensive, on purpose, to disarm the room first.", d:{bo:14,di:-12,co:6}, tag:{k:"humor",v:"aggressive"}, tell:"You say the unsayable first — converting judgment into laughter you control.", own:"samantha" },
+        { t:"Dry and deflationary — I exist to puncture pretense.", d:{lo:12,di:-6,co:-2}, tag:{k:"humor",v:"dry"}, tell:"Teasing is your affection channel. Emotionally blunt, sentimentally shy.", own:"miranda" },
+        { t:"Honestly? I'm earnest. I don't really hide behind the joke.", d:{di:10,im:-2,re:6}, tag:{k:"humor",v:"earnest"}, own:"charlotte" },
+      ]},
+
+    // ---- Round 4: The Friction ----
+    { r:3, q:"Someone crosses a line. Your negative feeling…", sub:"",
+      opts:[
+        { t:"Leaks out sideways — a dig here, a pointed silence there.", d:{im:6,di:-4,co:-8}, tag:{k:"conflict",v:"passive"}, tell:"Passive-aggression: what conflict looks like in someone who can't tolerate confrontation.", own:"carrie" },
+        { t:"Escalates on the spot. Insulted, I come back harder.", d:{bo:16,di:-10,co:6}, tag:{k:"conflict",v:"fight"}, tell:"Your stress response is fight, never freeze.", own:"samantha" },
+        { t:"Gets stored… and stored… and then detonates all at once.", d:{di:6,co:-12,re:-4}, tag:{k:"conflict",v:"suppress"}, tell:"You're a suppressor. It doesn't leak — it stores, then detonates.", own:"charlotte" },
+        { t:"Converts to sarcasm somewhere on the way out.", d:{lo:8,di:-8,co:-2}, tag:{k:"conflict",v:"sarcasm"}, own:"miranda" },
+      ]},
+    { r:3, q:"A friend keeps taking and never reciprocating. You…", sub:"",
+      opts:[
+        { t:"Keep score, and eventually call out the imbalance directly.", d:{lo:10,di:-6,bo:6}, tell:"A fairness grievance, not cruelty. The group's strongest justice orientation.", own:"miranda" },
+        { t:"Show up for them anyway. I don't keep a ledger on people I love.", d:{co:8,di:-4,bo:6}, tell:"Low politeness, high compassion — the rare, specific combination.", own:"samantha" },
+        { t:"Feel hurt, say nothing. I really don't want to make a scene.", d:{di:8,bo:-10,co:-6}, own:"carrie" },
+        { t:"Quietly judge the breach of decorum and file it away.", d:{di:14,im:-4}, tell:"Judgment is what high politeness does to rule-breakers.", own:"charlotte" },
+      ]},
+
+    // ---- Round 5: The Blow ----
+    { r:4, q:"A text goes unanswered all day. There's also a real, boring problem — a bill, your taxes. Which one eats you?", sub:"",
+      opts:[
+        { t:"The text. Obviously. The bill can wait forever.", d:{co:-16,im:8,re:-6}, tell:"Threat-detection calibrated entirely to relational signals, not practical ones.", own:"carrie" },
+        { t:"Neither, really. I've metabolized both by lunch.", d:{co:18,bo:6}, tell:"Low neuroticism as a superpower — and it isn't performance.", own:"samantha" },
+        { t:"The bill I can handle — it's being judged that undoes me.", d:{re:8,di:8,co:-4}, tell:"Neuroticism that's evaluation-specific: calm in a crisis, wrecked by social failure.", own:"charlotte" },
+        { t:"I already assumed the worst about the text. Consider it confirmed.", d:{co:-8,lo:8,di:-6}, tell:"Pessimistic explanatory style: bad events just confirm the model.", own:"miranda" },
+      ]},
+    { r:4, q:"Something genuinely goes wrong. In the first hour, you…", sub:"",
+      opts:[
+        { t:"Ruminate. Spiral. Replay it on a loop I can't switch off.", d:{co:-14,im:6}, own:"carrie" },
+        { t:"Reframe it on the spot and keep moving. Onward.", d:{co:16,bo:8}, own:"samantha" },
+        { t:"Hold it together, run the logistics — and crumble only later, with my people.", d:{re:10,di:6,co:-6}, own:"charlotte" },
+        { t:"Go quiet, dry, and grimly practical about the damage.", d:{lo:10,co:-6,di:-2}, own:"miranda" },
+      ]},
+
+    // ---- Round 6: The Update ----
+    { r:5, q:"You change your mind when…", sub:"This one's the rarest tell of all.",
+      opts:[
+        { t:"A feeling shifts. My gut reroutes and I follow it.", d:{im:12,lo:-10,co:-2}, tag:{k:"plasticity",v:"feeling"}, own:"carrie" },
+        { t:"Someone I trust gives me the permission to.", d:{di:10,re:4,im:-2}, tag:{k:"plasticity",v:"permission"}, own:"charlotte" },
+        { t:"Honestly? Rarely. I know what I like and I keep it.", d:{bo:10,co:8,re:4}, tag:{k:"plasticity",v:"rarely"}, own:"samantha" },
+        { t:"The evidence forces me to. Slowly, grudgingly — but really.", d:{lo:16,re:6}, tag:{k:"plasticity",v:"evidence"}, tell:"The highest behavioral plasticity of the four. You actually update.", own:"miranda" },
+      ]},
+    { r:5, q:"Which “obviously right” thing would you die on the hill for?", sub:"",
+      opts:[
+        { t:"That the story matters more than the facts.", d:{im:16,lo:-12}, own:"carrie" },
+        { t:"That you should chase what you want, with no apology.", d:{bo:14,di:-10,co:6}, own:"samantha" },
+        { t:"That there's a right way to do things, and it genuinely matters.", d:{di:16,re:10,im:-4}, own:"charlotte" },
+        { t:"That fair is fair, and the double standard is the real crime.", d:{lo:12,di:-2,bo:6}, tell:"You hold yourself to the standards you impose. That's the tell.", own:"miranda" },
+      ]},
+  ];
+
+  // Deep facet-level profiles.
   const PROFILES = {
     carrie: {
-      tag: "Anxious-preoccupied · the self as story",
-      body: [
-        "You run on anxious attachment: unavailability doesn't get in the way of your desire, it <em>is</em> your desire. Security can read as pressure, and the person who keeps you guessing keeps you hooked — because intermittent, unpredictable reward is the most addictive schedule there is.",
-        "Your signature defense is narrativization. You metabolize pain by turning it into material — a clever question, a good line — which gives you the <em>appearance</em> of introspection while quietly sparing you from actually sitting in the feeling. It's intellectualization dressed up as self-examination, and it shows up everywhere, even in the things you'd rather not look at directly.",
-        "The good news buried in all this: in your closest friendships you're less self-absorbed, more reachable. You borrow other people's reality-testing there, and it grounds you. Growth is learning to feel a thing before you narrate it.",
+      tag:"High openness · low orderliness",
+      head:"The metaphor mind — built for experience, hopeless at maintenance.",
+      body:[
+        "Your dominant cluster is high openness in nearly every facet — aesthetics, ideas, fantasy, feeling. You experience the world through metaphor and association rather than analysis; when you argue you almost never reach for evidence, you reach for images and reframes. It's a genuinely divergent mind, with openness's shadow attached: a weak boundary between fantasy and assessment. You don't evaluate people, apartments, or purchases so much as <em>audition them for the story</em>.",
+        "Your neuroticism is high but specific — not generalized worry, but rumination and emotional lability. An unreturned call can consume your week while an objectively serious problem like debt barely registers. That inversion is diagnostic: your threat-detection system is calibrated entirely to <em>relational</em> signals, not practical ones.",
+        "And your conscientiousness isn't uniform. Your industriousness is actually decent — you produce, you hit deadlines, you sustain a career. What's low is orderliness and deliberation: impulse purchases, chaotic finances, decisions made on feeling and justified afterward. You're a low-deliberation, high-output person — exactly the profile that thrives in creative work and drowns in life admin.",
+        "Socially you're an attention-oriented ambivert: you don't need a crowd, you need an audience, even an audience of one. Your most under-noticed trait is conflict avoidance masked as wit — you rarely state a need or grievance directly. You joke, you hint, you write about it.",
       ],
-      traits: { Openness: 92, Neuroticism: 84, Conscientiousness: 34, Extraversion: 66, Agreeableness: 58 },
     },
     samantha: {
-      tag: "Dismissive-avoidant · the fortress of control",
-      body: [
-        "You're counterdependent, and — crucially — you're at peace with it. Your avoidance isn't a torment; you've built a genuinely good life on it. The organizing principle is control: of your body, your image, your terms. If nothing is promised, nothing can be taken from you.",
-        "Your confidence is real, but it's more effortful than it looks — you know your currency can depreciate, and you guard it. Insecurity is so foreign to your self-concept that when the system does get breached, you don't have practiced machinery for it. The rare, radical move for you isn't falling in love; it's tolerating being <em>witnessed</em> without armor.",
-        "And your autonomy isn't a wound to be healed — it's your actual self. Sometimes integrity means leaving a good thing to restore your relationship with you. That's not regression. That's the whole point of you.",
+      tag:"Extraversion maxed · neuroticism near zero",
+      head:"Approach in human form — appetite inside a very well-run system.",
+      body:[
+        "Yours is the clearest temperament of the four: extremely high extraversion across every facet — assertiveness, excitement-seeking, gregariousness, positive emotionality. You're approach-motivated to an almost physiological degree. Where others deliberate, you move. Your baseline mood is genuinely elevated, and it isn't performance — low neuroticism is your superpower. Rejection, embarrassment, aging: things that would hospitalize other people emotionally, you metabolize by the afternoon. Your stress response is fight, never freeze.",
+        "Your agreeableness is low in style — blunt, competitive, allergic to politeness norms — but here's the nuance: your <em>compassion</em> runs far higher than your <em>politeness</em>. You'll say the crude, tactless thing, and you'll also be the first to show up, the last to judge, the only one who never moralizes about anyone else's choices. Low politeness, high loyalty is a rare, specific combination — it's why you read as abrasive to strangers and utterly safe to intimates.",
+        "Cognitively you're concrete and pragmatic — low openness to ideas and fantasy, but high openness to <em>experience</em> in the literal sense: novelty, sensation, transgression. You don't theorize about life, you consume it. And your conscientiousness is deceptively high where it matters — you build things, run them, negotiate ruthlessly, manage your image with discipline. The impulsivity is real but bounded: licensed hedonism that never actually threatens your business or your autonomy.",
+        "Your humor is aggressive and sexual, used offensively — you disarm a room by saying the unsayable first, converting potential judgment into laughter you control.",
       ],
-      traits: { Openness: 70, Neuroticism: 22, Conscientiousness: 68, Extraversion: 95, Agreeableness: 40 },
     },
     charlotte: {
-      tag: "Introjection · the perfect script",
-      body: [
-        "You swallowed the rulebook whole — so completely that external expectations feel like your own desires. Your perfectionism isn't vanity; it's contingent self-worth. The equation runs: if I do everything correctly, I'll be safe and loved. Which makes you both the most rule-bound and, at times, the most quietly self-policing of any type.",
-        "That's why real loss is uniquely destabilizing for you: it doesn't just hurt, it <em>falsifies your worldview</em>. You did everything right and the promised outcome didn't come. Your arc is the slow, brave work of replacing borrowed worth with something sturdier — and choosing what's true over what's correct, even when they diverge.",
-        "You don't become less earnest as you grow; you redirect the earnestness from form to substance. That same rule-following rigor, flipped, becomes fierce and principled loyalty. In a crisis, you're made of steel.",
+      tag:"Conscientiousness + agreeableness · in the politeness-and-order key",
+      head:"An executor whose operating system occasionally throws contradictory instructions.",
+      body:[
+        "You're a textbook high-conscientiousness, high-agreeableness profile — but the facet structure is where you get interesting. Your conscientiousness is loaded on orderliness, dutifulness, and self-discipline: routines, etiquette, plans, follow-through. Your agreeableness is loaded on politeness and compliance more than raw compassion. You're deeply kind, but your kindness is <em>rule-shaped</em> — generous in the ways one is supposed to be generous, warm in the ways decorum permits. It's why you can be, at once, the sweetest and the most judgmental person in the room: judgment is simply what high politeness does to rule-breakers.",
+        "Your openness is low on ideas and values — you resist arguments that challenge your framework — but high on aesthetics. Your neuroticism is moderate and evaluation-specific: calm in an actual emergency, undone by social failure or a broken timeline. And you're a suppressor. Your negative emotion doesn't leak gradually or convert to sarcasm; it stores, and then it detonates.",
+        "Two traits go chronically underrated in you. First, persistence — you have the highest frustration tolerance of the four in pursuit of a goal. Second, decisiveness inside your value system: when a choice aligns with your principles you act faster than anyone. Your indecision only appears when two rules conflict. You're not weak-willed — you're an executor whose operating system occasionally throws contradictory instructions.",
       ],
-      traits: { Openness: 55, Neuroticism: 60, Conscientiousness: 93, Extraversion: 58, Agreeableness: 88 },
     },
     miranda: {
-      tag: "Fearful-avoidant · competence as identity",
-      body: [
-        "On the surface you're dismissive — sarcasm, self-sufficiency, an allergy to neediness. Underneath, it's closer to fearful-avoidant: you want closeness and distrust it at the same time. Your defense is cynicism-as-preemption. Expect the worst and you can never be blindsided. The sharpness isn't cruelty; it's a perimeter.",
-        "Your identity is fused with competence — you built a self that needs nothing. The quiet danger you narrowly avoid is that a self that needs nothing can't receive anything either. Care offered with no achievement attached is the thing that most threatens you, and devaluing the giver can feel safer than needing the gift.",
-        "Your growth is the deliberate, effortful practice of dependence — letting yourself be held. You don't become soft. You expand your definition of strength to include being held. Your steadiest people are the ones who make it safe to finally stop performing.",
+      tag:"Industriousness + skepticism · the analytic engine",
+      head:"The only one who actually updates on evidence.",
+      body:[
+        "Your core is high conscientiousness of the <em>industriousness and deliberation</em> type — not tidiness (your place can be takeout and chaos), but work discipline, planning, and risk assessment. Paired with it is the group's highest trait skepticism: low agreeableness expressed as low compliance and low trust rather than low compassion. You argue as a default social mode, play devil's advocate reflexively, and treat optimistic claims as errors to be corrected. It's a genuinely critical cognitive style — analytical, sequential, evidence-demanding — and you're the only one of the four who reasons the way she argues.",
+        "Your neuroticism is real but almost entirely internalized as irritability and pessimism rather than anxiety. You don't worry forward — you pre-conclude negatively and call it realism. Good events you attribute to luck; bad events confirm the model. It's protective and self-limiting in equal measure.",
+        "Your introversion gets missed because you're socially competent and verbally dominant — but note the recovery pattern: social effort costs you, solitude restores you. You're a low-gregariousness, high-assertiveness introvert: comfortable commanding a room, depleted by inhabiting one. Your humor is the group's driest, and it doubles as your affection channel — you tease the people you love because directness of feeling embarrasses you.",
+        "Your most distinctive trait is principled fairness. Beneath the cynicism sits the strongest justice orientation of the four — you call out double standards, keep score of reciprocity, and hold yourself to the standards you impose. And you have the highest behavioral plasticity: the only one who changes her mind in response to evidence. Slow, grudging, but real.",
       ],
-      traits: { Openness: 64, Neuroticism: 74, Conscientiousness: 90, Extraversion: 52, Agreeableness: 44 },
     },
   };
 
-  const els = {};
-  let idx = 0;
-  const answers = new Array(QUESTIONS.length).fill(null);
+  const HUMOR = {
+    affiliative:{ k:"Humor style", v:"Affiliative & self-deprecating — the laugh that preempts criticism and invites reassurance." },
+    aggressive: { k:"Humor style", v:"Aggressive & sexual — you say the unsayable first and control the laughter." },
+    dry:        { k:"Humor style", v:"Dry & deflationary — teasing as an affection channel." },
+    earnest:    { k:"Humor style", v:"Earnest — you don't hide behind the joke." },
+  };
+  const CONFLICT = {
+    avoid:   { k:"Conflict style", v:"Avoidant — you keep the peace and raise it sideways, later." },
+    passive: { k:"Conflict style", v:"Passive-aggressive — the dig, the pointed silence." },
+    fight:   { k:"Conflict style", v:"Fight response — insulted, you escalate on the spot." },
+    suppress:{ k:"Conflict style", v:"Suppressor — it stores quietly, then it detonates." },
+    sarcasm: { k:"Conflict style", v:"Sarcasm — grievance, filtered dry." },
+  };
+  const PLASTICITY = {
+    feeling:   { k:"What moves you", v:"You change with feeling — the gut reroutes and you follow." },
+    permission:{ k:"What moves you", v:"You change with permission — from someone you trust." },
+    rarely:    { k:"What moves you", v:"You rarely change — you know what you like." },
+    evidence:  { k:"What moves you", v:"You change with evidence — slow, grudging, and real." },
+  };
+  // fallbacks per type if the player never hit a tagged option
+  const DEFAULT_TAGS = {
+    carrie:   { humor:"affiliative", conflict:"avoid",    plasticity:"feeling" },
+    samantha: { humor:"aggressive",  conflict:"fight",    plasticity:"rarely" },
+    charlotte:{ humor:"earnest",     conflict:"suppress", plasticity:"permission" },
+    miranda:  { humor:"dry",         conflict:"sarcasm",  plasticity:"evidence" },
+  };
 
-  function $(id) { return document.getElementById(id); }
-  function show(screen) {
-    document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  // ---------- state ----------
+  let idx = 0;
+  let meters = { im:50, co:50, re:50, bo:50, di:50, lo:50 };
+  const answers = new Array(QUESTIONS.length).fill(null);
+  const chosenTags = {};              // {humor:'dry', conflict:..., plasticity:...}
+  let locked = false;
+  let shownRound = -1;
+
+  function $(id){ return document.getElementById(id); }
+  function clamp(v){ return Math.max(2, Math.min(100, v)); }
+  function show(screen){
+    document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
     $(screen).classList.add("active");
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top:0, behavior:"smooth" });
+  }
+  function escapeHtml(s){ return s.replace(/[&<>"']/g, c=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c])); }
+
+  function buildMeterPanel(){
+    const g = $("mGrid"); g.innerHTML = "";
+    METERS.forEach(m=>{
+      const el = document.createElement("div");
+      el.className = "m";
+      el.innerHTML =
+        '<div class="m-top"><span class="name">'+m.name+'</span><span class="delta" id="d_'+m.k+'"></span></div>'+
+        '<div class="m-bar"><i id="f_'+m.k+'"></i></div>';
+      g.appendChild(el);
+    });
+    paintMeters(false);
+  }
+  function paintMeters(animateDeltas, deltas){
+    METERS.forEach(m=>{
+      $("f_"+m.k).style.width = meters[m.k] + "%";
+      if (animateDeltas && deltas && deltas[m.k]){
+        const d = deltas[m.k];
+        const el = $("d_"+m.k);
+        el.textContent = (d>0?"+":"") + d;
+        el.className = "delta " + (d>0?"up":"down") + " show";
+        setTimeout(()=>{ el.classList.remove("show"); }, 1300);
+      }
+    });
   }
 
-  function render() {
-    const total = QUESTIONS.length;
+  function maybeRoundIntro(){
+    const round = QUESTIONS[idx].r;
+    if (round !== shownRound){
+      shownRound = round;
+      const R = ROUNDS[round];
+      $("riNo").textContent = R.no;
+      $("riTitle").textContent = R.title;
+      $("riSub").textContent = R.sub;
+      show("roundIntro");
+      return true;
+    }
+    return false;
+  }
+
+  function render(){
     const item = QUESTIONS[idx];
-    $("stepLabel").textContent = item.step;
-    $("countLabel").textContent = (idx + 1) + " / " + total;
-    $("barFill").style.width = ((idx) / total * 100) + "%";
+    const roundName = ROUNDS[item.r].title;
+    $("stepLabel").textContent = "Round " + (item.r+1) + " · " + roundName;
+    $("countLabel").textContent = (idx+1) + " / " + QUESTIONS.length;
+    $("barFill").style.width = (idx / QUESTIONS.length * 100) + "%";
     $("qText").textContent = item.q;
     $("qSub").textContent = item.sub || "";
     $("qSub").style.display = item.sub ? "block" : "none";
+    $("mHint").textContent = "";
 
-    const box = $("opts");
-    box.innerHTML = "";
-    item.opts.forEach((o, i) => {
+    const box = $("opts"); box.innerHTML = "";
+    item.opts.forEach((o,i)=>{
       const b = document.createElement("button");
-      b.className = "opt" + (answers[idx] === i ? " selected" : "");
-      b.innerHTML = escapeHtml(o.t) + '<span class="tick">✓</span>';
-      b.onclick = () => choose(i);
+      b.className = "opt" + (answers[idx]===i ? " selected" : "");
+      b.textContent = o.t;
+      b.onclick = ()=>choose(i);
       box.appendChild(b);
     });
+    $("tell").classList.remove("show");
     $("backBtn").disabled = idx === 0;
+    locked = false;
   }
 
-  function choose(i) {
+  function applyDeltas(d, sign){
+    const eff = {};
+    for (const k in d){ const v = d[k]*sign; meters[k] = clamp(meters[k]+v); eff[k]=d[k]; }
+    return eff;
+  }
+
+  function choose(i){
+    if (locked) return;
+    locked = true;
+
+    // undo a previous answer on this question (if navigating back and re-answering)
+    if (answers[idx] !== null){
+      applyDeltas(QUESTIONS[idx].opts[answers[idx]].d, -1);
+    }
     answers[idx] = i;
-    // paint selection, then advance with a beat
+    const opt = QUESTIONS[idx].opts[i];
+    const eff = applyDeltas(opt.d, +1);
+    if (opt.tag) chosenTags[opt.tag.k] = opt.tag.v;
+
+    // paint selection
     const nodes = $("opts").children;
-    for (let n = 0; n < nodes.length; n++) nodes[n].classList.toggle("selected", n === i);
-    setTimeout(() => {
-      if (idx < QUESTIONS.length - 1) { idx++; render(); }
-      else finish();
-    }, 320);
+    for (let n=0;n<nodes.length;n++){ nodes[n].classList.toggle("selected", n===i); nodes[n].disabled = true; }
+    paintMeters(true, eff);
+
+    const advance = ()=>{
+      idx++;
+      if (idx >= QUESTIONS.length){ analyze(); return; }
+      if (maybeRoundIntro()) return;   // round card handles re-render on continue
+      render();
+    };
+
+    if (opt.tell){
+      $("tellText").textContent = " " + opt.tell;
+      $("tell").classList.add("show");
+      setTimeout(advance, 1750);
+    } else {
+      setTimeout(advance, 520);
+    }
   }
 
-  function back() {
-    if (idx > 0) { idx--; render(); }
+  function enterRound(){
+    show("quiz");
+    render();
   }
 
-  function tally() {
-    const score = { carrie: 0, samantha: 0, charlotte: 0, miranda: 0 };
-    answers.forEach((a, qi) => {
-      if (a === null) return;
-      const w = QUESTIONS[qi].opts[a].w;
-      for (const k in w) score[k] += w[k];
-    });
-    return score;
+  function back(){
+    if (idx===0) return;
+    // stepping back one question; if that question starts a round we don't replay the card
+    idx--;
+    // if we cross a round boundary going back, keep shownRound in sync so we don't re-show
+    shownRound = QUESTIONS[idx].r;
+    show("quiz");
+    render();
   }
 
-  function finish() {
-    $("barFill").style.width = "100%";
-    const score = tally();
-    const ranked = Object.keys(score).sort((a, b) => score[b] - score[a]);
-    const winner = ranked[0];
-    const runner = ranked[1];
+  // ---------- scoring ----------
+  function distances(){
+    const out = {};
+    for (const key in ARCHETYPE){
+      let sum = 0;
+      METERS.forEach(m=>{ const diff = meters[m.k]-ARCHETYPE[key][m.k]; sum += diff*diff; });
+      out[key] = Math.sqrt(sum);
+    }
+    return out;
+  }
+  function blend(dist){
+    // inverse-distance weighting -> percentages
+    const eps = 8;
+    const w = {}; let tot = 0;
+    for (const k in dist){ w[k] = 1/(dist[k]+eps); tot += w[k]; }
+    const pct = {};
+    for (const k in w){ pct[k] = w[k]/tot; }
+    return pct;
+  }
+
+  function analyze(){
+    show("analyzing");
+    const dist = distances();
+    const ranked = Object.keys(dist).sort((a,b)=>dist[a]-dist[b]);
+    // little theatrical cycle through names then land on winner
+    const seq = ["carrie","samantha","charlotte","miranda","charlotte","samantha", ranked[0], ranked[0], ranked[0]];
+    let step = 0;
+    const el = $("anName");
+    const timer = setInterval(()=>{
+      const k = seq[step];
+      el.textContent = C[k].name;
+      el.style.color = C[k].color;
+      step++;
+      if (step >= seq.length){
+        clearInterval(timer);
+        setTimeout(()=>renderResult(ranked, dist), 450);
+      }
+    }, 190);
+  }
+
+  function renderResult(ranked, dist){
+    const winner = ranked[0], runner = ranked[1];
     const p = PROFILES[winner];
+    const pct = blend(dist);
 
     $("rName").textContent = C[winner].name;
     $("rName").style.color = C[winner].color;
     $("rTag").textContent = p.tag;
+    $("rHead").textContent = "“" + p.head + "”";
 
-    // mixed-blood bar
-    const totalPts = Object.values(score).reduce((s, v) => s + v, 0) || 1;
+    // blend bar
     const mix = $("rMix"); mix.innerHTML = "";
-    ranked.forEach(k => {
-      if (score[k] <= 0) return;
+    const leg = $("rLegend"); leg.innerHTML = "";
+    ranked.forEach(k=>{
       const span = document.createElement("span");
-      span.style.width = (score[k] / totalPts * 100) + "%";
+      span.style.width = (pct[k]*100)+"%";
       span.style.background = C[k].color;
-      span.title = C[k].name + " " + Math.round(score[k] / totalPts * 100) + "%";
       mix.appendChild(span);
     });
+    ranked.forEach(k=>{
+      const s = document.createElement("span");
+      s.innerHTML = '<span class="dotc" style="background:'+C[k].color+'"></span>'+
+        (k===winner?'<b>':'')+C[k].name+' '+Math.round(pct[k]*100)+'%'+(k===winner?'</b>':'');
+      leg.appendChild(s);
+    });
 
-    const runnerPct = Math.round(score[runner] / totalPts * 100);
-    $("rAlso").innerHTML = "Strong secondary streak of <b style='color:" + C[runner].color + "'>" +
-      C[runner].name + "</b> — about " + runnerPct + "% of you keeps her close.";
+    // profile prose
+    $("rBody").innerHTML = p.body.map(t=>"<p>"+t+"</p>").join("");
 
-    // body
-    $("rBody").innerHTML = p.body.map(t => "<p>" + t + "</p>").join("");
+    // badges — use the player's actual tagged answers, fall back to type default
+    const tags = Object.assign({}, DEFAULT_TAGS[winner], chosenTags);
+    const bx = $("rBadges"); bx.innerHTML = "";
+    [HUMOR[tags.humor], CONFLICT[tags.conflict], PLASTICITY[tags.plasticity]].forEach(b=>{
+      const el = document.createElement("div");
+      el.className = "badge";
+      el.innerHTML = '<div class="k">'+b.k+'</div><div class="v">'+b.v+'</div>';
+      bx.appendChild(el);
+    });
 
-    // traits
-    const tbox = $("rTraits"); tbox.innerHTML = "";
-    for (const label in p.traits) {
-      const v = p.traits[label];
+    // profile meters: you (fill) vs archetype (mark)
+    const pmBox = $("rMeters"); pmBox.innerHTML = "";
+    METERS.forEach(m=>{
+      const you = Math.round(meters[m.k]);
+      const arch = ARCHETYPE[winner][m.k];
       const row = document.createElement("div");
-      row.className = "trait";
+      row.className = "pm";
       row.innerHTML =
-        '<div class="trait-top"><span>' + label + '</span><span class="val">' + descriptor(v) + '</span></div>' +
-        '<div class="trait-bar"><i style="background:' + C[winner].color + '"></i></div>';
-      tbox.appendChild(row);
-      requestAnimationFrame(() => {
-        setTimeout(() => { row.querySelector("i").style.width = v + "%"; }, 120);
-      });
-    }
+        '<div class="pm-top"><span>'+m.name+' <span style="opacity:.6">· '+m.note+'</span></span><span class="val">'+you+'</span></div>'+
+        '<div class="pm-bar"><i style="background:'+C[winner].color+'"></i><span class="mark" style="left:'+arch+'%"></span></div>';
+      pmBox.appendChild(row);
+      requestAnimationFrame(()=>setTimeout(()=>{ row.querySelector("i").style.width = you+"%"; }, 100));
+    });
 
-    window._result = { winner, runner, runnerPct, score };
+    window._res = { winner, runner, pct };
     show("result");
   }
 
-  function descriptor(v) {
-    if (v >= 85) return "very high";
-    if (v >= 68) return "high";
-    if (v >= 45) return "moderate";
-    if (v >= 30) return "low";
-    return "very low";
-  }
-
-  function copy() {
-    const r = window._result;
-    if (!r) return;
+  function copy(){
+    const r = window._res; if (!r) return;
     const p = PROFILES[r.winner];
+    const tags = Object.assign({}, DEFAULT_TAGS[r.winner], chosenTags);
+    const line = k => k.charAt(0).toUpperCase()+k.slice(1);
     const text =
-      "Which one am I? → " + C[r.winner].name + "\n" +
-      p.tag + "\n" +
-      "(with a " + r.runnerPct + "% streak of " + C[r.runner].name + ")\n\n" +
-      p.body[0].replace(/<[^>]+>/g, "") + "\n\n" +
-      "Find out which one you are.";
-    navigator.clipboard && navigator.clipboard.writeText(text).then(toast).catch(toast);
+      "The Read → I'm "+C[r.winner].name+"\n"+
+      p.tag+"\n"+
+      "“"+p.head+"”\n\n"+
+      "Humor: "+HUMOR[tags.humor].v+"\n"+
+      "Conflict: "+CONFLICT[tags.conflict].v+"\n"+
+      "What moves me: "+PLASTICITY[tags.plasticity].v+"\n\n"+
+      "Blend — "+Object.keys(r.pct).sort((a,b)=>r.pct[b]-r.pct[a])
+        .map(k=>C[k].name+" "+Math.round(r.pct[k]*100)+"%").join(" · ")+"\n\n"+
+      "Which one are you? Play The Read.";
+    (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject())
+      .then(toast).catch(toast);
   }
+  function toast(){ const t=$("toast"); t.classList.add("show"); setTimeout(()=>t.classList.remove("show"),1900); }
 
-  function toast() {
-    const t = $("toast");
-    t.classList.add("show");
-    setTimeout(() => t.classList.remove("show"), 1900);
+  function start(){
+    idx = 0; shownRound = -1;
+    meters = { im:50, co:50, re:50, bo:50, di:50, lo:50 };
+    for (let i=0;i<answers.length;i++) answers[i]=null;
+    for (const k in chosenTags) delete chosenTags[k];
+    buildMeterPanel();
+    // show round 1 intro then the first question
+    maybeRoundIntro();
   }
+  function restart(){ show("intro"); }
 
-  function escapeHtml(s) {
-    return s.replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
-  }
-
-  function start() { idx = 0; render(); show("quiz"); }
-  function restart() {
-    idx = 0;
-    for (let i = 0; i < answers.length; i++) answers[i] = null;
-    show("intro");
-  }
-
-  window.Game = { start, back, restart, copy };
+  window.Game = { start, back, restart, copy, enterRound };
 })();
 </script>
 </body>
