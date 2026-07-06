@@ -100,7 +100,10 @@
   .scene-head { font-family:"Helvetica Neue",Arial,sans-serif; margin:26px 0 4px; display:flex; align-items:baseline; gap:10px; }
   .scene-head .time { font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent-ink); font-weight:700; }
   .scene-head .place { font-size:13px; color:var(--muted); letter-spacing:.03em; }
-  .scene { font-size:16px; color:var(--muted); font-style:italic; margin-bottom:16px; min-height:1.6em; }
+  .scene { font-size:17.5px; color:var(--ink); margin-bottom:18px; line-height:1.62; }
+  .scene p { margin-bottom:11px; }
+  .scene p:last-child { margin-bottom:0; }
+  .scene em { color:var(--accent-ink); font-style:italic; }
   .prompt { font-size:clamp(23px,4.6vw,30px); line-height:1.28; font-weight:400; margin-bottom:20px; }
 
   .options { display:flex; flex-direction:column; gap:12px; }
@@ -223,7 +226,7 @@
       <span class="time" id="sTime"></span>
       <span class="place" id="sPlace"></span>
     </div>
-    <p class="scene" id="sScene" aria-live="polite"></p>
+    <div class="scene" id="sScene" aria-live="polite"></div>
     <h2 class="prompt" id="sPrompt"></h2>
     <div class="options" id="opts" role="group" aria-label="Your choices"></div>
     <p class="reaction" id="reaction" aria-live="polite"></p>
@@ -325,132 +328,145 @@
   };
 
   const ACTS = [
-    { time:"7:00 PM", label:"Dusk",     place:"getting ready", scene:"Tonight you finally see Wren — the almost that never happened, the one you never let yourself have. You get ready with your heart going." },
-    { time:"8:40 PM", label:"Twilight", place:"the meeting",   scene:"You meet on the corner in the blue hour. There they are, smiling like no time has passed at all." },
-    { time:"10:15 PM",label:"Night",    place:"falling",       scene:"Candlelight, hours slipping by, the walls quietly coming down. This is really happening." },
-    { time:"12:20 AM",label:"Midnight", place:"the wobble",    scene:"Then something catches — a careless word, an old fear — and the perfect night tips off its axis." },
-    { time:"1:45 AM", label:"Late",     place:"bared",         scene:"Late and quiet and real now. No party, no performance — just the two of you and the truth of it." },
-    { time:"6:10 AM", label:"Dawn",     place:"the choice",    scene:"The sky goes pale. It comes down to a single question, the one you've spent your life avoiding: will you let them in?" },
+    { time:"7:00 PM", label:"Dusk",     place:"getting ready", scene:"Seven o'clock. Tonight you finally see Wren — the almost that never happened, the one you never let yourself have." },
+    { time:"8:40 PM", label:"Twilight", place:"the meeting",   scene:"Blue hour, the corner by the old cinema. They're early. So are you." },
+    { time:"10:15 PM",label:"Night",    place:"falling",       scene:"A small golden restaurant, a candle burning down, and neither of you has checked the time once." },
+    { time:"12:20 AM",label:"Midnight", place:"the wobble",    scene:"Midnight. The night is perfect — which is exactly when nights like this tip." },
+    { time:"1:45 AM", label:"Late",     place:"bared",         scene:"A borrowed kitchen, 2 AM, two mugs of tea. No performance left." },
+    { time:"6:10 AM", label:"Dawn",     place:"the choice",    scene:"Dawn on the doorstep. One question left — the one you've spent your whole life avoiding." },
   ];
 
-  // Each option: t, d (trait deltas), rx (in-scene beat), echo? (past-tense clause
-  // the result stitches back into your night), tag?/read?. No character labels.
-  // One deep love story: one night with Wren — the almost you never let yourself have.
+  // Each option: t, d (trait deltas), rx (Wren's reaction / the beat after),
+  // echo? (past-tense clause for the recap), tag?/read?. No character labels.
+  // Scenes are HTML prose with dialogue. Options are just the move — no explanations.
   const QUESTIONS = [
     // ACT 0 — Dusk · getting ready
-    { act:0, key:true, scene:"You're getting ready to see Wren tonight — the almost that never quite happened. Your heart won't settle.",
-      prompt:"You steady your nerves by—",
+    { act:0, key:true,
+      scene:"<p>Your place, an hour before. Three outfits lie vetoed on the bed, and the mirror keeps catching you smiling at nothing.</p><p>Tonight you see Wren. Three years, one almost-kiss on a fire escape, and zero closure since. Your heart will not sit down.</p>",
+      prompt:"How do you survive the next hour?",
       opts:[
-        { t:"spinning the whole night into a story in your head — every way it could go", d:{im:16,lo:-10,co:-4}, rx:"You've lived it ten times already.", echo:"spun the whole night into a story before it began", read:"You live it in your imagination before you ever live it for real." },
-        { t:"getting everything just right — the outfit, the timing, the little details", d:{di:14,re:10,im:-4}, rx:"Every detail lands where it should.", echo:"got every detail of the night just right" },
-        { t:"hyping yourself up — no nerves, you've got this, go", d:{bo:16,co:8,im:-4}, rx:"You grin at the mirror and go.", echo:"hyped yourself up and out the door" },
-        { t:"talking yourself down with cold logic — it's one night, keep expectations low", d:{lo:16,di:-6,co:-2}, rx:"You manage yourself back to calm.", echo:"talked yourself down with cold logic" },
+        { t:"Play the whole night out in your head, scene by scene, until it's practically a memory", d:{im:16,lo:-10,co:-4}, rx:"By the time you're dressed, you've fallen in love and broken up twice, and neither has happened yet.", echo:"lived the whole night in your head before it began", read:"You live the story in your imagination before you ever live it in the room." },
+        { t:"Steam the outfit. Confirm the table. Check the mirror. Twice.", d:{di:14,re:10,im:-4}, rx:"Everything lands exactly where it should. There's a comfort in that no one ever gives you credit for.", echo:"made every detail of the night perfect first" },
+        { t:"Loud music, one drink, out the door early with a grin", d:{bo:16,co:8,im:-4}, rx:"The mirror gets a wink. Nerves are just excitement wearing a worse outfit.", echo:"walked out the door grinning, nerves be damned" },
+        { t:"Say it out loud to the empty room: it's one dinner, people change, keep it level", d:{lo:16,di:-6,co:-2}, rx:"You manage yourself back down to level. Mostly. The mirror looks unconvinced.", echo:"talked yourself level before you left" },
       ]},
-    { act:0, key:true, scene:"Your phone lights up. Wren: “I've been thinking about you all week. Can't wait.”",
-      prompt:"Reading it, you—",
+    { act:0, key:true,
+      scene:"<p>Your phone buzzes against the sink.</p><p>Wren: <em>“I keep thinking about the fire escape. Tonight, finally. I can't wait.”</em></p><p>Three dots appear. Vanish. Appear again. Then nothing.</p>",
+      prompt:"Your reply:",
       opts:[
-        { t:"melt, and read it ten more times — you're already half-gone", d:{im:12,co:-8,lo:-6}, rx:"The words go straight through you.", echo:"read their message ten times, already half-gone", read:"You fall into the feeling fast and all the way." },
-        { t:"reply something cool and playful — you won't be the breathless one", d:{bo:14,co:8,di:-8}, rx:"Sent, light and unbothered.", echo:"answered cool and playful, never the breathless one", read:"You keep the upper hand — never the one who wants more." },
-        { t:"let yourself hope — maybe this is finally the real thing", d:{di:12,im:6,re:4}, rx:"You let the old hope back in.", echo:"let yourself hope it was finally real" },
-        { t:"feel the guard go up — words are easy; you'll believe it when you see it", d:{lo:12,co:-6,di:-6}, rx:"You set the phone face-down.", echo:"put the guard up — you'll believe it when you see it", read:"You pre-empt the hurt; the perimeter goes up first." },
+        { t:"Nothing yet. You just read it again. And again. Slower each time.", d:{im:12,co:-8,lo:-6}, rx:"Half-gone already, and you haven't even left the house.", echo:"reread their text until you were half-gone", read:"You fall fast and all the way — the feeling floods the facts." },
+        { t:"“Careful. I'll hold you to that.” Sent before you can overthink it.", d:{bo:14,co:8,di:-8}, rx:"Wren replies instantly: “Promise?” You put the phone away, smiling, taking your time.", echo:"flirted back and made them wait", read:"You keep the upper hand — never the breathless one." },
+        { t:"“I've been thinking about it too. Let's finally get this right.”", d:{di:12,im:6,re:4}, rx:"You mean every word of it. The old hope walks back in like it owns the place.", echo:"let the old hope back in, out loud" },
+        { t:"“See you at 8.” Nothing else.", d:{lo:12,co:-6,di:-6}, rx:"The phone goes face-down on the counter. Words are easy. Eight o'clock will tell you what's true.", echo:"kept the guard up until proof arrived", read:"You pre-empt the hurt; the perimeter goes up first." },
       ]},
 
     // ACT 1 — Twilight · the meeting
-    { act:1, key:true, scene:"You meet on the corner. Wren's already there, smiling. You brought something.",
-      prompt:"You give them—",
+    { act:1, key:true,
+      scene:"<p>The corner by the old cinema, blue hour. And there they are — leaning against the lamppost like the last three years were a rumor.</p><p>“You look—” Wren stops, laughs at themselves, starts over. “Hi.”</p><p>You've got something with you.</p>",
+      prompt:"What you brought:",
       opts:[
-        { t:"something impulsive and romantic you grabbed on the way", d:{im:14,re:-10,co:-4}, rx:"Their whole face opens.", echo:"gave them something impulsive and romantic" },
-        { t:"nothing — just yourself, and a look that says everything", d:{bo:12,co:8,re:-4}, rx:"You don't need a prop.", echo:"showed up with just yourself and a look" },
-        { t:"the thoughtful, perfect thing you planned days ago", d:{re:16,di:10,im:-2}, rx:"You'd thought about this all week.", echo:"gave them the perfect thing you'd planned", read:"Even the gesture goes through the rulebook — it has to be done right." },
-        { t:"something small and real — no grand gesture, just true", d:{lo:12,re:8,di:-4}, rx:"Simple. Honest. Theirs.", echo:"kept it small and real, no grand gesture" },
+        { t:"Flowers grabbed on the way, still wet from the bodega bucket", d:{im:14,re:-10,co:-4}, rx:"“You remembered these are my favorite,” Wren says. You didn't. Some things you just get right by feeling.", echo:"brought impulsive flowers, still wet" },
+        { t:"Nothing. You brought you.", d:{bo:12,co:8,re:-4}, rx:"Wren looks you up and down, once. “Fair,” they say. “That's plenty.”", echo:"brought nothing but yourself" },
+        { t:"The book they mentioned once, three years ago. Found, wrapped, ribboned.", d:{re:16,di:10,im:-2}, rx:"“You kept that in your head for three years?” They hold it like it might break. So do you.", echo:"brought the gift you'd planned for days", read:"Even the gesture goes through the rulebook — it has to be done right." },
+        { t:"Two coffees, exactly how they take it", d:{lo:12,re:8,di:-4}, rx:"“Oat, two sugars.” Wren stares at the cup, then at you. “That's terrifying. Don't stop.”", echo:"brought two coffees, exactly right" },
       ]},
-    { act:1, scene:"“So,” they ask, eyes bright, “what are we doing tonight?”",
-      prompt:"What you want is—",
+    { act:1,
+      scene:"<p>“So.” Wren pockets their phone without checking it — you notice that, and file it somewhere warm. “I have one night in this city. Where are you taking me?”</p>",
+      prompt:"Where you take them:",
       opts:[
-        { t:"to wander wherever the night takes you — no plan, just the feeling", d:{im:16,lo:-12}, rx:"“Let's just see where we end up.”", echo:"wanted to wander wherever the night led" },
-        { t:"somewhere alive and electric — you want to feel the charge", d:{bo:8,co:10,di:-8}, rx:"“Somewhere with a pulse.”", echo:"wanted somewhere alive and electric" },
-        { t:"the lovely evening you already pictured — done properly, start to finish", d:{di:16,re:10,im:-4}, rx:"You have the whole night mapped.", echo:"wanted the evening you'd pictured, done right" },
-        { t:"somewhere quiet you can actually talk and see who they really are", d:{lo:16,re:8,co:-4}, rx:"“Somewhere we can hear each other.”", echo:"wanted somewhere quiet to really see them" },
+        { t:"Nowhere. Anywhere. You start walking and let the city decide.", d:{im:16,lo:-12}, rx:"“You still don't do plans,” they grin, falling into step so close your hands keep almost touching.", echo:"let the city decide the night" },
+        { t:"The loud little bar where the night always gets interesting", d:{bo:8,co:10,di:-8}, rx:"“There it is,” Wren laughs. “The trouble I remember.”", echo:"took them straight toward the trouble" },
+        { t:"The place you booked two weeks ago. Corner table. Candles.", d:{di:16,re:10,im:-4}, rx:"“You planned this.” They say it quietly, like it's the most romantic thing they've heard all year. Maybe it is.", echo:"took them to the corner table you'd booked" },
+        { t:"Somewhere quiet enough to actually hear each other", d:{lo:16,re:8,co:-4}, rx:"“Good,” they say. “I came to talk to you, not shout at you.”", echo:"chose somewhere quiet enough to really talk" },
       ]},
 
     // ACT 2 — Night · falling
-    { act:2, scene:"Over dinner, in the candlelight, you find yourself just watching them.",
-      prompt:"What you notice is—",
+    { act:2,
+      scene:"<p>The restaurant is small and golden. Wren tells a story with both hands and a laugh that arrives early, and halfway through it they catch you — not laughing. Just looking.</p><p>“What?” they say, softer.</p>",
+      prompt:"What you were caught noticing:",
       opts:[
-        { t:"the way being near them feels — the whole mood of it", d:{im:16,lo:-8}, rx:"You could stay in this all night." },
-        { t:"the little things — how they hold themselves, their care, their manners", d:{di:12,re:6,im:2}, rx:"The small gracefulness of them." },
-        { t:"the pull — how badly you want to close the space between you", d:{bo:14,co:8,im:-6}, rx:"Your hand drifts toward theirs." },
-        { t:"the tells — whether they mean it, or they're performing", d:{lo:10,co:-6,di:-6}, rx:"You watch for what's real.", read:"You read for the truth under the charm — a careful eye, always on." },
+        { t:"How this already feels like a memory you're going to miss", d:{im:16,lo:-8}, rx:"“You're memorizing this,” Wren says. You don't deny it." },
+        { t:"The way they thanked the waiter by name", d:{di:12,re:6,im:2}, rx:"They notice you noticing their manners, and sit up a little straighter, pleased." },
+        { t:"Their mouth. The space between you. The obvious.", d:{bo:14,co:8,im:-6}, rx:"“What?” they say again. They know exactly what. The candle does its work." },
+        { t:"How polished that story sounded. Who else has heard it?", d:{lo:10,co:-6,di:-6}, rx:"You watch for the seams. Wren catches you doing it and, oddly, seems to respect it.", read:"You read for the truth under the charm — a careful eye, always on." },
       ]},
-    { act:2, key:true, scene:"They ask you something real — the kind of question that could open a door.",
-      prompt:"You—",
+    { act:2, key:true,
+      scene:"<p>The plates are cleared. Wren turns the stem of their glass, then says it, quiet enough to be dangerous:</p><p>“Why didn't we ever happen? Back then.” A beat. “The truth.”</p><p>The candle holds very still.</p>",
+      prompt:"You give them:",
       opts:[
-        { t:"answer sideways, in a story — closer to the feeling than the fact", d:{im:12,co:-8,bo:-6}, rx:"You tell it slant, but true.", echo:"answered in a story instead of head-on" },
-        { t:"meet it head-on, bold and unguarded — you say the real thing", d:{bo:16,co:8,di:-8}, rx:"You just say it, out loud.", echo:"met the real question head-on, unguarded" },
-        { t:"open the door carefully, wanting so badly to get it right", d:{di:12,re:6,im:6}, rx:"You choose the words like stepping-stones.", echo:"opened up carefully, wanting to get it right" },
-        { t:"deflect a little — letting someone in is exactly what you don't do", d:{lo:10,bo:-10,co:-6}, rx:"You slide the door half-shut again.", echo:"deflected — letting someone in is the risk" },
+        { t:"A story about timing, and fire escapes, that circles the truth without landing on it", d:{im:12,co:-8,bo:-6}, rx:"They listen all the way through. “That's not an answer,” they say gently. “But it's beautiful.”", echo:"answered their why-not-us with a story" },
+        { t:"“Because I was a coward. I'm done being one.”", d:{bo:16,co:8,di:-8}, rx:"Wren blinks. Then smiles like a struck match.", echo:"told them the truth, flat out" },
+        { t:"The careful truth, chosen word by word, like crossing a river on stones", d:{di:12,re:6,im:6}, rx:"They wait for every word. Nobody has ever waited for your words like that.", echo:"gave the careful truth, stone by stone" },
+        { t:"“Does it matter now?” Refill their glass. Move on.", d:{lo:10,bo:-10,co:-6}, rx:"“Okay,” they say, letting you have the exit. Something in the light dims one notch.", echo:"dodged the why-not-us question" },
       ]},
-    { act:2, scene:"They tease you about something, eyes laughing. The moment could go either way.",
-      prompt:"You come back with—",
+    { act:2,
+      scene:"<p>“I'd forgotten this about you,” Wren says, mouth curving. They lean across the table, one finger almost touching your forehead. “This little line. It shows up when you're pretending you're not nervous.”</p>",
+      prompt:"You come back with:",
       opts:[
-        { t:"a joke at your own expense — you love making them laugh", d:{im:8,di:6,co:-8}, rx:"They laugh, and lean in.", tag:{k:"humor",v:"affiliative"} },
-        { t:"something bold and flirty that raises the stakes", d:{bo:14,di:-12,co:6}, rx:"The air between you gets warmer.", tag:{k:"humor",v:"aggressive"} },
-        { t:"a dry, deadpan line that makes them laugh harder", d:{lo:12,di:-6,co:-2}, rx:"One flat beat, and they're gone.", tag:{k:"humor",v:"dry"} },
-        { t:"no joke — you just tell them, sincerely, that you're happy", d:{di:10,im:-2,re:6}, rx:"They go quiet, touched.", tag:{k:"humor",v:"earnest"} },
+        { t:"“That line has a name and pays rent, thank you.”", d:{im:8,di:6,co:-8}, rx:"They laugh, and their hand drops to rest on yours for one long second.", tag:{k:"humor",v:"affiliative"} },
+        { t:"“Keep touching my face and find out how nervous.”", d:{bo:14,di:-12,co:6}, rx:"The air changes pressure. A waiter refills water nobody asked for.", tag:{k:"humor",v:"aggressive"} },
+        { t:"“It's not nerves. It's a wine allergy.”", d:{lo:12,di:-6,co:-2}, rx:"Wren loses it — the real laugh, the loud one, the one that turns heads.", tag:{k:"humor",v:"dry"} },
+        { t:"“I am nervous. You make me nervous. I've missed it.”", d:{di:10,im:-2,re:6}, rx:"They go still. “God,” they say quietly. “You can't just say things like that.”", tag:{k:"humor",v:"earnest"} },
       ]},
 
     // ACT 3 — Midnight · the wobble
-    { act:3, key:true, scene:"They say something careless — or it lands on an old wound. The perfect night tips.",
-      prompt:"It comes out of you as—",
+    { act:3, key:true,
+      scene:"<p>Walking off dinner, warm and loose, Wren says it — casual as weather:</p><p>“Honestly? I always figured you'd end up with someone kind of… safe.”</p><p>They keep walking. You stop.</p>",
+      prompt:"It comes out as:",
       opts:[
-        { t:"a quiet pulling-away — you go cool instead of saying it", d:{im:6,di:-4,co:-8}, rx:"You retreat behind a closed door.", echo:"pulled away and went cool instead of saying it", tag:{k:"conflict",v:"passive"} },
-        { t:"something direct, right now — you don't sit on it", d:{bo:16,di:-10,co:6}, rx:"You name it, straight out.", echo:"said it directly, right in the moment", tag:{k:"conflict",v:"fight"} },
-        { t:"nothing — you smile through it, and it'll surface later", d:{di:6,co:-12,re:-4}, rx:"You hold the smile in place.", echo:"smiled through it, saving it for later", tag:{k:"conflict",v:"suppress"} },
-        { t:"a dry, cutting line before you can stop yourself", d:{lo:8,di:-8,co:-2}, rx:"It's out before you mean it.", echo:"cut back with one dry line", tag:{k:"conflict",v:"sarcasm"} },
+        { t:"“It's fine.” Two blocks of silence that say otherwise.", d:{im:6,di:-4,co:-8}, rx:"Wren feels the temperature drop. “Did I say something?” You look at the skyline.", echo:"went cold instead of saying it", tag:{k:"conflict",v:"passive"} },
+        { t:"“Stop. What is that supposed to mean?”", d:{bo:16,di:-10,co:6}, rx:"They stop too. “Okay,” they breathe. “Okay. That was unfair. I'm sorry.”", echo:"called it out right there on the sidewalk", tag:{k:"conflict",v:"fight"} },
+        { t:"A smile. A subject change. A knot for later.", d:{di:6,co:-12,re:-4}, rx:"You keep the night pleasant. The knot pulls itself tighter with every block.", echo:"smiled through it and tied the knot for later", tag:{k:"conflict",v:"suppress"} },
+        { t:"“And I always figured you'd end up self-aware. Wild night for both of us.”", d:{lo:8,di:-8,co:-2}, rx:"It lands sharp. Wren winces, then half-laughs. “Deserved.”", echo:"answered the sting with a sharper line", tag:{k:"conflict",v:"sarcasm"} },
       ]},
-    { act:3, scene:"Their phone buzzes — an ex's name lights the screen. They glance at it, then at you.",
-      prompt:"You—",
+    { act:3,
+      scene:"<p>On the bridge, the city doubled in the black water, their phone lights up between you. A name you remember. The ex.</p><p>Wren silences it fast — not fast enough — and looks at you like a held breath.</p>",
+      prompt:"You:",
       opts:[
-        { t:"just ask, plainly — you'd rather know where you stand than guess", d:{lo:12,di:-6,bo:8}, rx:"“Who's that?” — no games.", read:"You'd take the hard truth over a comfortable unknown, every time." },
-        { t:"let it go — you're secure, and you don't do jealous", d:{co:10,bo:8,di:-6}, rx:"You don't give it a second thought." },
-        { t:"say nothing, but spiral quietly, imagining the worst", d:{im:10,bo:-8,co:-6}, rx:"The story writes itself behind your eyes." },
-        { t:"find it improper of them, and cool a few degrees", d:{di:14,im:-4}, rx:"You draw back, correct and careful." },
+        { t:"“Do you two still talk?” Level voice. Eyes on theirs.", d:{lo:12,di:-6,bo:8}, rx:"“No,” Wren says, holding your look. “The name's still saved so I remember I don't.”", read:"You'd take the hard truth over a comfortable unknown, every time." },
+        { t:"Shrug. Keep walking. Tonight belongs to you, not the phone.", d:{co:10,bo:8,di:-6}, rx:"Wren exhales a laugh. “You're really not going to ask? You're unbelievable.” They catch up to you.", },
+        { t:"Say nothing, and quietly begin writing the whole tragedy in your head", d:{im:10,bo:-8,co:-6}, rx:"By the next streetlight you've drafted the affair, the wedding, and the divorce. Wren notices you go somewhere far away.", },
+        { t:"“You should take that.” A polite step back.", d:{di:14,im:-4}, rx:"“I don't want to take it,” they say, watching you retreat. “That's the point.”", },
       ]},
 
     // ACT 4 — Late · bared
-    { act:4, scene:"It's late and quiet and real. Alone with the feeling for a second, you notice the fear underneath.",
-      prompt:"What scares you is—",
+    { act:4,
+      scene:"<p>Their borrowed kitchen, nearly two in the morning. Wren makes tea like they've lived here forever — hair down now, guard down too.</p><p>Watching them, it arrives uninvited: the fear. Yours has always had one specific shape.</p>",
+      prompt:"Yours is:",
       opts:[
-        { t:"how much you already want them — you're in too deep, too fast", d:{co:-16,im:8,re:-6}, rx:"The wanting is almost too much.", echo:"were already in too deep, too fast", read:"Your alarm is tuned to connection itself — the wanting is the danger." },
-        { t:"nothing, really — you're easy here; if it ends, it ends", d:{co:18,bo:6}, rx:"You're loose, open, unbothered.", echo:"stayed easy — if it ends, it ends", read:"Low neuroticism, quietly at work." },
-        { t:"that you'll do it wrong and lose the thing you finally want", d:{re:8,di:8,co:-6}, rx:"You don't want to ruin this.", echo:"feared doing it wrong and losing them" },
-        { t:"nothing new — you already assume it won't last", d:{co:-8,lo:8,di:-6}, rx:"You've priced in the ending already.", echo:"already assumed it wouldn't last", read:"A pessimistic set-point — braced for the end in advance." },
+        { t:"That you already want this too much to survive losing it", d:{co:-16,im:8,re:-6}, rx:"The wanting sits down in your chest with its bags packed.", echo:"wanted it too much to feel safe", read:"Your alarm is tuned to connection itself — the wanting is the danger." },
+        { t:"Honestly? Nothing. Whatever this is, you can take it.", d:{co:18,bo:6}, rx:"You check yourself and find yourself steady. It almost makes you laugh — everyone always thinks the armor is hiding something. Sometimes it's just skin.", echo:"stayed easy, come what may", read:"Low neuroticism, quietly and genuinely at work." },
+        { t:"That you'll get one thing wrong and watch all of it come apart", d:{re:8,di:8,co:-6}, rx:"You start triple-checking every sentence before you say it. Wren notices you being careful.", echo:"feared getting one detail wrong" },
+        { t:"That it ends the way everything ends. You've already seen it.", d:{co:-8,lo:8,di:-6}, rx:"You could sketch the ending from memory. You've had practice. The tea is good, though.", echo:"had already sketched the ending", read:"A pessimistic set-point — braced for the end in advance." },
       ]},
-    { act:4, key:true, scene:"Then they go quiet, take your hand, and say they're scared too — that this, you, matters to them.",
-      prompt:"In that bared moment, you—",
+    { act:4, key:true,
+      scene:"<p>Then Wren sets your mug down and doesn't let go of it.</p><p>“I need to say a thing.” They study the steam. “Tonight scared me. Because it matters. <em>You</em> matter. You always did.”</p><p>Then they look up, and wait.</p>",
+      prompt:"You:",
       opts:[
-        { t:"feel it crack you wide open — you'll replay this for days", d:{co:-14,im:6}, rx:"Something in your chest gives way.", echo:"let it crack you wide open" },
-        { t:"meet them there, steady, and pull them closer", d:{co:16,bo:8}, rx:"You hold their gaze and close the gap.", echo:"met them there, steady, and pulled closer" },
-        { t:"hold it together, keep it graceful — save your own trembling for later", d:{re:10,di:6,co:-6}, rx:"You stay composed, barely.", echo:"held it together, gracefully, trembling later" },
-        { t:"go quiet — being seen this closely is the hardest thing there is", d:{lo:10,co:-6,di:-2}, rx:"You look away from all that light.", echo:"went quiet — being seen was the hard part" },
+        { t:"Feel it split you open, right down the old seam", d:{co:-14,im:6}, rx:"Your eyes sting before you can stop them. Wren sees. Wren stays.", echo:"let it split you open" },
+        { t:"Take their hand off the mug and hold it. “Same. Come here.”", d:{co:16,bo:8}, rx:"The gap closes. Simple as gravity.", echo:"took their hand and closed the gap" },
+        { t:"“Thank you.” Perfect posture. The trembling can wait until you're alone.", d:{re:10,di:6,co:-6}, rx:"Wren studies your composure like they don't quite buy it. They're right not to.", echo:"held perfect posture, trembling later" },
+        { t:"Look at your tea. Being seen like this is the one thing you can't do.", d:{lo:10,co:-6,di:-2}, rx:"“There you go,” Wren whispers, not unkindly. “Disappearing again.”", echo:"looked at your tea instead of being seen" },
       ]},
 
     // ACT 5 — Dawn · the choice
-    { act:5, key:true, scene:"Dawn. They look at you and ask, softly: “Are you going to let me in?”",
-      prompt:"You tell them—",
+    { act:5, key:true,
+      scene:"<p>The doorstep. The sky has gone from black to bruise to almost-gold, and neither of you has said goodnight.</p><p>Wren takes both your hands. “I'm not asking for forever. I'm asking for real.” A breath. “Are you going to let me in?”</p>",
+      prompt:"You say:",
       opts:[
-        { t:"“if it keeps feeling like this — yes. I follow the feeling.”", d:{im:12,lo:-10,co:-2}, rx:"“And right now it feels like everything.”", echo:"said you'd follow the feeling", tag:{k:"plasticity",v:"feeling"} },
-        { t:"“I want to — I just need to know it's safe first”", d:{di:10,re:4,im:-2}, rx:"“Show me it's solid, and I'm yours.”", echo:"said you needed to know it was safe first", tag:{k:"plasticity",v:"permission"} },
-        { t:"“I'm not sure I know how to — I am who I am”", d:{bo:10,co:8,re:4}, rx:"“This is just how I'm built.”", echo:"admitted you don't easily let anyone in", tag:{k:"plasticity",v:"rarely"} },
-        { t:"“show me, over time — and I'll come around, slowly”", d:{lo:16,re:6}, rx:"“Prove it. Again and again. Then maybe.”", echo:"said they'd have to show you, over time", tag:{k:"plasticity",v:"evidence"} },
+        { t:"“If it keeps feeling like this, I'm already yours.”", d:{im:12,lo:-10,co:-2}, rx:"“Then let's keep it feeling like this,” Wren says, and squeezes your hands like a signature.", echo:"promised to follow the feeling", tag:{k:"plasticity",v:"feeling"} },
+        { t:"“I want to. Show me it's safe, and I will.”", d:{di:10,re:4,im:-2}, rx:"“Deal,” they say. No hesitation at all.", echo:"asked them to show you it was safe", tag:{k:"plasticity",v:"permission"} },
+        { t:"“I don't know if I bend that way. This is how I'm built.”", d:{bo:10,co:8,re:4}, rx:"“I know how you're built,” Wren says. “I'm asking anyway.”", echo:"admitted you might not bend", tag:{k:"plasticity",v:"rarely"} },
+        { t:"“Slowly. Show me again and again, and I'll come around.”", d:{lo:16,re:6}, rx:"“Again and again,” they repeat, like they're memorizing the terms. Like a vow.", echo:"asked for proof, again and again", tag:{k:"plasticity",v:"evidence"} },
       ]},
-    { act:5, scene:"The sky's going gold. They ask what you believe, deep down, about love.",
-      prompt:"You tell them—",
+    { act:5,
+      scene:"<p>The cab idles at the curb, in no hurry, like it knows.</p><p>“Last thing,” Wren says. “Tell me what you actually believe. About love. The real answer — not the good line.”</p>",
+      prompt:"The real answer:",
       opts:[
-        { t:"that it's the best story there is — and you'd risk everything for it", d:{im:16,lo:-12}, rx:"They smile — that's you, exactly." },
-        { t:"that you chase what you want and never apologize for wanting it", d:{bo:14,di:-10,co:6}, rx:"“No apologies. Not for this.”" },
-        { t:"that you do it right, all in, and you build something that lasts", d:{di:16,re:10,im:-4}, rx:"“All the way, or not at all.”" },
-        { t:"that it only counts if it's fair — you give what you get, both ways", d:{lo:12,di:-2,bo:6}, rx:"“Even, honest, both of us.”", read:"You hold love to the same fairness you hold everything else." },
+        { t:"“It's the only story worth ruining your life for.”", d:{im:16,lo:-12}, rx:"They laugh, eyes shining. “Of course that's your answer. Of course it is.”" },
+        { t:"“You want something, you go get it. No apologies.”", d:{bo:14,di:-10,co:6}, rx:"“No apologies,” Wren echoes, stepping in close enough to make the point." },
+        { t:"“You do it properly. All in. You build it to last.”", d:{di:16,re:10,im:-4}, rx:"“All in,” they say. “I'd like to watch you do that.”" },
+        { t:"“It only counts if it's even. I give what I get.”", d:{lo:12,di:-2,bo:6}, rx:"“Even,” Wren nods slowly. “That's the fairest thing anyone's ever offered me.”", read:"You hold love to the same fairness you hold everything else." },
       ]},
   ];
 
@@ -610,7 +626,7 @@
     buildTimeline(item.act);
     $("sTime").textContent = A.time + " · " + A.label;
     $("sPlace").textContent = A.place;
-    $("sScene").textContent = item.scene;
+    $("sScene").innerHTML = item.scene;
     $("sPrompt").textContent = item.prompt;
     $("reaction").textContent = "";
 
@@ -651,7 +667,7 @@
     $("opts").querySelectorAll(".opt").forEach(n=>{ n.disabled = true; n.classList.toggle("selected", +n.dataset.oi === oi); });
     if (opt.rx) $("reaction").textContent = opt.rx;
 
-    const wait = reduceMotion ? 350 : (opt.rx ? 1050 : 520);
+    const wait = reduceMotion ? 400 : (opt.rx ? 2100 : 520);
     setTimeout(()=>{
       idx++;
       if (idx >= QUESTIONS.length){ analyze(); return; }
