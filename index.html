@@ -3,207 +3,231 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>The Read — Which One Are You?</title>
+<title>One Night — Which One Are You?</title>
 <style>
   :root {
-    --bg: #f7f1ec;
-    --ink: #211a1e;
-    --muted: #7c6f75;
-    --line: #e6dad1;
+    --bg1: #fbe7d8; --bg2: #f7e2ea;
+    --ink: #1f1820;
+    --muted: #5f5359;
+    --line: #e6d8ce;
     --card: #fffdfb;
-    --accent: #c04a72;
-    --accent-soft: #f6dde5;
-    --shadow: 0 18px 50px -22px rgba(60, 20, 40, 0.45);
+    --accent: #b8406a;
+    --accent-ink: #92264c;
+    --accent-soft: #f7dbe4;
+    --shadow: 0 18px 50px -22px rgba(60, 20, 40, 0.4);
+    --radius: 20px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg1: #241a2a; --bg2: #1c1720;
+      --ink: #f2e9ee;
+      --muted: #b3a4ad;
+      --line: #3a2f3c;
+      --card: #251d2b;
+      --accent: #f08bab;
+      --accent-ink: #f5aec5;
+      --accent-soft: #3a2130;
+      --shadow: 0 18px 50px -22px rgba(0,0,0,.6);
+    }
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { height: 100%; }
   body {
-    background:
-      radial-gradient(1100px 560px at 82% -10%, #fbe6ec 0%, transparent 60%),
-      radial-gradient(900px 500px at -10% 110%, #e8e2f6 0%, transparent 55%),
-      var(--bg);
+    background: linear-gradient(160deg, var(--bg1), var(--bg2));
     color: var(--ink);
     font-family: "Georgia", "Iowan Old Style", "Palatino", serif;
-    line-height: 1.55;
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     min-height: 100%;
+    transition: background 1.1s ease;
   }
-  .wrap { max-width: 760px; margin: 0 auto; padding: 34px 20px 90px; }
+  /* Per-act mood shifts (light) */
+  body[data-act="0"] { --bg1:#fbe7d8; --bg2:#f8dfe8; }
+  body[data-act="1"] { --bg1:#f6dced; --bg2:#eadcf3; }
+  body[data-act="2"] { --bg1:#e7ddf5; --bg2:#e6e0f6; }
+  body[data-act="3"] { --bg1:#ddd9f2; --bg2:#e9dced; }
+  body[data-act="4"] { --bg1:#dfe0f0; --bg2:#efdfe4; }
+  body[data-act="5"] { --bg1:#fde7dc; --bg2:#f5e7d6; }
+  @media (prefers-color-scheme: dark) {
+    body[data-act="0"] { --bg1:#2a1c22; --bg2:#22161f; }
+    body[data-act="1"] { --bg1:#251829; --bg2:#1d1522; }
+    body[data-act="2"] { --bg1:#1e1a2e; --bg2:#191627; }
+    body[data-act="3"] { --bg1:#191727; --bg2:#1d1622; }
+    body[data-act="4"] { --bg1:#1a1826; --bg2:#221722; }
+    body[data-act="5"] { --bg1:#2a1d1e; --bg2:#241a1c; }
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 30px 20px 90px; }
 
-  .screen { display: none; animation: rise .5s cubic-bezier(.2,.7,.3,1); }
-  .screen.active { display: block; }
+  .screen { display: none; }
+  .screen.active { display: block; animation: rise .5s cubic-bezier(.2,.7,.3,1); }
   @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
-  @keyframes pop { 0% { transform: scale(.6); opacity: 0; } 60% { transform: scale(1.12); } 100% { transform: scale(1); opacity: 1; } }
+  @keyframes pop { 0% { transform: scale(.7); opacity:0 } 60% { transform: scale(1.08) } 100% { transform: scale(1); opacity:1 } }
+  @keyframes fadein { from { opacity:0 } to { opacity:1 } }
 
-  /* Intro */
-  .kicker { font-family:"Helvetica Neue",Arial,sans-serif; text-transform:uppercase; letter-spacing:.32em; font-size:12px; color:var(--accent); font-weight:700; }
-  h1 { font-size: clamp(40px, 8.5vw, 72px); line-height:1.0; font-weight:400; margin:14px 0 18px; letter-spacing:-0.5px; }
+  .sans { font-family: "Helvetica Neue", Arial, sans-serif; }
+  .kicker { font-family:"Helvetica Neue",Arial,sans-serif; text-transform:uppercase; letter-spacing:.3em; font-size:12px; color:var(--accent-ink); font-weight:700; }
+  h1 { font-size: clamp(42px, 9vw, 74px); line-height:.98; font-weight:400; margin:14px 0 18px; letter-spacing:-0.5px; }
   h1 em { font-style: italic; color: var(--accent); }
-  .lede { font-size:19px; color:var(--muted); max-width:36em; margin-bottom:24px; }
+  .lede { font-size:19px; color:var(--muted); max-width:34em; margin-bottom:22px; }
   .lede strong { color:var(--ink); font-weight:400; font-style:italic; }
-  .how { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin:26px 0 26px; }
-  .how div { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px 16px; }
-  .how h4 { font-family:"Helvetica Neue",Arial,sans-serif; font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); margin-bottom:5px; }
-  .how p { font-size:14.5px; color:var(--muted); line-height:1.4; }
-  .warn { font-family:"Helvetica Neue",Arial,sans-serif; font-size:14px; color:var(--ink); background:var(--accent-soft); border:1px solid #ecc4d2; border-radius:12px; padding:12px 15px; margin-bottom:26px; line-height:1.45; }
-  .warn b { color:var(--accent); }
 
-  .btn { font-family:"Helvetica Neue",Arial,sans-serif; font-weight:700; letter-spacing:.06em; font-size:14px; text-transform:uppercase; background:var(--ink); color:#fff; border:none; padding:16px 30px; border-radius:40px; cursor:pointer; transition:transform .15s ease, box-shadow .15s ease, background .2s; box-shadow:var(--shadow); }
-  .btn:hover { transform:translateY(-2px); background:var(--accent); }
+  .btn { font-family:"Helvetica Neue",Arial,sans-serif; font-weight:700; letter-spacing:.05em; font-size:15px; text-transform:uppercase; background:var(--ink); color:var(--card); border:none; padding:17px 32px; border-radius:40px; cursor:pointer; transition:transform .15s ease, box-shadow .15s ease, background .2s; box-shadow:var(--shadow); min-height:52px; }
+  .btn:hover { transform:translateY(-2px); background:var(--accent-ink); color:#fff; }
   .btn:active { transform:translateY(0); }
-  .btn.ghost { background:transparent; color:var(--ink); box-shadow:none; border:1.5px solid var(--line); padding:13px 24px; }
-  .btn.ghost:hover { background:#fff; border-color:var(--accent); color:var(--accent); }
-  .note { font-family:"Helvetica Neue",Arial,sans-serif; font-size:12.5px; color:var(--muted); margin-top:20px; letter-spacing:.02em; }
+  .btn.ghost { background:transparent; color:var(--ink); box-shadow:none; border:1.5px solid var(--line); }
+  .btn.ghost:hover { background:var(--card); border-color:var(--accent); color:var(--accent); }
+  :focus-visible { outline:3px solid var(--accent); outline-offset:3px; border-radius:6px; }
 
-  /* Meters (live) */
-  .meters { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:16px 16px 8px; margin-bottom:22px; box-shadow:0 10px 30px -24px rgba(60,20,40,.5); }
-  .meters-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
-  .meters-head .lbl { font-family:"Helvetica Neue",Arial,sans-serif; font-size:10.5px; letter-spacing:.24em; text-transform:uppercase; color:var(--muted); font-weight:700; }
-  .mgrid { display:grid; grid-template-columns:repeat(2,1fr); gap:9px 22px; }
-  @media (max-width:560px){ .mgrid{ grid-template-columns:1fr; } }
-  .m { position:relative; }
-  .m-top { display:flex; justify-content:space-between; align-items:baseline; font-family:"Helvetica Neue",Arial,sans-serif; font-size:11.5px; letter-spacing:.02em; margin-bottom:4px; }
-  .m-top .name { color:var(--ink); font-weight:700; }
-  .m-top .delta { font-size:11px; font-weight:700; opacity:0; transition:opacity .25s; }
-  .m-top .delta.up { color:#2b8a5c; }
-  .m-top .delta.down { color:#c0433f; }
-  .m-top .delta.show { opacity:1; }
-  .m-bar { height:6px; background:var(--line); border-radius:6px; overflow:hidden; }
-  .m-bar > i { display:block; height:100%; width:50%; border-radius:6px; background:linear-gradient(90deg,var(--accent),#e28fa8); transition:width .55s cubic-bezier(.2,.7,.3,1); }
+  .note { font-family:"Helvetica Neue",Arial,sans-serif; font-size:13px; color:var(--muted); margin-top:18px; }
+  .setup { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin:24px 0 24px; }
+  .setup div { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px 16px; }
+  .setup h4 { font-family:"Helvetica Neue",Arial,sans-serif; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--accent-ink); margin-bottom:5px; }
+  .setup p { font-size:14.5px; color:var(--muted); line-height:1.45; }
 
-  /* Round intro */
-  .round-card { text-align:center; padding:40px 10px; }
-  .round-no { font-family:"Helvetica Neue",Arial,sans-serif; letter-spacing:.34em; text-transform:uppercase; font-size:12px; color:var(--accent); font-weight:700; }
-  .round-title { font-size:clamp(32px,6.5vw,50px); font-style:italic; margin:10px 0 12px; }
-  .round-sub { color:var(--muted); font-size:17px; max-width:30em; margin:0 auto 26px; }
+  /* Timeline */
+  .timeline { display:flex; align-items:flex-start; gap:0; margin-bottom:6px; }
+  .tl-node { flex:1; text-align:center; position:relative; }
+  .tl-node::before { content:""; position:absolute; top:7px; left:-50%; width:100%; height:2px; background:var(--line); z-index:0; }
+  .tl-node:first-child::before { display:none; }
+  .tl-node.done::before, .tl-node.now::before { background:var(--accent); }
+  .tl-dot { position:relative; z-index:1; width:16px; height:16px; border-radius:50%; background:var(--line); margin:0 auto 6px; transition:.4s; }
+  .tl-node.done .tl-dot { background:var(--accent); }
+  .tl-node.now .tl-dot { background:var(--accent); box-shadow:0 0 0 5px var(--accent-soft); animation:pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{ box-shadow:0 0 0 5px var(--accent-soft) } 50%{ box-shadow:0 0 0 8px var(--accent-soft) } }
+  .tl-label { font-family:"Helvetica Neue",Arial,sans-serif; font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
+  .tl-node.now .tl-label { color:var(--accent-ink); font-weight:700; }
 
-  /* Progress */
-  .progress-head { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px; font-family:"Helvetica Neue",Arial,sans-serif; }
-  .progress-head .step { text-transform:uppercase; letter-spacing:.2em; font-size:11px; color:var(--accent); font-weight:700; }
-  .progress-head .count { font-size:13px; color:var(--muted); }
-  .bar { height:4px; background:var(--line); border-radius:4px; overflow:hidden; margin-bottom:26px; }
-  .bar > i { display:block; height:100%; width:0; background:linear-gradient(90deg,var(--accent),#e08aa5); border-radius:4px; transition:width .45s cubic-bezier(.2,.7,.3,1); }
+  .scene-head { font-family:"Helvetica Neue",Arial,sans-serif; margin:26px 0 4px; display:flex; align-items:baseline; gap:10px; }
+  .scene-head .time { font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent-ink); font-weight:700; }
+  .scene-head .place { font-size:13px; color:var(--muted); letter-spacing:.03em; }
+  .scene { font-size:16px; color:var(--muted); font-style:italic; margin-bottom:16px; min-height:1.6em; }
+  .prompt { font-size:clamp(23px,4.6vw,30px); line-height:1.28; font-weight:400; margin-bottom:20px; }
 
-  /* Question */
-  .q { font-size:clamp(22px,4.4vw,29px); line-height:1.3; font-weight:400; margin-bottom:8px; }
-  .q-sub { font-family:"Helvetica Neue",Arial,sans-serif; font-size:13.5px; color:var(--muted); margin-bottom:22px; }
-  .options { display:flex; flex-direction:column; gap:11px; }
-  .opt { text-align:left; background:var(--card); border:1.5px solid var(--line); border-radius:15px; padding:16px 18px; font-family:inherit; font-size:16.5px; color:var(--ink); cursor:pointer; transition:border-color .18s, transform .12s, box-shadow .18s, background .18s; position:relative; line-height:1.4; }
+  .options { display:flex; flex-direction:column; gap:12px; }
+  .opt { text-align:left; background:var(--card); border:1.5px solid var(--line); border-radius:15px; padding:16px 18px 16px 50px; font-family:inherit; font-size:17px; color:var(--ink); cursor:pointer; transition:border-color .18s, transform .12s, box-shadow .18s, background .18s; position:relative; line-height:1.4; min-height:56px; }
   .opt:hover { border-color:var(--accent); transform:translateX(3px); box-shadow:0 10px 24px -16px rgba(120,30,70,.5); }
+  .opt .num { position:absolute; left:16px; top:50%; transform:translateY(-50%); font-family:"Helvetica Neue",Arial,sans-serif; font-size:12px; font-weight:700; width:22px; height:22px; border-radius:50%; border:1.5px solid var(--line); color:var(--muted); display:grid; place-items:center; transition:.18s; }
+  .opt:hover .num { border-color:var(--accent); color:var(--accent); }
   .opt.selected { border-color:var(--accent); background:var(--accent-soft); }
-  .opt[disabled] { cursor:default; }
+  .opt.selected .num { background:var(--accent); border-color:var(--accent); color:#fff; }
+  .opt[disabled] { cursor:default; opacity:.55; }
+  .opt.selected[disabled] { opacity:1; }
 
-  .nav { display:flex; justify-content:space-between; align-items:center; margin-top:26px; }
-  .nav .back { font-family:"Helvetica Neue",Arial,sans-serif; background:none; border:none; color:var(--muted); cursor:pointer; font-size:14px; letter-spacing:.04em; padding:8px 4px; }
+  .reaction { margin-top:18px; font-style:italic; font-size:17px; color:var(--accent-ink); min-height:1.4em; animation:fadein .4s ease; }
+
+  .nav { display:flex; justify-content:space-between; align-items:center; margin-top:22px; }
+  .nav .back { font-family:"Helvetica Neue",Arial,sans-serif; background:none; border:none; color:var(--muted); cursor:pointer; font-size:14px; padding:10px 6px; }
   .nav .back:hover { color:var(--ink); }
   .nav .back[disabled] { opacity:0; pointer-events:none; }
 
+  /* Act intro */
+  .act-card { text-align:center; padding:48px 10px; }
+  .act-time { font-family:"Helvetica Neue",Arial,sans-serif; letter-spacing:.3em; text-transform:uppercase; font-size:13px; color:var(--accent-ink); font-weight:700; }
+  .act-title { font-size:clamp(36px,7.5vw,58px); font-style:italic; margin:12px 0 14px; }
+  .act-scene { color:var(--muted); font-size:18px; max-width:26em; margin:0 auto 28px; font-style:italic; }
+
   /* Analyzing */
-  .analyzing { text-align:center; padding:70px 10px; }
-  .analyzing .dot-name { font-style:italic; font-size:clamp(30px,7vw,52px); transition:.35s; }
-  .analyzing .sub { font-family:"Helvetica Neue",Arial,sans-serif; color:var(--muted); font-size:14px; letter-spacing:.16em; text-transform:uppercase; margin-top:16px; }
+  .analyzing { text-align:center; padding:80px 10px; }
+  .analyzing .dot-name { font-style:italic; font-size:clamp(32px,8vw,56px); transition:.3s; }
+  .analyzing .sub { font-family:"Helvetica Neue",Arial,sans-serif; color:var(--muted); font-size:13px; letter-spacing:.18em; text-transform:uppercase; margin-top:16px; }
 
   /* Result */
   .result-hero { text-align:center; padding:6px 0 4px; }
-  .result-kicker { font-family:"Helvetica Neue",Arial,sans-serif; text-transform:uppercase; letter-spacing:.3em; font-size:11.5px; color:var(--muted); font-weight:700; }
-  .result-name { font-size:clamp(46px,11vw,84px); line-height:1; margin:8px 0 6px; font-style:italic; }
-  .result-tag { font-family:"Helvetica Neue",Arial,sans-serif; font-size:15px; letter-spacing:.02em; color:var(--muted); margin-bottom:2px; }
-  .headline { font-size:19px; font-style:italic; color:#33282d; max-width:30em; margin:12px auto 0; }
+  .result-kicker { font-family:"Helvetica Neue",Arial,sans-serif; text-transform:uppercase; letter-spacing:.28em; font-size:12px; color:var(--muted); font-weight:700; }
+  .result-name { font-size:clamp(50px,12vw,90px); line-height:1; margin:8px 0 8px; font-style:italic; }
+  .result-tag { font-family:"Helvetica Neue",Arial,sans-serif; font-size:14px; letter-spacing:.02em; color:var(--muted); }
+  .headline { font-size:21px; font-style:italic; color:var(--ink); max-width:24em; margin:14px auto 0; line-height:1.4; }
 
-  .mix { display:flex; gap:5px; margin:22px 0 8px; height:11px; border-radius:6px; overflow:hidden; }
+  .mix { display:flex; gap:5px; margin:24px 0 10px; height:12px; border-radius:6px; overflow:hidden; }
   .mix > span { display:block; height:100%; }
-  .mix-legend { display:flex; flex-wrap:wrap; gap:14px; justify-content:center; font-family:"Helvetica Neue",Arial,sans-serif; font-size:12.5px; color:var(--muted); }
+  .mix-legend { font-family:"Helvetica Neue",Arial,sans-serif; font-size:14px; color:var(--muted); text-align:center; }
   .mix-legend b { color:var(--ink); }
-  .dotc { display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:5px; vertical-align:middle; }
 
-  .card { background:var(--card); border:1.5px solid var(--line); border-radius:22px; padding:28px 26px; box-shadow:var(--shadow); margin-top:22px; }
-  .card h3 { font-family:"Helvetica Neue",Arial,sans-serif; text-transform:uppercase; letter-spacing:.18em; font-size:11.5px; color:var(--accent); font-weight:700; margin:0 0 12px; }
-  .card p { font-size:16.5px; margin-bottom:14px; color:#33282d; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:26px 24px; box-shadow:var(--shadow); margin-top:18px; }
+  .card h3 { font-family:"Helvetica Neue",Arial,sans-serif; text-transform:uppercase; letter-spacing:.16em; font-size:12px; color:var(--accent-ink); font-weight:700; margin:0 0 14px; }
+  .card p { font-size:16.5px; margin-bottom:14px; }
   .card p:last-child { margin-bottom:0; }
+  .card em { font-style:italic; }
 
-  .reads { list-style:none; display:flex; flex-direction:column; gap:11px; }
-  .reads li { display:flex; gap:11px; align-items:flex-start; font-family:"Helvetica Neue",Arial,sans-serif; font-size:15px; line-height:1.45; color:#33282d; }
-  .reads li .eye { color:var(--accent); flex:0 0 auto; }
+  .reads { list-style:none; display:flex; flex-direction:column; gap:12px; }
+  .reads li { display:flex; gap:12px; align-items:flex-start; font-family:"Helvetica Neue",Arial,sans-serif; font-size:15.5px; line-height:1.5; }
+  .reads li .mk { color:var(--accent); flex:0 0 auto; font-weight:700; }
 
-  .badges { display:grid; grid-template-columns:1fr; gap:10px; }
-  .badge { border:1px solid var(--line); border-radius:13px; padding:13px 15px; background:#fffaf7; }
-  .badge .k { font-family:"Helvetica Neue",Arial,sans-serif; font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); font-weight:700; margin-bottom:3px; }
-  .badge .v { font-size:16px; }
+  .badges { display:flex; flex-direction:column; gap:11px; }
+  .badge { border:1px solid var(--line); border-radius:13px; padding:14px 16px; background:linear-gradient(180deg, transparent, rgba(184,64,106,.04)); }
+  .badge .k { font-family:"Helvetica Neue",Arial,sans-serif; font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); font-weight:700; margin-bottom:4px; }
+  .badge .v { font-size:16.5px; }
 
-  .pm { margin-bottom:14px; }
-  .pm-top { display:flex; justify-content:space-between; font-family:"Helvetica Neue",Arial,sans-serif; font-size:12.5px; margin-bottom:6px; letter-spacing:.02em; }
-  .pm-top .val { color:var(--muted); }
-  .pm-bar { position:relative; height:8px; background:var(--line); border-radius:6px; overflow:visible; }
-  .pm-bar > i { display:block; height:100%; width:0; border-radius:6px; transition:width 1s cubic-bezier(.2,.7,.3,1); }
-  .pm-bar > .mark { position:absolute; top:-4px; width:2px; height:16px; background:var(--ink); opacity:.5; border-radius:2px; transition:left 1s cubic-bezier(.2,.7,.3,1); }
-  .pm-note { font-family:"Helvetica Neue",Arial,sans-serif; font-size:11px; color:var(--muted); margin-top:14px; text-align:center; letter-spacing:.02em; }
+  .sig { margin-bottom:14px; }
+  .sig-top { display:flex; justify-content:space-between; font-family:"Helvetica Neue",Arial,sans-serif; font-size:13px; margin-bottom:6px; }
+  .sig-top .val { color:var(--muted); }
+  .sig-bar { height:9px; background:var(--line); border-radius:6px; overflow:hidden; }
+  .sig-bar > i { display:block; height:100%; width:0; border-radius:6px; transition:width 1.1s cubic-bezier(.2,.7,.3,1); }
 
-  .result-actions { display:flex; gap:12px; justify-content:center; margin-top:28px; flex-wrap:wrap; }
-  .footer { text-align:center; font-family:"Helvetica Neue",Arial,sans-serif; font-size:12px; color:var(--muted); margin-top:36px; letter-spacing:.02em; line-height:1.6; }
-  .toast { position:fixed; left:50%; bottom:26px; transform:translateX(-50%) translateY(20px); background:var(--ink); color:#fff; font-family:"Helvetica Neue",Arial,sans-serif; font-size:13.5px; padding:12px 20px; border-radius:30px; opacity:0; pointer-events:none; transition:.3s; z-index:20; }
+  .secure { text-align:center; font-style:italic; color:var(--muted); font-size:16px; max-width:30em; margin:26px auto 0; line-height:1.5; }
+  .result-actions { display:flex; gap:12px; justify-content:center; margin-top:26px; flex-wrap:wrap; }
+  .footer { text-align:center; font-family:"Helvetica Neue",Arial,sans-serif; font-size:12px; color:var(--muted); margin-top:30px; }
+  .toast { position:fixed; left:50%; bottom:26px; transform:translateX(-50%) translateY(20px); background:var(--ink); color:var(--card); font-family:"Helvetica Neue",Arial,sans-serif; font-size:14px; padding:13px 22px; border-radius:30px; opacity:0; pointer-events:none; transition:.3s; z-index:20; }
   .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+  .visually-hidden { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, .screen.active { animation:none !important; transition:none !important; }
+    body { transition:none !important; }
+  }
 </style>
 </head>
-<body>
+<body data-act="0">
 <div class="wrap">
 
   <!-- INTRO -->
-  <section class="screen active" id="intro">
-    <div class="kicker">A Trait-Psychology Game · 6 rounds</div>
-    <h1>The <em>Read</em></h1>
+  <section class="screen active" id="intro" aria-labelledby="introTitle">
+    <div class="kicker">A one-night story · plays in ~4 minutes</div>
+    <h1 id="introTitle">One <em>Night</em></h1>
     <p class="lede">
-      There are four of them in here, and this game will tell you which one you
-      are. But it won't ask you who you'd <strong>date</strong> or hand you a line
-      to recognize — it measures the machinery underneath: how you decide, how
-      you fight, what your jokes are really doing, and what it takes to change
-      your mind.
+      Four women live in this game, and by sunrise it will tell you which one is
+      <strong>you</strong>. You won't answer a quiz — you'll <strong>live an evening</strong>,
+      from getting ready to the walk home, and the small choices you make along the
+      way will quietly give you away.
     </p>
-    <div class="warn">
-      <b>No favorites.</b> The situations are deliberately ordinary and the
-      answers don't line up with anyone the way you'd guess — you can't aim for
-      a character. The only way to get an honest read is to answer as you
-      actually are.
+    <p class="lede">
+      There's no “right” one to aim for. The scenes are ordinary on purpose and the
+      answers don't line up with anyone the way you'd guess. Just move through the
+      night as <em>you</em> would.
+    </p>
+    <div class="setup">
+      <div><h4>Live the night</h4><p>Six scenes, dusk to dawn. Each one asks you to do something, not describe yourself.</p></div>
+      <div><h4>Play by tap or key</h4><p>Click a choice, or press its number. Everything's keyboard-friendly.</p></div>
+      <div><h4>No scores on screen</h4><p>Nothing to game or optimize. The read happens quietly, underneath.</p></div>
+      <div><h4>Then: the mirror</h4><p>At sunrise, who you are — your traits, and the pattern underneath them.</p></div>
     </div>
-    <div class="how">
-      <div><h4>Play a day</h4><p>Six rounds of everyday situations — the mind, the wallet, the night, the friction, the blow, the update.</p></div>
-      <div><h4>Watch your profile form</h4><p>Six trait meters shift with every choice, in real time. No black box.</p></div>
-      <div><h4>Answer blind</h4><p>Options are shuffled and unlabeled. There's no "the Carrie one" to click.</p></div>
-      <div><h4>Get the read</h4><p>At the end: a facet-level profile, your tells, and your signature moves.</p></div>
-    </div>
-    <button class="btn" onclick="Game.start()">Start the read →</button>
-    <p class="note">13 choices · nothing saved · nobody watching but you</p>
+    <button class="btn" onclick="Game.start()">Begin the night →</button>
+    <p class="note">Nothing is saved · nobody is watching but you</p>
   </section>
 
-  <!-- ROUND INTRO -->
-  <section class="screen" id="roundIntro">
-    <div class="round-card">
-      <div class="round-no" id="riNo"></div>
-      <div class="round-title" id="riTitle"></div>
-      <div class="round-sub" id="riSub"></div>
-      <button class="btn" onclick="Game.enterRound()" id="riBtn">Continue →</button>
+  <!-- ACT INTRO -->
+  <section class="screen" id="actIntro" aria-live="polite">
+    <div class="act-card">
+      <div class="act-time" id="aiTime"></div>
+      <div class="act-title" id="aiTitle"></div>
+      <div class="act-scene" id="aiScene"></div>
+      <button class="btn" id="aiBtn" onclick="Game.enterAct()">Continue →</button>
     </div>
   </section>
 
-  <!-- QUIZ -->
-  <section class="screen" id="quiz">
-    <div class="meters">
-      <div class="meters-head">
-        <span class="lbl">Your profile · forming</span>
-        <span class="lbl" id="mHint" style="color:var(--accent)"></span>
-      </div>
-      <div class="mgrid" id="mGrid"></div>
+  <!-- PLAY -->
+  <section class="screen" id="play">
+    <nav class="timeline" id="timeline" aria-label="Progress through the night"></nav>
+    <div class="scene-head">
+      <span class="time" id="sTime"></span>
+      <span class="place" id="sPlace"></span>
     </div>
-
-    <div class="progress-head">
-      <span class="step" id="stepLabel"></span>
-      <span class="count" id="countLabel"></span>
-    </div>
-    <div class="bar"><i id="barFill"></i></div>
-    <div class="q" id="qText"></div>
-    <div class="q-sub" id="qSub"></div>
-    <div class="options" id="opts"></div>
+    <p class="scene" id="sScene" aria-live="polite"></p>
+    <h2 class="prompt" id="sPrompt"></h2>
+    <div class="options" id="opts" role="group" aria-label="Your choices"></div>
+    <p class="reaction" id="reaction" aria-live="polite"></p>
     <div class="nav">
-      <button class="back" id="backBtn" onclick="Game.back()">← back</button>
+      <button class="back" id="backBtn" onclick="Game.back()">← a beat back</button>
       <span></span>
     </div>
   </section>
@@ -211,31 +235,36 @@
   <!-- ANALYZING -->
   <section class="screen" id="analyzing">
     <div class="analyzing">
-      <div class="result-kicker">Reading you</div>
+      <div class="result-kicker">The sun's coming up</div>
       <div class="dot-name" id="anName">—</div>
-      <div class="sub" id="anSub">cross-referencing the trait space…</div>
+      <div class="sub">seeing who you were all night…</div>
     </div>
   </section>
 
   <!-- RESULT -->
-  <section class="screen" id="result">
+  <section class="screen" id="result" aria-labelledby="rName">
     <div class="result-hero">
-      <div class="result-kicker">You are</div>
+      <div class="result-kicker">By sunrise, you're</div>
       <div class="result-name" id="rName"></div>
       <div class="result-tag" id="rTag"></div>
       <div class="headline" id="rHead"></div>
     </div>
 
-    <div class="mix" id="rMix"></div>
+    <div class="mix" id="rMix" aria-hidden="true"></div>
     <div class="mix-legend" id="rLegend"></div>
 
     <div class="card">
-      <h3>The trait profile</h3>
-      <div id="rBody"></div>
+      <h3>Who you are</h3>
+      <div id="rTrait"></div>
+    </div>
+
+    <div class="card">
+      <h3>Underneath — how you attach &amp; defend</h3>
+      <div id="rAttach"></div>
     </div>
 
     <div class="card" id="readsCard">
-      <h3>What you gave off</h3>
+      <h3>What the night told on you</h3>
       <ul class="reads" id="rReads"></ul>
     </div>
 
@@ -245,19 +274,17 @@
     </div>
 
     <div class="card">
-      <h3>How you scored · you vs the archetype</h3>
-      <div id="rMeters"></div>
-      <div class="pm-note">Filled bar = you. Vertical mark = the type you landed closest to.</div>
+      <h3>The shape of you</h3>
+      <div id="rSig"></div>
     </div>
+
+    <p class="secure" id="rSecure"></p>
 
     <div class="result-actions">
       <button class="btn" onclick="Game.copy()">Copy my read</button>
-      <button class="btn ghost" onclick="Game.restart()">Play again</button>
+      <button class="btn ghost" onclick="Game.restart()">Live it again</button>
     </div>
-    <p class="footer">
-      Openness · Composure · Restraint · Boldness · Diplomacy · Logic.<br />
-      Traits aren't destiny — they're just the shape of the armor, and the shape of the gift.
-    </p>
+    <p class="footer">Traits and attachment aren't destiny — they're the shape of the armor, and the shape of the gift.</p>
   </section>
 
 </div>
@@ -275,15 +302,14 @@
   };
 
   const METERS = [
-    { k:"im", name:"Imagination", note:"aesthetic & fantasy openness" },
-    { k:"co", name:"Composure",   note:"emotional stability" },
-    { k:"re", name:"Restraint",   note:"deliberation & impulse control" },
-    { k:"bo", name:"Boldness",    note:"extraversion & approach" },
-    { k:"di", name:"Diplomacy",   note:"politeness & decorum" },
-    { k:"lo", name:"Logic",       note:"evidence-driven reasoning" },
+    { k:"im", name:"Imagination" },
+    { k:"co", name:"Composure" },
+    { k:"re", name:"Restraint" },
+    { k:"bo", name:"Boldness" },
+    { k:"di", name:"Diplomacy" },
+    { k:"lo", name:"Logic" },
   ];
 
-  // Target trait vectors. Keyed by neutral letters so the source doesn't spell it out.
   const ARCHETYPE = {
     A: { im:95, co:24, re:22, bo:45, di:52, lo:15 },
     B: { im:42, co:92, re:55, bo:96, di:12, lo:58 },
@@ -291,159 +317,181 @@
     E: { im:44, co:38, re:80, bo:70, di:26, lo:95 },
   };
 
-  const ROUNDS = [
-    { no:"Round 1", title:"The Mind", sub:"How you think and take the world in. Openness shows itself here." },
-    { no:"Round 2", title:"The Wallet", sub:"Impulse and order — what you do with something you didn't plan for." },
-    { no:"Round 3", title:"The Night", sub:"Where your battery charges, and what your humor is actually for." },
-    { no:"Round 4", title:"The Friction", sub:"Someone crosses a line. The exact shape of how you handle it." },
-    { no:"Round 5", title:"The Blow", sub:"Bad news lands. Your composure — its flavor and its recovery." },
-    { no:"Round 6", title:"The Update", sub:"Values, and the rarest tell: what it takes to change your mind." },
+  const ACTS = [
+    { time:"7:00 PM", label:"Dusk",     place:"getting ready",   scene:"You're getting ready. The night hasn't decided what it is yet." },
+    { time:"8:40 PM", label:"Twilight", place:"on your way",      scene:"Out the door, into the blue hour, phone in hand." },
+    { time:"10:15 PM",label:"Night",    place:"the room",        scene:"The room is full, loud, and warm. You've arrived." },
+    { time:"12:20 AM",label:"Midnight", place:"the friction",    scene:"The mood tips. Something between you and someone else goes wrong." },
+    { time:"1:45 AM", label:"Late",     place:"the call",        scene:"Quieter now. Your phone lights up in the dark." },
+    { time:"6:10 AM", label:"Dawn",     place:"the walk home",   scene:"The sky's going pale. You're walking home, thinking." },
   ];
 
-  // Options carry only meter deltas + optional tag/read. No character labels.
+  // Options carry meter deltas + optional reaction/tag/read. No character labels.
   const QUESTIONS = [
-    // Round 1 — The Mind
-    { r:0, q:"You're explaining a tricky idea to a friend. You reach for…", sub:"",
+    // ACT 0 — Dusk
+    { act:0, scene:"A friend texts mid-spiral and wants your read on a messy situation.",
+      prompt:"How do you help them see it?",
       opts:[
-        { t:"an analogy — some vivid image that makes it click", d:{im:16,lo:-10}, read:"You reach for image before analysis — a divergent, associative mind." },
-        { t:"the facts, laid out clearly, one step at a time", d:{lo:18,di:-4}, read:"You argue from evidence, point by point. You reason the way you argue." },
-        { t:"the confident version, and you just keep moving", d:{bo:12,co:8,im:-4} },
-        { t:"the proper, by-the-book way it's supposed to be explained", d:{di:12,re:8,im:-4} },
+        { t:"With an image — some vivid comparison that makes it click", d:{im:16,lo:-10}, rx:"You send it. Three dots blink back.", read:"You reach for image before analysis — a divergent, associative mind." },
+        { t:"Lay out the facts, clearly, one step at a time", d:{lo:18,di:-4}, rx:"Sent. They go quiet, thinking it over.", read:"You argue from evidence, point by point. You reason the way you argue." },
+        { t:"Give them the confident version and keep it moving", d:{bo:12,co:8,im:-4}, rx:"Sent. Onto the next thing." },
+        { t:"Tell them the proper way to handle it", d:{di:12,re:8,im:-4}, rx:"Sent, tidy and sure." },
       ]},
-    { r:0, q:"A friend swears something is true. Your first instinct is to…", sub:"",
+    { act:0, scene:"They swear a piece of gossip is true.",
+      prompt:"Do you buy it?",
       opts:[
-        { t:"go with whether it feels right", d:{im:12,lo:-12} },
-        { t:"ask where they got it and look for the holes", d:{lo:18,co:-6}, read:"Optimistic claims register as things to be checked. Trust set low by default." },
-        { t:"not care much either way — life's short", d:{bo:8,co:10,re:-6} },
-        { t:"believe it, if someone you trust stands behind it", d:{di:12,re:4,im:-2} },
-      ]},
-    { r:0, q:"Walking into a room you've never been in, the first thing you notice is…", sub:"",
-      opts:[
-        { t:"the light, the mood, the feeling of the place", d:{im:16,lo:-8} },
-        { t:"whether it's tasteful and done properly", d:{di:12,re:6,im:2} },
-        { t:"the energy — and the most interesting person in it", d:{bo:14,co:8,im:-6} },
-        { t:"what's overdone or trying too hard about it", d:{lo:10,co:-6,di:-6}, read:"You clock what's overdone before what's lovely — a critical eye, always on." },
+        { t:"You go with whether it feels right", d:{im:12,lo:-12}, rx:"Feels true enough. You move on." },
+        { t:"You ask where they got it and poke for holes", d:{lo:18,co:-6}, rx:"They get defensive. You noticed.", read:"You treat a rosy claim as something to check. Trust set low by default." },
+        { t:"You don't really care either way", d:{bo:8,co:10,re:-6}, rx:"Life's short. Next." },
+        { t:"You believe it — a trusted friend said so", d:{di:12,re:4,im:-2}, rx:"If they say so, that's good enough." },
       ]},
 
-    // Round 2 — The Wallet
-    { r:1, q:"Something you didn't plan to buy is right in front of you, and it's perfect.", sub:"",
+    // ACT 1 — Twilight
+    { act:1, scene:"Passing a shop window, something you didn't plan to buy is right there, and it's perfect.",
+      prompt:"What do you do?",
       opts:[
-        { t:"It's already yours. You'll deal with the money… later. Or never.", d:{re:-20,im:8,co:-4}, read:"Low deliberation, and a threat-radar tuned away from the practical." },
-        { t:"Bought. You earned it, no guilt, moving on.", d:{re:-4,bo:12,co:8}, read:"Impulse indulged, but bounded — appetite inside a well-run system." },
-        { t:"You agonize, then get the sensible version instead.", d:{re:14,di:8,im:-2} },
-        { t:"The budget says no. You close the tab.", d:{re:18,lo:10,co:-2} },
+        { t:"It's already yours. You'll deal with the money later. Or never.", d:{re:-20,im:8,co:-4}, rx:"Bag in hand, you keep walking, lighter.", read:"Low deliberation, and a threat-radar tuned away from the practical." },
+        { t:"Buy it — you earned it, no guilt", d:{re:-4,bo:12,co:8}, rx:"Done. No second thoughts.", read:"Impulse indulged, but bounded — appetite inside a well-run system." },
+        { t:"Agonize, then get the sensible version instead", d:{re:14,di:8,im:-2}, rx:"A small, responsible compromise." },
+        { t:"The budget says no. You keep walking.", d:{re:18,lo:10,co:-2}, rx:"You don't even slow down." },
       ]},
-    { r:1, q:"Be honest about the state of your space right now.", sub:"",
+    { act:1, scene:"You glance back at the place you're leaving for the night.",
+      prompt:"What state is it in?",
       opts:[
-        { t:"a beautiful mess you'd call “a mood”", d:{im:12,re:-10} },
-        { t:"immaculate — everything has a place and it's in it", d:{re:18,di:12,im:-2}, read:"Order as a value: routines, follow-through, a place for everything." },
-        { t:"cluttered and chaotic — but your actual work is airtight", d:{re:6,lo:10,di:-8,im:-4}, read:"Not tidiness — discipline where it counts. Output over neatness." },
-        { t:"minimal, spare, deliberately controlled", d:{re:10,bo:8,co:6} },
-      ]},
-
-    // Round 3 — The Night
-    { r:2, q:"Your ideal Friday night is…", sub:"",
-      opts:[
-        { t:"a big room full of new people to charge through", d:{bo:20,co:10,im:2}, read:"Approach-motivated. Where others deliberate, you move." },
-        { t:"one good person who really gets you", d:{bo:4,im:10,co:-4} },
-        { t:"alone, off-duty, blissfully quiet", d:{bo:-18,di:-4,lo:4}, read:"At ease in a room when you want to be, but solitude is what restores you." },
-        { t:"a small, easy dinner with your trusted few", d:{di:12,bo:-4,re:6} },
-      ]},
-    { r:2, q:"In a tense moment, your sense of humor tends to be…", sub:"What are your jokes actually doing?",
-      opts:[
-        { t:"self-deprecating — you get the first laugh at yourself", d:{im:8,di:6,co:-8}, tag:{k:"humor",v:"affiliative"} },
-        { t:"bold and a little shocking, to break the tension first", d:{bo:14,di:-12,co:6}, tag:{k:"humor",v:"aggressive"} },
-        { t:"dry and deadpan, quietly puncturing the drama", d:{lo:12,di:-6,co:-2}, tag:{k:"humor",v:"dry"} },
-        { t:"honestly, absent — you stay sincere and earnest", d:{di:10,im:-2,re:6}, tag:{k:"humor",v:"earnest"} },
+        { t:"A beautiful mess you'd call “a mood”", d:{im:12,re:-10}, rx:"You pull the door shut on the lovely chaos." },
+        { t:"Immaculate — everything has a place and it's in it", d:{re:18,di:12,im:-2}, rx:"Spotless. You leave it perfect.", read:"Order as a value: routines, follow-through, a place for everything." },
+        { t:"Chaos — but your actual work is airtight", d:{re:6,lo:10,di:-8,im:-4}, rx:"Messy room, flawless deadlines.", read:"Not tidiness — discipline where it counts. Output over neatness." },
+        { t:"Minimal, spare, deliberately controlled", d:{re:10,bo:8,co:6}, rx:"Nothing out of place, nothing extra." },
       ]},
 
-    // Round 4 — The Friction
-    { r:3, q:"Someone genuinely gets under your skin. The feeling…", sub:"",
+    // ACT 2 — Night
+    { act:2, scene:"You walk into the party.",
+      prompt:"The first thing you notice is…",
       opts:[
-        { t:"leaks out sideways — a comment, a cooler silence", d:{im:6,di:-4,co:-8}, tag:{k:"conflict",v:"passive"} },
-        { t:"comes out fast and direct, right in the moment", d:{bo:16,di:-10,co:6}, tag:{k:"conflict",v:"fight"} },
-        { t:"gets held in… and held… then bursts out all at once later", d:{di:6,co:-12,re:-4}, tag:{k:"conflict",v:"suppress"} },
-        { t:"turns into a dry, cutting remark", d:{lo:8,di:-8,co:-2}, tag:{k:"conflict",v:"sarcasm"} },
+        { t:"the light, the mood, the feeling of the place", d:{im:16,lo:-8}, rx:"You breathe it in like a scene." },
+        { t:"whether it's tasteful and done properly", d:{di:12,re:6,im:2}, rx:"You clock the details, approving or not." },
+        { t:"the energy — and the most interesting person in it", d:{bo:14,co:8,im:-6}, rx:"You're already moving toward them." },
+        { t:"what's overdone or trying too hard about it", d:{lo:10,co:-6,di:-6}, rx:"You catch the try-hard details first.", read:"You clock what's overdone before what's lovely — a critical eye, always on." },
       ]},
-    { r:3, q:"A friend keeps leaning on you and rarely returns the favor. You…", sub:"",
+    { act:2, scene:"An hour in, you know what you actually want from tonight.",
+      prompt:"It's…",
       opts:[
-        { t:"notice the imbalance and name it, plainly", d:{lo:10,di:-6,bo:6}, read:"A fairness read, not cruelty — a strong justice streak underneath." },
-        { t:"keep showing up anyway; you don't keep score on people you love", d:{co:8,di:-4,bo:6} },
-        { t:"feel hurt but stay quiet to keep the peace", d:{di:8,bo:-10,co:-6} },
-        { t:"quietly lose a little respect for the lapse", d:{di:14,im:-4} },
+        { t:"a big room full of new people to charge through", d:{bo:20,co:10,im:2}, rx:"You dive in, lit up.", read:"Approach-motivated. Where others deliberate, you move." },
+        { t:"one good person who really gets you", d:{bo:4,im:10,co:-4}, rx:"You find your one and settle in." },
+        { t:"honestly, to be home and off-duty soon", d:{bo:-18,di:-4,lo:4}, rx:"You're already picturing your own quiet.", read:"At ease in a room when you want to be — but solitude is what restores you." },
+        { t:"a small, easy corner with your trusted few", d:{di:12,bo:-4,re:6}, rx:"You gather your people close." },
       ]},
-
-    // Round 5 — The Blow
-    { r:4, q:"A message sits unanswered all day. There's also a dull, overdue admin task. Which one nags more?", sub:"",
+    { act:2, scene:"Someone says something awkward and the table tenses.",
+      prompt:"Your humor kicks in as…",
       opts:[
-        { t:"the unanswered message, by a mile", d:{co:-16,im:8,re:-6}, read:"Threat-detection calibrated to relational signals over practical ones." },
-        { t:"neither, really — you shrug both off by lunch", d:{co:18,bo:6}, read:"Low neuroticism, doing its quiet and genuine work." },
-        { t:"the admin you can handle; it's being judged that stings", d:{re:8,di:8,co:-4} },
-        { t:"you'd already assumed the worst about the message anyway", d:{co:-8,lo:8,di:-6}, read:"A pessimistic explanatory style — the worst, pre-assumed." },
-      ]},
-    { r:4, q:"Something genuinely goes wrong. In the first hour, you…", sub:"",
-      opts:[
-        { t:"replay it on a loop you can't switch off", d:{co:-14,im:6} },
-        { t:"reframe it and keep moving", d:{co:16,bo:8} },
-        { t:"hold it together, handle the logistics, fall apart later", d:{re:10,di:6,co:-6} },
-        { t:"go quiet, dry, and grimly practical", d:{lo:10,co:-6,di:-2} },
+        { t:"a joke at your own expense to ease it", d:{im:8,di:6,co:-8}, rx:"The table laughs, relieved.", tag:{k:"humor",v:"affiliative"} },
+        { t:"something bold and a little shocking", d:{bo:14,di:-12,co:6}, rx:"You say the unsayable. The room breaks open.", tag:{k:"humor",v:"aggressive"} },
+        { t:"a dry, deadpan line that punctures it", d:{lo:12,di:-6,co:-2}, rx:"One flat remark, and the tension pops.", tag:{k:"humor",v:"dry"} },
+        { t:"you don't joke — you stay sincere", d:{di:10,im:-2,re:6}, rx:"You meet it earnestly, no deflection.", tag:{k:"humor",v:"earnest"} },
       ]},
 
-    // Round 6 — The Update
-    { r:5, q:"You'll actually change your mind when…", sub:"The rarest tell of all.",
+    // ACT 3 — Midnight
+    { act:3, scene:"Someone gets genuinely under your skin.",
+      prompt:"The feeling comes out as…",
       opts:[
-        { t:"a feeling shifts and you follow it", d:{im:12,lo:-10,co:-2}, tag:{k:"plasticity",v:"feeling"} },
-        { t:"someone you trust nudges you toward it", d:{di:10,re:4,im:-2}, tag:{k:"plasticity",v:"permission"} },
-        { t:"rarely — you know what you like and you keep it", d:{bo:10,co:8,re:4}, tag:{k:"plasticity",v:"rarely"} },
-        { t:"the evidence leaves you no honest choice", d:{lo:16,re:6}, tag:{k:"plasticity",v:"evidence"} },
+        { t:"a dig, a cooler silence — sideways", d:{im:6,di:-4,co:-8}, rx:"You go quiet in a pointed way.", tag:{k:"conflict",v:"passive"} },
+        { t:"something fast and direct, right now", d:{bo:16,di:-10,co:6}, rx:"You come back harder, on the spot.", tag:{k:"conflict",v:"fight"} },
+        { t:"nothing — until it bursts out later", d:{di:6,co:-12,re:-4}, rx:"You hold it in. For now.", tag:{k:"conflict",v:"suppress"} },
+        { t:"a dry, cutting remark", d:{lo:8,di:-8,co:-2}, rx:"One sharp line, delivered flat.", tag:{k:"conflict",v:"sarcasm"} },
       ]},
-    { r:5, q:"The thing you'd argue is just “obviously” true:", sub:"",
+    { act:3, scene:"You realize this friend leans on you constantly and rarely returns it.",
+      prompt:"You…",
       opts:[
-        { t:"a good story matters more than the bare facts", d:{im:16,lo:-12} },
-        { t:"you should chase what you want, no apologies", d:{bo:14,di:-10,co:6} },
-        { t:"there's a right way to do things, and it matters", d:{di:16,re:10,im:-4} },
-        { t:"fairness is everything; the double standard is the real crime", d:{lo:12,di:-2,bo:6}, read:"You hold yourself to the standards you impose on everyone else." },
+        { t:"name the imbalance, plainly", d:{lo:10,di:-6,bo:6}, rx:"You say it. Fair is fair.", read:"A fairness read, not cruelty — a strong justice streak underneath." },
+        { t:"show up anyway; you don't keep score on people you love", d:{co:8,di:-4,bo:6}, rx:"You let it go and stay warm." },
+        { t:"feel hurt but keep the peace", d:{di:8,bo:-10,co:-6}, rx:"You swallow it to avoid a scene." },
+        { t:"quietly lose a little respect", d:{di:14,im:-4}, rx:"You file the lapse away, silently." },
+      ]},
+
+    // ACT 4 — Late
+    { act:4, scene:"Your screen shows an unanswered message from earlier — and a dull responsibility waiting tomorrow.",
+      prompt:"Which one gnaws at you?",
+      opts:[
+        { t:"the unanswered message, by a mile", d:{co:-16,im:8,re:-6}, rx:"You reread it. Again.", read:"Threat-detection calibrated to relational signals over practical ones." },
+        { t:"neither — you shrug both off", d:{co:18,bo:6}, rx:"You lock the phone and let it be.", read:"Low neuroticism, doing its quiet and genuine work." },
+        { t:"the task you can handle; it's being judged that stings", d:{re:8,di:8,co:-4}, rx:"You can manage the work. The judgment, less so." },
+        { t:"you'd already assumed the worst anyway", d:{co:-8,lo:8,di:-6}, rx:"Confirmed what you expected.", read:"A pessimistic explanatory style — the worst, pre-assumed." },
+      ]},
+    { act:4, scene:"Then something actually goes wrong.",
+      prompt:"In the first hour, you…",
+      opts:[
+        { t:"replay it on a loop you can't switch off", d:{co:-14,im:6}, rx:"It runs and runs behind your eyes." },
+        { t:"reframe it and keep moving", d:{co:16,bo:8}, rx:"You find the angle and carry on." },
+        { t:"hold it together now, fall apart later", d:{re:10,di:6,co:-6}, rx:"You handle it. The cracks wait." },
+        { t:"go quiet, dry, and grimly practical", d:{lo:10,co:-6,di:-2}, rx:"You get to work on the damage." },
+      ]},
+
+    // ACT 5 — Dawn
+    { act:5, scene:"Walking home, you think about something you've been sure of.",
+      prompt:"You'd actually change your mind if…",
+      opts:[
+        { t:"a feeling shifts and you follow it", d:{im:12,lo:-10,co:-2}, rx:"Your gut turns, and you turn with it.", tag:{k:"plasticity",v:"feeling"} },
+        { t:"someone you trust nudges you", d:{di:10,re:4,im:-2}, rx:"The right voice could move you.", tag:{k:"plasticity",v:"permission"} },
+        { t:"rarely — you know what you like", d:{bo:10,co:8,re:4}, rx:"You know your own mind, and you keep it.", tag:{k:"plasticity",v:"rarely"} },
+        { t:"the evidence leaves you no choice", d:{lo:16,re:6}, rx:"Show you the proof and you'll turn. Slowly.", tag:{k:"plasticity",v:"evidence"} },
+      ]},
+    { act:5, scene:"The last thought before your door.",
+      prompt:"The thing you'd argue is just “obviously” true:",
+      opts:[
+        { t:"a good story matters more than the bare facts", d:{im:16,lo:-12}, rx:"You'd take the truer story every time." },
+        { t:"you should chase what you want, no apologies", d:{bo:14,di:-10,co:6}, rx:"No apologies. Never were any." },
+        { t:"there's a right way to do things, and it matters", d:{di:16,re:10,im:-4}, rx:"The right way is worth the trouble." },
+        { t:"fairness is everything; the double standard is the crime", d:{lo:12,di:-2,bo:6}, rx:"You hold everyone to it — yourself first.", read:"You hold yourself to the standards you impose on everyone else." },
       ]},
   ];
 
   const PROFILES = {
     A: {
-      tag:"High openness · low orderliness",
-      head:"The metaphor mind — built for experience, hopeless at maintenance.",
-      body:[
-        "Your dominant cluster is high openness in nearly every facet — aesthetics, ideas, fantasy, feeling. You experience the world through metaphor and association rather than analysis; when you argue you almost never reach for evidence, you reach for images and reframes. It's a genuinely divergent mind, with openness's shadow attached: a weak boundary between fantasy and assessment. You don't so much evaluate people, places, or purchases as <em>audition them for the story</em>.",
-        "Your neuroticism is high but specific — not generalized worry, but rumination and emotional lability. An unreturned message can consume your week while an objectively serious problem barely registers. That inversion is diagnostic: your threat-detection is calibrated entirely to <em>relational</em> signals, not practical ones.",
-        "Your conscientiousness isn't uniform. Your industriousness is actually decent — you produce, you meet the deadline, you sustain the work. What's low is orderliness and deliberation: impulse buys, chaotic admin, decisions made on feeling and justified afterward. You're a low-deliberation, high-output person — the profile that thrives in creative work and drowns in life maintenance.",
-        "Socially you're an attention-oriented ambivert: you don't need a crowd, you need an audience — even an audience of one. Your most under-noticed trait is conflict avoidance masked as wit: you rarely state a need or a grievance directly. You joke, you hint, you write around it.",
+      tag:"Anxious-preoccupied · high openness, low order",
+      head:"You feel your way through life and turn it into a story as you go.",
+      trait:[
+        "You're wired for openness — you take the world in through image, mood, and association, not analysis. You don't so much weigh people, places, and purchases as <em>audition them for the story</em>. It makes you the imaginative one; it also blurs the line between what you feel and what's actually so.",
+        "Your worry is specific: not bills or logistics, but relationships — an unanswered message can eat a week. And your discipline is lopsided — you make the deadline but not the budget. High-output, low-order: built for creative life, hopeless at its admin. You rarely confront anyone head-on; you joke, hint, and write around what you can't quite say.",
+      ],
+      attach:[
+        "Underneath is anxious attachment. Unavailability doesn't get in the way of wanting — it <em>is</em> the wanting, and steadiness can register as pressure rather than safety. The hook is intermittent reward: whoever keeps you guessing keeps you. Unpredictable reward is the most addictive kind there is.",
+        "Your deepest defense is narration itself — turning pain into a clever question so you never quite have to sit inside it. It looks like insight and works like its opposite. What you're really guarding is the story, because if the story is good, reality feels negotiable.",
       ],
     },
     B: {
-      tag:"Extraversion maxed · neuroticism near zero",
-      head:"Approach in human form — appetite inside a very well-run system.",
-      body:[
-        "Yours is the clearest temperament of the four: extremely high extraversion across every facet — assertiveness, excitement-seeking, gregariousness, positive emotionality. You're approach-motivated to an almost physiological degree. Where others deliberate, you move. Your baseline mood is genuinely elevated, and it isn't performance — low neuroticism is your superpower. Rejection, embarrassment, a bad day: things that would flatten other people, you metabolize by the afternoon. Your stress response is fight, never freeze.",
-        "Your agreeableness is low in style — blunt, competitive, allergic to politeness norms — but here's the nuance: your <em>compassion</em> runs far higher than your <em>politeness</em>. You'll say the tactless thing, and you'll also be the first to show up and the last to judge. Low politeness, high loyalty is a rare, specific combination — it's why you read as abrasive to strangers and utterly safe to intimates.",
-        "Cognitively you're concrete and pragmatic — low openness to ideas and fantasy, but high openness to <em>experience</em> in the literal sense: novelty, sensation, the untried. You don't theorize about life, you consume it. And your conscientiousness is deceptively high where it counts — you build things, run them, manage yourself with discipline. The impulsivity is real but bounded: licensed indulgence that never actually threatens the system you've built.",
-        "Your humor is bold and disarming, used offensively — you break a room open by saying the unsayable first, converting potential judgment into laughter you control.",
+      tag:"Dismissive-avoidant · extraversion maxed, neuroticism near zero",
+      head:"You run your own life on your own terms, and you're not sorry.",
+      trait:[
+        "You're the clearest temperament here — enormous extraversion, and a nervous system that barely registers threat. Rejection, embarrassment, a bad day: metabolized by the afternoon. Where others deliberate, you move. Your stress response is fight, never freeze.",
+        "You're blunt but not unkind — low on politeness, high on loyalty: first to show up, last to judge. You don't theorize life, you consume it, and your appetites are real but bounded — indulgence that never actually threatens what you've built. Your humor breaks a room open by saying the unsayable first.",
+      ],
+      attach:[
+        "Underneath is a fortress you're genuinely happy in — counterdependence that built a good life, not a lonely one. The organizing principle is control: of your body, your image, your terms. If nothing is promised, nothing can be taken from you.",
+        "Your confidence is real, and it's also armor — a place where you're never the one who wants more. What you guard is autonomy. The real edge for you isn't finding love; it's being <em>witnessed</em> without the armor — scared, unsure, not okay — and letting that be seen. Sometimes integrity even means leaving a good thing to get back to yourself.",
       ],
     },
     D: {
-      tag:"Conscientiousness + agreeableness · in the politeness-and-order key",
-      head:"An executor whose operating system occasionally throws contradictory instructions.",
-      body:[
-        "You're a textbook high-conscientiousness, high-agreeableness profile — but the facet structure is where you get interesting. Your conscientiousness is loaded on orderliness, dutifulness, and self-discipline: routines, etiquette, plans, follow-through. Your agreeableness is loaded on politeness and compliance more than raw compassion. You're deeply kind, but your kindness is <em>rule-shaped</em> — generous in the ways one is supposed to be. It's why you can be, at once, the sweetest and the most quietly judgmental person in the room: judgment is simply what high politeness does to rule-breakers.",
-        "Your openness is low on ideas and values — you resist arguments that challenge your framework — but high on aesthetics. Your neuroticism is moderate and evaluation-specific: calm in an actual emergency, undone by social failure or a broken timeline. And you're a suppressor. Your negative emotion doesn't leak gradually or convert to sarcasm; it stores, and then it detonates.",
-        "Two traits go chronically underrated in you. First, persistence — you have the highest frustration tolerance of the four in pursuit of a goal. Second, decisiveness inside your value system: when a choice aligns with your principles you act faster than anyone. Your indecision only appears when two rules conflict. You're not weak-willed — you're an executor whose operating system occasionally throws contradictory instructions.",
+      tag:"Introjection · conscientious & agreeable, in the politeness key",
+      head:"You do things right, and you believe — quietly, stubbornly — that it should matter.",
+      trait:[
+        "You're high on order and warmth, but the details matter: your kindness is <em>rule-shaped</em> — generous in the ways one is supposed to be — and your conscience runs on politeness and duty. That's why you can be the sweetest and the most quietly judgmental person at once; judgment is just what high standards do to broken rules.",
+        "You're calm in a real crisis and undone by social failure or a broken timeline. You don't leak feelings — you store them, then detonate. And you're tougher than you look: the highest frustration tolerance here, lightning-decisive when a choice fits your values. You only stall when two rules collide.",
+      ],
+      attach:[
+        "Underneath, you swallowed a rulebook so completely that other people's expectations feel like your own wishes. Your perfectionism isn't vanity — it's contingent worth: do everything correctly and you'll be safe and loved.",
+        "Which is why loss doesn't just hurt you, it <em>falsifies your world</em> — you followed the rules and the promised ending didn't arrive. What you're protecting is the belief that correctness earns safety. Growth is trading it for a worth that doesn't depend on the checklist — and you don't get less earnest, you just aim the earnestness at substance instead of form.",
       ],
     },
     E: {
-      tag:"Industriousness + skepticism · the analytic engine",
-      head:"The only one who actually updates on evidence.",
-      body:[
-        "Your core is high conscientiousness of the <em>industriousness and deliberation</em> type — not tidiness (your place can be chaos), but work discipline, planning, and risk assessment. Paired with it is the group's highest trait skepticism: low agreeableness expressed as low compliance and low trust rather than low compassion. You argue as a default social mode, play devil's advocate reflexively, and treat optimistic claims as errors to be corrected. It's a genuinely critical cognitive style — analytical, sequential, evidence-demanding — and you're the only one of the four who reasons the way she argues.",
-        "Your neuroticism is real but almost entirely internalized as irritability and pessimism rather than anxiety. You don't worry forward — you pre-conclude negatively and call it realism. Good events you attribute to luck; bad events confirm the model. It's protective and self-limiting in equal measure.",
-        "Your introversion gets missed because you're socially competent and verbally dominant — but note the recovery pattern: social effort costs you, solitude restores you. You're a low-gregariousness, high-assertiveness introvert: comfortable commanding a room, depleted by inhabiting one. Your humor is the driest of the four, and it doubles as your affection channel — you tease the people you love because directness of feeling embarrasses you.",
-        "Your most distinctive trait is principled fairness. Beneath the cynicism sits the strongest justice orientation of the four — you call out double standards, keep score of reciprocity, and hold yourself to the standards you impose. And you have the highest behavioral plasticity: the only one who changes her mind in response to evidence. Slow, grudging, but real.",
+      tag:"Fearful-avoidant · industriousness & skepticism",
+      head:"You'd rather handle it yourself — but the brave thing is letting someone help.",
+      trait:[
+        "Your engine is discipline and skepticism — planning, risk-assessment, and a reflex to argue and poke holes. You reason the way you argue: sequential, evidence-first. You're the one who actually changes her mind when the facts change — slow, grudging, but real.",
+        "Your worry shows up as irritability and pessimism, not anxiety — you pre-conclude the worst and call it realism. And you're an introvert people miss because you can command a room; you just need to be alone afterward to refill. Your humor is the driest here, and it's how you show love without having to say it.",
+      ],
+      attach:[
+        "Underneath the dryness is fearful-avoidance — you want closeness and distrust it in the same breath. The defense is pre-emptive cynicism: expect the worst and you can't be blindsided. The sharpness is a perimeter, not cruelty.",
+        "Your identity fused with competence, and the quiet danger is that a self that needs nothing can't receive anything either. What you guard is self-sufficiency. Growth is the effortful practice of being held — letting your definition of strength expand to include being carried.",
       ],
     },
   };
@@ -473,92 +521,94 @@
     E:{ humor:"dry",         conflict:"sarcasm",  plasticity:"evidence" },
   };
 
+  const SECURE = "However you scored, the truest attachment in the story isn't romantic at all — the four of them are, in the end, each other's secure base: the one bond where the armor is allowed to fail safely. Whichever one you are, that's the part worth keeping.";
+
+  // calibration constants (see notes) so every type's basin is equal-sized
+  const MU = { A:-6.18, B:12.75, D:20.41, E:26.98 };
+  const SD = { A:25.07, B:26.80, D:24.02, E:21.07 };
+  const UNIT = (function(){
+    const u = {};
+    for (const c in ARCHETYPE){ let s=0; const v={}; METERS.forEach(m=>{ v[m.k]=ARCHETYPE[c][m.k]-50; s+=v[m.k]*v[m.k]; }); s=Math.sqrt(s); METERS.forEach(m=>{ v[m.k]/=s; }); u[c]=v; }
+    return u;
+  })();
+
   // ---------- state ----------
   let idx = 0;
   let meters = { im:50, co:50, re:50, bo:50, di:50, lo:50 };
   const answers = new Array(QUESTIONS.length).fill(null);
   const chosenTags = {};
-  const chosenReads = {};   // keyed by question index
+  const chosenReads = {};
   let locked = false;
-  let shownRound = -1;
+  let shownAct = -1;
+  const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   function $(id){ return document.getElementById(id); }
   function clamp(v){ return Math.max(2, Math.min(100, v)); }
   function show(screen){
     document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
     $(screen).classList.add("active");
-    window.scrollTo({ top:0, behavior:"smooth" });
+    window.scrollTo({ top:0, behavior: reduceMotion ? "auto" : "smooth" });
   }
   function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
 
-  function buildMeterPanel(){
-    const g = $("mGrid"); g.innerHTML = "";
-    METERS.forEach(m=>{
-      const el = document.createElement("div");
-      el.className = "m";
-      el.innerHTML =
-        '<div class="m-top"><span class="name">'+m.name+'</span><span class="delta" id="d_'+m.k+'"></span></div>'+
-        '<div class="m-bar"><i id="f_'+m.k+'"></i></div>';
-      g.appendChild(el);
-    });
-    paintMeters(false);
-  }
-  function paintMeters(animateDeltas, deltas){
-    METERS.forEach(m=>{
-      $("f_"+m.k).style.width = meters[m.k] + "%";
-      if (animateDeltas && deltas && deltas[m.k]){
-        const d = deltas[m.k];
-        const el = $("d_"+m.k);
-        el.textContent = (d>0?"+":"") + d;
-        el.className = "delta " + (d>0?"up":"down") + " show";
-        setTimeout(()=>{ el.classList.remove("show"); }, 1200);
-      }
+  function buildTimeline(curAct){
+    const t = $("timeline"); t.innerHTML = "";
+    ACTS.forEach((a,i)=>{
+      const n = document.createElement("div");
+      n.className = "tl-node " + (i<curAct?"done":i===curAct?"now":"");
+      n.innerHTML = '<div class="tl-dot"></div><div class="tl-label">'+a.label+'</div>';
+      t.appendChild(n);
     });
   }
 
-  function maybeRoundIntro(){
-    const round = QUESTIONS[idx].r;
-    if (round !== shownRound){
-      shownRound = round;
-      const R = ROUNDS[round];
-      $("riNo").textContent = R.no;
-      $("riTitle").textContent = R.title;
-      $("riSub").textContent = R.sub;
-      show("roundIntro");
+  function maybeActIntro(){
+    const act = QUESTIONS[idx].act;
+    if (act !== shownAct){
+      shownAct = act;
+      document.body.setAttribute("data-act", act);
+      const A = ACTS[act];
+      $("aiTime").textContent = A.time + " · " + A.label;
+      $("aiTitle").textContent = capitalize(A.place);
+      $("aiScene").textContent = A.scene;
+      show("actIntro");
+      setTimeout(()=>$("aiBtn").focus(), reduceMotion?0:120);
       return true;
     }
     return false;
   }
+  function capitalize(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
 
   function render(){
     const item = QUESTIONS[idx];
-    $("stepLabel").textContent = "Round " + (item.r+1) + " · " + ROUNDS[item.r].title;
-    $("countLabel").textContent = (idx+1) + " / " + QUESTIONS.length;
-    $("barFill").style.width = (idx / QUESTIONS.length * 100) + "%";
-    $("qText").textContent = item.q;
-    $("qSub").textContent = item.sub || "";
-    $("qSub").style.display = item.sub ? "block" : "none";
+    const A = ACTS[item.act];
+    document.body.setAttribute("data-act", item.act);
+    buildTimeline(item.act);
+    $("sTime").textContent = A.time + " · " + A.label;
+    $("sPlace").textContent = A.place;
+    $("sScene").textContent = item.scene;
+    $("sPrompt").textContent = item.prompt;
+    $("reaction").textContent = "";
 
     const order = shuffle(item.opts.map((_,i)=>i));
     const box = $("opts"); box.innerHTML = "";
-    order.forEach(oi=>{
+    order.forEach((oi,pos)=>{
       const o = item.opts[oi];
       const b = document.createElement("button");
       b.className = "opt" + (answers[idx]===oi ? " selected" : "");
-      b.textContent = o.t;
+      b.innerHTML = '<span class="num" aria-hidden="true">'+(pos+1)+'</span>'+escapeHtml(o.t);
       b.dataset.oi = oi;
+      b.setAttribute("aria-label", (pos+1)+". "+o.t);
       b.onclick = ()=>choose(oi);
       box.appendChild(b);
     });
     $("backBtn").disabled = idx === 0;
     locked = false;
+    setTimeout(()=>{ const f=$("opts").querySelector(".opt"); if(f) f.focus(); }, reduceMotion?0:80);
   }
 
-  function applyDeltas(d, sign){
-    const eff = {};
-    for (const k in d){ meters[k] = clamp(meters[k] + d[k]*sign); eff[k]=d[k]; }
-    return eff;
-  }
+  function escapeHtml(s){ return s.replace(/[&<>"']/g, c=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c])); }
+
+  function applyDeltas(d, sign){ for (const k in d){ meters[k] = clamp(meters[k] + d[k]*sign); } }
 
   function choose(oi){
     if (locked) return;
@@ -568,82 +618,74 @@
     if (answers[idx] !== null) applyDeltas(item.opts[answers[idx]].d, -1);
     answers[idx] = oi;
     const opt = item.opts[oi];
-    const eff = applyDeltas(opt.d, +1);
+    applyDeltas(opt.d, +1);
     if (opt.tag) chosenTags[opt.tag.k] = opt.tag.v;
     if (opt.read) chosenReads[idx] = opt.read; else delete chosenReads[idx];
 
     $("opts").querySelectorAll(".opt").forEach(n=>{ n.disabled = true; n.classList.toggle("selected", +n.dataset.oi === oi); });
-    paintMeters(true, eff);
+    if (opt.rx) $("reaction").textContent = opt.rx;
 
+    const wait = reduceMotion ? 350 : (opt.rx ? 1050 : 520);
     setTimeout(()=>{
       idx++;
       if (idx >= QUESTIONS.length){ analyze(); return; }
-      if (maybeRoundIntro()) return;
+      if (maybeActIntro()) return;
       render();
-    }, 600);
+    }, wait);
   }
 
-  function enterRound(){ show("quiz"); render(); }
+  function enterAct(){ show("play"); render(); }
 
   function back(){
     if (idx===0) return;
     idx--;
-    shownRound = QUESTIONS[idx].r;
-    show("quiz");
+    shownAct = QUESTIONS[idx].act;
+    show("play");
     render();
   }
 
-  // ---------- scoring ----------
-  // Each type is a direction in trait space; we project the player onto it and
-  // standardize against the neutral-play distribution (MU/SD, calibrated by
-  // simulation) so every type's basin is the same size — no type is easier to
-  // land, which is what keeps it from being gamed toward a favorite.
-  const MU = { A:-6.18, B:12.75, D:20.41, E:26.98 };
-  const SD = { A:25.07, B:26.80, D:24.02, E:21.07 };
-  const UNIT = (function(){
-    const u = {};
-    for (const c in ARCHETYPE){
-      let s = 0; const v = {};
-      METERS.forEach(m=>{ v[m.k] = ARCHETYPE[c][m.k]-50; s += v[m.k]*v[m.k]; });
-      s = Math.sqrt(s); METERS.forEach(m=>{ v[m.k] /= s; });
-      u[c] = v;
+  // number-key selection
+  document.addEventListener("keydown", (e)=>{
+    if (!$("play").classList.contains("active")) return;
+    const n = parseInt(e.key, 10);
+    if (n>=1 && n<=9){
+      const btns = $("opts").querySelectorAll(".opt");
+      if (btns[n-1] && !btns[n-1].disabled){ e.preventDefault(); btns[n-1].click(); }
     }
-    return u;
-  })();
+  });
+
+  // ---------- scoring ----------
   function zscores(){
     const z = {};
-    for (const c in ARCHETYPE){
-      let s = 0; METERS.forEach(m=>{ s += (meters[m.k]-50)*UNIT[c][m.k]; });
-      z[c] = (s - MU[c]) / SD[c];
-    }
+    for (const c in ARCHETYPE){ let s=0; METERS.forEach(m=>{ s += (meters[m.k]-50)*UNIT[c][m.k]; }); z[c] = (s - MU[c]) / SD[c]; }
     return z;
   }
   function blend(z){
-    const T = 0.9; const w = {}; let tot = 0;
-    for (const c in z){ w[c] = Math.exp(z[c]*T); tot += w[c]; }
-    const pct = {}; for (const c in w){ pct[c] = w[c]/tot; }
-    return pct;
+    const T=0.9; const w={}; let tot=0;
+    for (const c in z){ w[c]=Math.exp(z[c]*T); tot+=w[c]; }
+    const p={}; for (const c in w){ p[c]=w[c]/tot; }
+    return p;
   }
 
   function analyze(){
     show("analyzing");
     const z = zscores();
     const ranked = Object.keys(z).sort((a,b)=>z[b]-z[a]);
-    const seq = ["A","B","D","E","D","B", ranked[0], ranked[0], ranked[0]];
+    if (reduceMotion){ $("anName").textContent = C[ranked[0]].name; setTimeout(()=>renderResult(ranked,z), 500); return; }
+    const seq = ["A","B","D","E","B", ranked[0], ranked[0]];
     let step = 0;
     const el = $("anName");
     const timer = setInterval(()=>{
-      const k = seq[step];
-      el.textContent = C[k].name; el.style.color = C[k].color;
-      step++;
-      if (step >= seq.length){ clearInterval(timer); setTimeout(()=>renderResult(ranked, z), 450); }
-    }, 190);
+      const k = seq[step]; el.textContent = C[k].name; el.style.color = C[k].color; step++;
+      if (step >= seq.length){ clearInterval(timer); setTimeout(()=>renderResult(ranked,z), 500); }
+    }, 200);
   }
 
   function renderResult(ranked, z){
     const winner = ranked[0];
     const p = PROFILES[winner];
     const pct = blend(z);
+    const runner = ranked[1];
 
     $("rName").textContent = C[winner].name;
     $("rName").style.color = C[winner].color;
@@ -651,87 +693,71 @@
     $("rHead").textContent = "“" + p.head + "”";
 
     const mix = $("rMix"); mix.innerHTML = "";
-    const leg = $("rLegend"); leg.innerHTML = "";
-    ranked.forEach(k=>{
-      const span = document.createElement("span");
-      span.style.width = (pct[k]*100)+"%"; span.style.background = C[k].color;
-      mix.appendChild(span);
-    });
-    ranked.forEach(k=>{
-      const s = document.createElement("span");
-      s.innerHTML = '<span class="dotc" style="background:'+C[k].color+'"></span>'+
-        (k===winner?'<b>':'')+C[k].name+' '+Math.round(pct[k]*100)+'%'+(k===winner?'</b>':'');
-      leg.appendChild(s);
-    });
+    ranked.forEach(k=>{ const s=document.createElement("span"); s.style.width=(pct[k]*100)+"%"; s.style.background=C[k].color; mix.appendChild(s); });
+    $("rLegend").innerHTML = "You're mostly <b style='color:"+C[winner].color+"'>"+C[winner].name+"</b> ("+Math.round(pct[winner]*100)+
+      "%), with a streak of <b style='color:"+C[runner].color+"'>"+C[runner].name+"</b> ("+Math.round(pct[runner]*100)+"%).";
 
-    $("rBody").innerHTML = p.body.map(t=>"<p>"+t+"</p>").join("");
+    $("rTrait").innerHTML = p.trait.map(t=>"<p>"+t+"</p>").join("");
+    $("rAttach").innerHTML = p.attach.map(t=>"<p>"+t+"</p>").join("");
 
-    // "What you gave off" — from the player's own answers, revealed only now
     const reads = Object.keys(chosenReads).map(Number).sort((a,b)=>a-b).map(k=>chosenReads[k]);
-    if (reads.length){
-      $("readsCard").style.display = "";
-      $("rReads").innerHTML = reads.map(r=>'<li><span class="eye">▸</span><span>'+r+'</span></li>').join("");
-    } else {
-      $("readsCard").style.display = "none";
-    }
+    if (reads.length){ $("readsCard").style.display=""; $("rReads").innerHTML = reads.map(r=>'<li><span class="mk">▸</span><span>'+r+'</span></li>').join(""); }
+    else { $("readsCard").style.display="none"; }
 
     const tags = Object.assign({}, DEFAULT_TAGS[winner], chosenTags);
     const bx = $("rBadges"); bx.innerHTML = "";
     [HUMOR[tags.humor], CONFLICT[tags.conflict], PLASTICITY[tags.plasticity]].forEach(b=>{
-      const el = document.createElement("div");
-      el.className = "badge";
-      el.innerHTML = '<div class="k">'+b.k+'</div><div class="v">'+b.v+'</div>';
-      bx.appendChild(el);
+      const el=document.createElement("div"); el.className="badge";
+      el.innerHTML='<div class="k">'+b.k+'</div><div class="v">'+b.v+'</div>'; bx.appendChild(el);
     });
 
-    const pmBox = $("rMeters"); pmBox.innerHTML = "";
+    const sig = $("rSig"); sig.innerHTML = "";
     METERS.forEach(m=>{
       const you = Math.round(meters[m.k]);
-      const arch = ARCHETYPE[winner][m.k];
-      const row = document.createElement("div");
-      row.className = "pm";
-      row.innerHTML =
-        '<div class="pm-top"><span>'+m.name+' <span style="opacity:.6">· '+m.note+'</span></span><span class="val">'+you+'</span></div>'+
-        '<div class="pm-bar"><i style="background:'+C[winner].color+'"></i><span class="mark" style="left:'+arch+'%"></span></div>';
-      pmBox.appendChild(row);
-      requestAnimationFrame(()=>setTimeout(()=>{ row.querySelector("i").style.width = you+"%"; }, 100));
+      const row = document.createElement("div"); row.className="sig";
+      row.innerHTML = '<div class="sig-top"><span>'+m.name+'</span><span class="val">'+descriptor(you)+'</span></div>'+
+        '<div class="sig-bar"><i style="background:'+C[winner].color+'"></i></div>';
+      sig.appendChild(row);
+      if (reduceMotion){ row.querySelector("i").style.width = you+"%"; }
+      else requestAnimationFrame(()=>setTimeout(()=>{ row.querySelector("i").style.width = you+"%"; }, 100));
     });
 
-    window._res = { winner, pct };
+    $("rSecure").textContent = SECURE;
+    window._res = { winner, runner, pct };
+    document.body.setAttribute("data-act", "5");
     show("result");
+    setTimeout(()=>$("rName").focus && $("rName").setAttribute("tabindex","-1"), 0);
   }
+
+  function descriptor(v){ if(v>=85)return"very high"; if(v>=68)return"high"; if(v>=45)return"moderate"; if(v>=30)return"low"; return"very low"; }
 
   function copy(){
     const r = window._res; if (!r) return;
     const p = PROFILES[r.winner];
     const tags = Object.assign({}, DEFAULT_TAGS[r.winner], chosenTags);
     const text =
-      "The Read → I'm "+C[r.winner].name+"\n"+
-      p.tag+"\n"+
-      "“"+p.head+"”\n\n"+
+      "One Night → by sunrise, I'm "+C[r.winner].name+"\n"+
+      p.tag+"\n“"+p.head+"”\n\n"+
       "Humor: "+HUMOR[tags.humor].v+"\n"+
       "Conflict: "+CONFLICT[tags.conflict].v+"\n"+
       "What moves me: "+PLASTICITY[tags.plasticity].v+"\n\n"+
-      "Blend — "+Object.keys(r.pct).sort((a,b)=>r.pct[b]-r.pct[a])
-        .map(k=>C[k].name+" "+Math.round(r.pct[k]*100)+"%").join(" · ")+"\n\n"+
-      "Which one are you? Play The Read.";
-    (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject())
-      .then(toast).catch(toast);
+      "Mostly "+C[r.winner].name+", with a streak of "+C[r.runner].name+".\n\n"+
+      "Which one are you? Play One Night.";
+    (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(toast).catch(toast);
   }
   function toast(){ const t=$("toast"); t.classList.add("show"); setTimeout(()=>t.classList.remove("show"),1900); }
 
   function start(){
-    idx = 0; shownRound = -1;
-    meters = { im:50, co:50, re:50, bo:50, di:50, lo:50 };
+    idx=0; shownAct=-1;
+    meters={ im:50, co:50, re:50, bo:50, di:50, lo:50 };
     for (let i=0;i<answers.length;i++) answers[i]=null;
     for (const k in chosenTags) delete chosenTags[k];
     for (const k in chosenReads) delete chosenReads[k];
-    buildMeterPanel();
-    maybeRoundIntro();
+    maybeActIntro();
   }
-  function restart(){ show("intro"); }
+  function restart(){ document.body.setAttribute("data-act","0"); show("intro"); }
 
-  window.Game = { start, back, restart, copy, enterRound };
+  window.Game = { start, back, restart, copy, enterAct };
 })();
 </script>
 </body>
