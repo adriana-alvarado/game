@@ -253,6 +253,12 @@
     <div class="mix" id="rMix" aria-hidden="true"></div>
     <div class="mix-legend" id="rLegend"></div>
 
+    <div class="card" id="readsCard">
+      <h3>How the night read you</h3>
+      <p id="rRecap"></p>
+      <ul class="reads" id="rReads"></ul>
+    </div>
+
     <div class="card">
       <h3>Who you are</h3>
       <div id="rTrait"></div>
@@ -266,11 +272,6 @@
     <div class="card">
       <h3>Underneath — how you attach &amp; defend</h3>
       <div id="rAttach"></div>
-    </div>
-
-    <div class="card" id="readsCard">
-      <h3>What the night told on you</h3>
-      <ul class="reads" id="rReads"></ul>
     </div>
 
     <div class="card">
@@ -331,61 +332,61 @@
     { time:"6:10 AM", label:"Dawn",     place:"the balcony",        scene:"Everyone's gone. Just you, Nadia, and a paling sky. She wants to know if she should even go." },
   ];
 
-  // Options carry meter deltas + optional reaction/tag/read. No character labels.
-  // Re-skinned into one continuous story; the option "moves" (deltas) are unchanged.
+  // Each option: t, d (trait deltas), rx (in-scene beat), echo? (past-tense clause
+  // the result stitches back into your night), tag?/read?. No character labels.
   const QUESTIONS = [
     // ACT 0 — Dusk · before the others
-    { act:0, scene:"She won't say what's wrong. She circles it, insisting she's fine.",
-      prompt:"You try to reach her. You—",
+    { act:0, scene:"She's unraveling but keeps insisting she's fine. You have to decide how to meet it.",
+      prompt:"You—",
       opts:[
-        { t:"tell her what it reminds you of — a story, an image — so she feels less alone", d:{im:16,lo:-10}, rx:"Something in her face eases.", read:"You reach for image before analysis — a divergent, associative mind." },
-        { t:"ask the quiet, direct questions until the real thing comes out", d:{lo:18,di:-4}, rx:"She exhales, and starts talking.", read:"You draw out the facts and reason from them. You think the way you argue." },
-        { t:"skip the talking — pour two drinks and promise her it'll be fine", d:{bo:12,co:8,im:-4}, rx:"She almost laughs. Almost." },
-        { t:"steady the ship — “let's just get tonight right, together”", d:{di:12,re:8,im:-4}, rx:"She nods, grateful for the order." },
+        { t:"give her pain a shape — turn it into a story she can hold at arm's length", d:{im:16,lo:-10,co:-4}, rx:"Something eases. She almost smiles.", echo:"turned her pain into a story", read:"Your instinct is to narrate pain rather than sit in it — insight-shaped, but a way of not-feeling too." },
+        { t:"steady her with a plan — “we do tonight right, one step at a time”", d:{di:14,re:10,im:-4}, rx:"She nods, grateful for the order.", echo:"steadied her with a plan" },
+        { t:"pull her up by the collar — drinks, music, momentum, no wallowing", d:{bo:16,co:8,im:-4}, rx:"You drag her up into motion.", echo:"pulled her up and kept her moving" },
+        { t:"get to the facts — what exactly happened, so you can both see it clearly", d:{lo:16,di:-6,co:-2}, rx:"The picture sharpens as she talks.", echo:"pressed for what actually happened" },
       ]},
-    { act:0, scene:"She lets it slip: Theo told her something that changed everything. She swears it's true.",
-      prompt:"Do you believe it?",
+    { act:0, key:true, scene:"Your phone lights up. Ellis — the one you never quite resolved — is coming tonight: “can we finally talk?”",
+      prompt:"Something in you—",
       opts:[
-        { t:"you go with the feeling — the way she says it, it rings true", d:{im:12,lo:-12}, rx:"You take it as real." },
-        { t:"you press — says who? how does she actually know?", d:{lo:18,co:-6}, rx:"The story wobbles under the questions.", read:"You treat a rosy claim as something to check. Trust set low by default." },
-        { t:"it hardly matters now — she's gone by morning either way", d:{bo:8,co:10,re:-6}, rx:"You let it go. Tonight's the thing." },
-        { t:"if Theo said it and she believes him, that's enough for you too", d:{di:12,re:4,im:-2}, rx:"You take her word, and his." },
+        { t:"flips, and you don't reply — the not-knowing is almost better than the answer", d:{im:12,co:-8,lo:-6}, rx:"You leave it on read, heart going.", echo:"left Ellis on read, savoring the not-knowing", read:"You're pulled hardest by what's unresolved — the wanting, more than the having." },
+        { t:"stays cool — you answer breezy and in control; you won't be the off-balance one", d:{bo:14,co:8,di:-8}, rx:"Sent, light and unbothered.", echo:"answered Ellis coolly, on your own terms", read:"You manage closeness by keeping the upper hand — never the one who wants more." },
+        { t:"lifts — maybe tonight it's finally the right time, done right", d:{di:12,im:6,re:4}, rx:"You let the old hope in.", echo:"let yourself hope it could finally be right" },
+        { t:"goes wary — you decide not to hand them that power over you again", d:{lo:12,co:-6,di:-6}, rx:"You put the phone face-down.", echo:"refused to hand Ellis that power again", read:"You pre-empt the hurt before it can land — the perimeter goes up first." },
       ]},
 
     // ACT 1 — Twilight · one last errand
-    { act:1, scene:"In a shop window: the perfect goodbye gift for her. Beautiful, and more than you meant to spend.",
+    { act:1, scene:"You want to give Nadia something real before she goes. There's time to write her a note.",
       prompt:"You—",
       opts:[
-        { t:"buy it on the spot — you'll worry about the money never", d:{re:-20,im:8,co:-4}, rx:"Wrapped and yours. You feel lighter.", read:"Low deliberation, and a threat-radar tuned away from the practical." },
-        { t:"buy it, no guilt — she's worth exactly this", d:{re:-4,bo:12,co:8}, rx:"Done. No second thought.", read:"Impulse indulged, but bounded — appetite inside a well-run system." },
-        { t:"agonize, then choose the thoughtful, sensible version", d:{re:14,di:8,im:-2}, rx:"A careful compromise, warmly meant." },
-        { t:"stick to the errand you came for — the gesture's already enough", d:{re:18,lo:10,co:-2}, rx:"You get what you came for and go." },
+        { t:"write it raw and unguarded — too much, maybe, but every feeling true", d:{im:14,re:-10,co:-4}, rx:"It pours out, more than you planned.", echo:"wrote her the unguarded, too-much letter" },
+        { t:"skip the letter — you'll say it your own way, unsentimental, in person", d:{bo:12,co:8,re:-4}, rx:"No paper. You'll just say it.", echo:"skipped the letter to say it your own way" },
+        { t:"agonize over every word until it's exactly, correctly right", d:{re:16,di:10,im:-2}, rx:"Draft after draft, until it's perfect.", echo:"agonized to get every word exactly right", read:"Even love goes through the rulebook — it has to be done properly." },
+        { t:"keep it dry and honest — no performance, just the plain fact of it", d:{lo:12,re:8,di:-4}, rx:"Short. True. No flourish.", echo:"kept it dry and true, no performance" },
       ]},
-    { act:1, scene:"Back at hers, half the place is in boxes. You take over a corner to help her finish.",
-      prompt:"Your way of doing it is—",
+    { act:1, key:true, scene:"Half-drunk on the couch, Nadia says maybe she won't go at all. Maybe she'll stay, for love, and cancel the flight.",
+      prompt:"You—",
       opts:[
-        { t:"leave the lovely chaos where it is — a room should have a soul", d:{im:12,re:-10}, rx:"You save the mess that means something." },
-        { t:"labeled, boxed, immaculate — everything in its right place", d:{re:18,di:12,im:-2}, rx:"By your hand it turns spotless.", read:"Order as a value: routines, follow-through, a place for everything." },
-        { t:"messy boxes, who cares — but the important logistics nailed", d:{re:6,lo:10,di:-8,im:-4}, rx:"Chaos in the boxes, order in the plan.", read:"Not tidiness — discipline where it counts. Output over neatness." },
-        { t:"ruthless — pare it down, only what actually matters goes", d:{re:10,bo:8,co:6}, rx:"You cut it to the essentials." },
+        { t:"thrill at it, secretly — stay, choose the feeling, chase the story", d:{im:16,lo:-12}, rx:"Part of you wants her to do it.", echo:"secretly thrilled at the reckless, romantic choice" },
+        { t:"back her either way — her life, her call, no lecture from you", d:{bo:8,co:10,di:-8}, rx:"“Whatever you want, I'm in.”", echo:"backed her choice without a word of judgment" },
+        { t:"steer her gently back — this isn't the right way, and you both know it", d:{di:16,re:10,im:-4}, rx:"You walk her back to the plan.", echo:"steered her back to the sensible plan" },
+        { t:"lay out the cold arithmetic of what staying would actually cost her", d:{lo:16,re:8,co:-4}, rx:"You give her the hard math.", echo:"laid out the cold cost of staying" },
       ]},
 
     // ACT 2 — Night · the party
-    { act:2, scene:"The second Theo steps in with those flowers, the whole room changes.",
+    { act:2, scene:"The buzzer goes. Theo, uninvited, flowers in hand. The whole room changes.",
       prompt:"The first thing you clock is—",
       opts:[
         { t:"the mood tilting — the whole scene shifting on its axis", d:{im:16,lo:-8}, rx:"You feel the room turn." },
         { t:"whether he even has the nerve, the manners, to be here", d:{di:12,re:6,im:2}, rx:"You clock the sheer gall of it." },
         { t:"him — you're already crossing the room to head him off", d:{bo:14,co:8,im:-6}, rx:"You move before you think." },
-        { t:"the angle — what he's really here for, behind the flowers", d:{lo:10,co:-6,di:-6}, rx:"You read the play behind the gesture.", read:"You clock the angle before the gesture — a critical eye, always on." },
+        { t:"the angle — what he's really here for, behind the flowers", d:{lo:10,co:-6,di:-6}, rx:"You read the play behind the gesture.", read:"You see the angle before the gesture — a critical eye, always on." },
       ]},
-    { act:2, scene:"It falls to you to steer the room around him.",
-      prompt:"What you actually want to do is—",
+    { act:2, key:true, scene:"Across the room, Ellis catches your eye and starts toward you.",
+      prompt:"You—",
       opts:[
-        { t:"work the whole room, keep it loud and alive so nobody dwells", d:{bo:20,co:10,im:2}, rx:"You light the place back up.", read:"Approach-motivated. Where others deliberate, you move." },
-        { t:"pull Nadia into a corner for one real conversation", d:{bo:4,im:10,co:-4}, rx:"You find her and shut the noise out." },
-        { t:"honestly, just get her through it and everyone home", d:{bo:-18,di:-4,lo:4}, rx:"You start quietly counting down to quiet.", read:"At ease in a room when you want to be — but solitude is what restores you." },
-        { t:"keep your trusted few close and manage it in low tones", d:{di:12,bo:-4,re:6}, rx:"You gather your people in." },
+        { t:"look away, heart pounding — wanting them is safer than actually having them", d:{im:12,co:-8,bo:-6}, rx:"You break the look first.", echo:"looked away from Ellis, the wanting sharper than the having" },
+        { t:"hold the look and let them come to you — you'll decide the terms", d:{bo:16,co:8,di:-8}, rx:"You don't move. Let them.", echo:"held Ellis's eyes and set the terms" },
+        { t:"straighten up, suddenly wanting it — all of it — to go right", d:{di:12,re:6,im:6}, rx:"You want this so much it aches.", echo:"wanted it with Ellis to go right so badly" },
+        { t:"find something else to do — needing this is exactly what you don't trust", d:{lo:10,bo:-10,co:-6}, rx:"You busy yourself, safe.", echo:"made yourself busy — needing it felt like the risk" },
       ]},
     { act:2, scene:"Theo lands a barbed little comment about the move. The table freezes.",
       prompt:"You break the silence with—",
@@ -397,49 +398,49 @@
       ]},
 
     // ACT 3 — Midnight · it tips over
-    { act:3, scene:"Theo corners you — he wants you to carry a message to her — and he keeps pushing.",
+    { act:3, key:true, scene:"Theo corners you — wants you to carry a message to her — and won't let up.",
       prompt:"The anger comes out as—",
       opts:[
-        { t:"a dig, a colder silence — sideways", d:{im:6,di:-4,co:-8}, rx:"You go pointedly quiet.", tag:{k:"conflict",v:"passive"} },
-        { t:"something fast and direct, right in his face", d:{bo:16,di:-10,co:6}, rx:"You come back hard, no delay.", tag:{k:"conflict",v:"fight"} },
-        { t:"nothing — you hold it in, and it'll burst later", d:{di:6,co:-12,re:-4}, rx:"You swallow it. For now.", tag:{k:"conflict",v:"suppress"} },
-        { t:"one dry, cutting remark", d:{lo:8,di:-8,co:-2}, rx:"A single flat blade of a line.", tag:{k:"conflict",v:"sarcasm"} },
+        { t:"a dig, a colder silence — sideways, never head-on", d:{im:6,di:-4,co:-8}, rx:"You go pointedly quiet.", echo:"went pointedly quiet with Theo", tag:{k:"conflict",v:"passive"} },
+        { t:"something fast and direct, right in his face", d:{bo:16,di:-10,co:6}, rx:"You come back hard, no delay.", echo:"came back hard, right in his face", tag:{k:"conflict",v:"fight"} },
+        { t:"nothing yet — you hold it in, and it'll burst later", d:{di:6,co:-12,re:-4}, rx:"You swallow it. For now.", echo:"held it in until it could burst later", tag:{k:"conflict",v:"suppress"} },
+        { t:"one dry, cutting remark and a turned back", d:{lo:8,di:-8,co:-2}, rx:"A single flat blade of a line.", echo:"cut him down with one dry line", tag:{k:"conflict",v:"sarcasm"} },
       ]},
-    { act:3, scene:"June's drunk and has leaned on you all night. Now she wants you to fix her drama too — again.",
-      prompt:"You—",
+    { act:3, scene:"Then you see it: drunk June, three feet from Nadia's mother, about to blurt the secret to the whole room.",
+      prompt:"You've got two seconds. You—",
       opts:[
-        { t:"name it — you've carried her all night, and it isn't fair", d:{lo:10,di:-6,bo:6}, rx:"You say the true, unfun thing.", read:"A fairness read, not cruelty — a strong justice streak underneath." },
-        { t:"handle it anyway — you don't keep score on people you love", d:{co:8,di:-4,bo:6}, rx:"You step in, warm, no ledger." },
-        { t:"feel hurt but keep the peace and say nothing", d:{di:8,bo:-10,co:-6}, rx:"You swallow it to avoid a scene." },
-        { t:"quietly lose a little respect for her", d:{di:14,im:-4}, rx:"You file the lapse away, silent." },
+        { t:"shut her down cold — this is not hers to tell", d:{lo:12,di:-6,bo:8}, rx:"You cut her off, hard and clean.", read:"When the line matters, fairness wins over politeness — you protect the person, not the peace." },
+        { t:"sweep her out to the balcony — no scene, no scolding", d:{co:10,bo:8,di:-6}, rx:"You move her out, warm and fast." },
+        { t:"make yourself the distraction — spill a drink, pull every eye", d:{im:10,bo:-8,co:-6}, rx:"Suddenly it's about you instead." },
+        { t:"freeze, mortified — you'd never let decorum shatter like this", d:{di:14,im:-4}, rx:"The breach of it horrifies you." },
       ]},
 
     // ACT 4 — Late · the truth
-    { act:4, scene:"As it all breaks open, two things tug at the back of your mind.",
-      prompt:"The one that sits heavier is—",
+    { act:4, scene:"The secret's out. In a stolen minute alone, you notice what's actually gnawing at you.",
+      prompt:"It's—",
       opts:[
-        { t:"a message you never answered, from someone who matters", d:{co:-16,im:8,re:-6}, rx:"You keep drifting back to it.", read:"Threat-detection calibrated to relational signals over practical ones." },
-        { t:"neither, really — you set both down and stay present", d:{co:18,bo:6}, rx:"You let them both go.", read:"Low neuroticism, doing its quiet and genuine work." },
-        { t:"a real thing you owe at dawn — but being judged for it is the sting", d:{re:8,di:8,co:-4}, rx:"You could handle the task; the judgment, less." },
-        { t:"nothing new — you'd already assumed the worst anyway", d:{co:-8,lo:8,di:-6}, rx:"Confirmed what you expected.", read:"A pessimistic explanatory style — the worst, pre-assumed." },
+        { t:"the unfinished thing with Ellis — you can't stop circling it", d:{co:-16,im:8,re:-6}, rx:"Your mind keeps drifting to them.", echo:"kept circling the unfinished thing with Ellis", read:"Your threat-radar is tuned to the relational, not the practical." },
+        { t:"nothing, really — you set it all down and stay present", d:{co:18,bo:6}, rx:"You let it slide off you.", echo:"let it all slide off and stayed present", read:"Low neuroticism, doing its quiet and genuine work." },
+        { t:"that you should have managed this whole night better", d:{re:8,di:8,co:-6}, rx:"You replay what you'd fix.", echo:"blamed yourself for not managing the night better" },
+        { t:"nothing new — you saw this coming hours ago", d:{co:-8,lo:8,di:-6}, rx:"Grimly, you're unsurprised.", echo:"felt grimly unsurprised — you'd seen it coming", read:"A pessimistic explanatory style — the worst, pre-assumed." },
       ]},
-    { act:4, scene:"In the kitchen, away from everyone, Nadia finally breaks.",
+    { act:4, key:true, scene:"In the kitchen, away from everyone, Nadia finally breaks.",
       prompt:"In the first moments, you—",
       opts:[
-        { t:"feel it hit and replay it on a loop you can't stop", d:{co:-14,im:6}, rx:"It runs and runs behind your eyes." },
-        { t:"find the reframe and keep her moving through it", d:{co:16,bo:8}, rx:"You catch the angle and steady her." },
-        { t:"hold it together for her now, fall apart later, alone", d:{re:10,di:6,co:-6}, rx:"You handle it. The cracks wait." },
-        { t:"go quiet, dry, and grimly practical about what's next", d:{lo:10,co:-6,di:-2}, rx:"You get straight to what to do." },
+        { t:"feel it crack you open too, and loop on it", d:{co:-14,im:6}, rx:"It runs behind your eyes.", echo:"let it crack you open and loop" },
+        { t:"find the reframe and gently keep her moving through it", d:{co:16,bo:8}, rx:"You catch the angle and steady her.", echo:"found the reframe and steadied her" },
+        { t:"hold together for her now — save your own collapse for later, alone", d:{re:10,di:6,co:-6}, rx:"You hold. The cracks wait.", echo:"held together, saving your own collapse for later" },
+        { t:"go quiet, dry, and grimly practical about what's next", d:{lo:10,co:-6,di:-2}, rx:"You get straight to what to do.", echo:"went quiet and grimly practical" },
       ]},
 
     // ACT 5 — Dawn · the balcony
-    { act:5, scene:"On the balcony she asks: what would ever make you change a decision you were sure of?",
+    { act:5, key:true, scene:"Dawn. Ellis is still down on the street, waiting. Nadia asks softly: what would it even take for you to trust that?",
       prompt:"You tell her—",
       opts:[
-        { t:"“when a feeling shifts, I follow it”", d:{im:12,lo:-10,co:-2}, rx:"“My gut turns, and I turn.”", tag:{k:"plasticity",v:"feeling"} },
-        { t:"“when someone I trust nudges me to”", d:{di:10,re:4,im:-2}, rx:"“The right voice, at the right moment.”", tag:{k:"plasticity",v:"permission"} },
-        { t:"“rarely — I know my own mind and I keep it”", d:{bo:10,co:8,re:4}, rx:"“Almost never. I know what I want.”", tag:{k:"plasticity",v:"rarely"} },
-        { t:"“when the evidence leaves me no honest choice”", d:{lo:16,re:6}, rx:"“Show me I'm wrong and I'll turn. Slowly.”", tag:{k:"plasticity",v:"evidence"} },
+        { t:"“only a feeling — if my gut turns, I turn, and it hasn't yet”", d:{im:12,lo:-10,co:-2}, rx:"“When it feels true, I'll know.”", echo:"said only a feeling could ever turn you", tag:{k:"plasticity",v:"feeling"} },
+        { t:"“someone I trust telling me it's safe — I'd need that permission”", d:{di:10,re:4,im:-2}, rx:"“The right voice, at the right time.”", echo:"said you'd need someone you trust to vouch", tag:{k:"plasticity",v:"permission"} },
+        { t:"“almost nothing — I know my own mind and I keep it”", d:{bo:10,co:8,re:4}, rx:"“I don't really change.”", echo:"said almost nothing could move you", tag:{k:"plasticity",v:"rarely"} },
+        { t:"“proof, over time — show me, again and again, and I'll turn slowly”", d:{lo:16,re:6}, rx:"“Evidence. Then, maybe.”", echo:"said only proof, over time, would move you", tag:{k:"plasticity",v:"evidence"} },
       ]},
     { act:5, scene:"The sky's nearly up. She asks what she should carry out there, from you.",
       prompt:"The thing you tell her you believe—",
@@ -447,7 +448,7 @@
         { t:"that a good story matters more than the bare facts", d:{im:16,lo:-12}, rx:"She smiles — that's you, exactly." },
         { t:"that you should chase what you want, and never apologize", d:{bo:14,di:-10,co:6}, rx:"“Go get it. No sorry.”" },
         { t:"that there's a right way to do things, and it matters", d:{di:16,re:10,im:-4}, rx:"“Do it right. It counts.”" },
-        { t:"that fair is fair — and the double standard is the real crime", d:{lo:12,di:-2,bo:6}, rx:"You hold her to it — yourself first.", read:"You hold yourself to the standards you impose on everyone else." },
+        { t:"that fair is fair — and the double standard is the real crime", d:{lo:12,di:-2,bo:6}, rx:"You hold her to it — yourself first.", read:"You hold yourself to the very standards you impose on everyone else." },
       ]},
   ];
 
@@ -544,8 +545,8 @@
   const SECURE = "However you scored, the truest attachment in the story isn't romantic at all — the four of them are, in the end, each other's secure base: the one bond where the armor is allowed to fail safely. Whichever mix you are, that's the part worth keeping.";
 
   // calibration constants (see notes) so every type's basin is equal-sized
-  const MU = { A:-6.18, B:12.75, D:20.41, E:26.98 };
-  const SD = { A:25.07, B:26.80, D:24.02, E:21.07 };
+  const MU = { A:-0.47, B:13.67, D:17.19, E:31.70 };
+  const SD = { A:24.14, B:28.24, D:23.91, E:20.19 };
   const UNIT = (function(){
     const u = {};
     for (const c in ARCHETYPE){ let s=0; const v={}; METERS.forEach(m=>{ v[m.k]=ARCHETYPE[c][m.k]-50; s+=v[m.k]*v[m.k]; }); s=Math.sqrt(s); METERS.forEach(m=>{ v[m.k]/=s; }); u[c]=v; }
@@ -558,6 +559,7 @@
   const answers = new Array(QUESTIONS.length).fill(null);
   const chosenTags = {};
   const chosenReads = {};
+  const chosenEchoes = {};   // keyed by question index (key beats only)
   let locked = false;
   let shownAct = -1;
   const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -570,6 +572,7 @@
     window.scrollTo({ top:0, behavior: reduceMotion ? "auto" : "smooth" });
   }
   function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+  function joinList(a){ if(a.length===1) return a[0]; if(a.length===2) return a[0]+", then "+a[1]; return a.slice(0,-1).join(", then ")+", and finally "+a[a.length-1]; }
 
   function buildTimeline(curAct){
     const t = $("timeline"); t.innerHTML = "";
@@ -641,6 +644,7 @@
     applyDeltas(opt.d, +1);
     if (opt.tag) chosenTags[opt.tag.k] = opt.tag.v;
     if (opt.read) chosenReads[idx] = opt.read; else delete chosenReads[idx];
+    if (opt.echo) chosenEchoes[idx] = opt.echo; else delete chosenEchoes[idx];
 
     $("opts").querySelectorAll(".opt").forEach(n=>{ n.disabled = true; n.classList.toggle("selected", +n.dataset.oi === oi); });
     if (opt.rx) $("reaction").textContent = opt.rx;
@@ -733,8 +737,18 @@
 
     $("rAttach").innerHTML = p.attach.map(t=>"<p>"+t+"</p>").join("");
 
+    // Narrate the player's actual night back to them, then the psychological tells.
+    const echoes = Object.keys(chosenEchoes).map(Number).sort((a,b)=>a-b).map(k=>chosenEchoes[k]);
     const reads = Object.keys(chosenReads).map(Number).sort((a,b)=>a-b).map(k=>chosenReads[k]);
+    if (echoes.length){
+      let recap = "Across one night, you " + joinList(echoes) + ".";
+      recap += " Add it up and it points one way — the " +
+        "<b style='color:"+C[winner].color+"'>"+C[winner].name+"</b>–<b style='color:"+C[runner].color+"'>"+C[runner].name+"</b> in you.";
+      $("rRecap").innerHTML = recap;
+      $("rRecap").style.display = "";
+    } else { $("rRecap").style.display = "none"; }
     if (reads.length){ $("readsCard").style.display=""; $("rReads").innerHTML = reads.map(r=>'<li><span class="mk">▸</span><span>'+r+'</span></li>').join(""); }
+    else if (echoes.length){ $("readsCard").style.display=""; $("rReads").innerHTML=""; }
     else { $("readsCard").style.display="none"; }
 
     const tags = Object.assign({}, DEFAULT_TAGS[winner], chosenTags);
@@ -786,6 +800,7 @@
     for (let i=0;i<answers.length;i++) answers[i]=null;
     for (const k in chosenTags) delete chosenTags[k];
     for (const k in chosenReads) delete chosenReads[k];
+    for (const k in chosenEchoes) delete chosenEchoes[k];
     maybeActIntro();
   }
   function restart(){ document.body.setAttribute("data-act","0"); show("intro"); }
