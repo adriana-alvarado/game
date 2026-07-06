@@ -14,10 +14,6 @@
     --accent: #c04a72;
     --accent-soft: #f6dde5;
     --shadow: 0 18px 50px -22px rgba(60, 20, 40, 0.45);
-    --carrie: #d24b7a;
-    --samantha: #c0433f;
-    --charlotte: #3f8f86;
-    --miranda: #5566b8;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { height: 100%; }
@@ -33,7 +29,6 @@
     min-height: 100%;
   }
   .wrap { max-width: 760px; margin: 0 auto; padding: 34px 20px 90px; }
-  .sans { font-family: "Helvetica Neue", Arial, sans-serif; }
 
   .screen { display: none; animation: rise .5s cubic-bezier(.2,.7,.3,1); }
   .screen.active { display: block; }
@@ -46,10 +41,12 @@
   h1 em { font-style: italic; color: var(--accent); }
   .lede { font-size:19px; color:var(--muted); max-width:36em; margin-bottom:24px; }
   .lede strong { color:var(--ink); font-weight:400; font-style:italic; }
-  .how { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin:26px 0 30px; }
+  .how { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin:26px 0 26px; }
   .how div { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px 16px; }
   .how h4 { font-family:"Helvetica Neue",Arial,sans-serif; font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); margin-bottom:5px; }
   .how p { font-size:14.5px; color:var(--muted); line-height:1.4; }
+  .warn { font-family:"Helvetica Neue",Arial,sans-serif; font-size:14px; color:var(--ink); background:var(--accent-soft); border:1px solid #ecc4d2; border-radius:12px; padding:12px 15px; margin-bottom:26px; line-height:1.45; }
+  .warn b { color:var(--accent); }
 
   .btn { font-family:"Helvetica Neue",Arial,sans-serif; font-weight:700; letter-spacing:.06em; font-size:14px; text-transform:uppercase; background:var(--ink); color:#fff; border:none; padding:16px 30px; border-radius:40px; cursor:pointer; transition:transform .15s ease, box-shadow .15s ease, background .2s; box-shadow:var(--shadow); }
   .btn:hover { transform:translateY(-2px); background:var(--accent); }
@@ -58,7 +55,7 @@
   .btn.ghost:hover { background:#fff; border-color:var(--accent); color:var(--accent); }
   .note { font-family:"Helvetica Neue",Arial,sans-serif; font-size:12.5px; color:var(--muted); margin-top:20px; letter-spacing:.02em; }
 
-  /* Meters panel (live during play) */
+  /* Meters (live) */
   .meters { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:16px 16px 8px; margin-bottom:22px; box-shadow:0 10px 30px -24px rgba(60,20,40,.5); }
   .meters-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
   .meters-head .lbl { font-family:"Helvetica Neue",Arial,sans-serif; font-size:10.5px; letter-spacing:.24em; text-transform:uppercase; color:var(--muted); font-weight:700; }
@@ -96,12 +93,6 @@
   .opt.selected { border-color:var(--accent); background:var(--accent-soft); }
   .opt[disabled] { cursor:default; }
 
-  /* Tell popup */
-  .tell { margin-top:16px; background:var(--ink); color:#fff; border-radius:14px; padding:14px 18px; font-family:"Helvetica Neue",Arial,sans-serif; font-size:14.5px; line-height:1.45; display:none; align-items:flex-start; gap:10px; animation:pop .4s ease; }
-  .tell.show { display:flex; }
-  .tell .eye { font-size:16px; }
-  .tell b { color:#f3b6c8; font-weight:700; letter-spacing:.06em; text-transform:uppercase; font-size:11px; display:block; margin-bottom:3px; }
-
   .nav { display:flex; justify-content:space-between; align-items:center; margin-top:26px; }
   .nav .back { font-family:"Helvetica Neue",Arial,sans-serif; background:none; border:none; color:var(--muted); cursor:pointer; font-size:14px; letter-spacing:.04em; padding:8px 4px; }
   .nav .back:hover { color:var(--ink); }
@@ -129,15 +120,16 @@
   .card h3 { font-family:"Helvetica Neue",Arial,sans-serif; text-transform:uppercase; letter-spacing:.18em; font-size:11.5px; color:var(--accent); font-weight:700; margin:0 0 12px; }
   .card p { font-size:16.5px; margin-bottom:14px; color:#33282d; }
   .card p:last-child { margin-bottom:0; }
-  .divider { height:1px; background:var(--line); margin:22px 0; border:0; }
 
-  /* badges */
+  .reads { list-style:none; display:flex; flex-direction:column; gap:11px; }
+  .reads li { display:flex; gap:11px; align-items:flex-start; font-family:"Helvetica Neue",Arial,sans-serif; font-size:15px; line-height:1.45; color:#33282d; }
+  .reads li .eye { color:var(--accent); flex:0 0 auto; }
+
   .badges { display:grid; grid-template-columns:1fr; gap:10px; }
   .badge { border:1px solid var(--line); border-radius:13px; padding:13px 15px; background:#fffaf7; }
   .badge .k { font-family:"Helvetica Neue",Arial,sans-serif; font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); font-weight:700; margin-bottom:3px; }
   .badge .v { font-size:16px; }
 
-  /* profile meters */
   .pm { margin-bottom:14px; }
   .pm-top { display:flex; justify-content:space-between; font-family:"Helvetica Neue",Arial,sans-serif; font-size:12.5px; margin-bottom:6px; letter-spacing:.02em; }
   .pm-top .val { color:var(--muted); }
@@ -160,20 +152,26 @@
     <div class="kicker">A Trait-Psychology Game · 6 rounds</div>
     <h1>The <em>Read</em></h1>
     <p class="lede">
-      Four women, four temperaments. This isn't a quiz that asks who you'd
-      <strong>date</strong> — it's a game that <strong>reads you</strong>. Every choice you
-      make moves six live trait meters, and the game quietly clocks the subtle
-      stuff: how you argue, how you fight, what your jokes are really doing, and
-      what it takes to actually change your mind.
+      There are four of them in here, and this game will tell you which one you
+      are. But it won't ask you who you'd <strong>date</strong> or hand you a line
+      to recognize — it measures the machinery underneath: how you decide, how
+      you fight, what your jokes are really doing, and what it takes to change
+      your mind.
     </p>
+    <div class="warn">
+      <b>No favorites.</b> The situations are deliberately ordinary and the
+      answers don't line up with anyone the way you'd guess — you can't aim for
+      a character. The only way to get an honest read is to answer as you
+      actually are.
+    </div>
     <div class="how">
-      <div><h4>Play a day</h4><p>Six rounds of real situations — the mind, the wallet, the night out, the friction, the blow, the update.</p></div>
-      <div><h4>Watch your profile form</h4><p>Your Big-Five-style meters fill in real time. No black box — you see the read happening.</p></div>
-      <div><h4>Get clocked</h4><p>The game surfaces "tells" — the diagnostic reads underneath your answers.</p></div>
-      <div><h4>Meet your type</h4><p>A facet-level profile: your humor style, conflict style, and what moves you.</p></div>
+      <div><h4>Play a day</h4><p>Six rounds of everyday situations — the mind, the wallet, the night, the friction, the blow, the update.</p></div>
+      <div><h4>Watch your profile form</h4><p>Six trait meters shift with every choice, in real time. No black box.</p></div>
+      <div><h4>Answer blind</h4><p>Options are shuffled and unlabeled. There's no "the Carrie one" to click.</p></div>
+      <div><h4>Get the read</h4><p>At the end: a facet-level profile, your tells, and your signature moves.</p></div>
     </div>
     <button class="btn" onclick="Game.start()">Start the read →</button>
-    <p class="note">14 choices · nothing saved · nobody watching but you</p>
+    <p class="note">13 choices · nothing saved · nobody watching but you</p>
   </section>
 
   <!-- ROUND INTRO -->
@@ -204,7 +202,6 @@
     <div class="q" id="qText"></div>
     <div class="q-sub" id="qSub"></div>
     <div class="options" id="opts"></div>
-    <div class="tell" id="tell"><span class="eye">👁</span><span><b>The read</b><span id="tellText"></span></span></div>
     <div class="nav">
       <button class="back" id="backBtn" onclick="Game.back()">← back</button>
       <span></span>
@@ -237,6 +234,11 @@
       <div id="rBody"></div>
     </div>
 
+    <div class="card" id="readsCard">
+      <h3>What you gave off</h3>
+      <ul class="reads" id="rReads"></ul>
+    </div>
+
     <div class="card">
       <h3>Your signature moves</h3>
       <div class="badges" id="rBadges"></div>
@@ -266,13 +268,12 @@
   "use strict";
 
   const C = {
-    carrie:   { name:"Carrie",    color:"#d24b7a" },
-    samantha: { name:"Samantha",  color:"#c0433f" },
-    charlotte:{ name:"Charlotte", color:"#3f8f86" },
-    miranda:  { name:"Miranda",   color:"#5566b8" },
+    A:{ name:"Carrie",    color:"#d24b7a" },
+    B:{ name:"Samantha",  color:"#c0433f" },
+    D:{ name:"Charlotte", color:"#3f8f86" },
+    E:{ name:"Miranda",   color:"#5566b8" },
   };
 
-  // Six live meters. Keys used everywhere.
   const METERS = [
     { k:"im", name:"Imagination", note:"aesthetic & fantasy openness" },
     { k:"co", name:"Composure",   note:"emotional stability" },
@@ -282,167 +283,166 @@
     { k:"lo", name:"Logic",       note:"evidence-driven reasoning" },
   ];
 
-  // Canonical trait vectors (the archetypes' target scores).
+  // Target trait vectors. Keyed by neutral letters so the source doesn't spell it out.
   const ARCHETYPE = {
-    carrie:   { im:95, co:24, re:22, bo:45, di:52, lo:15 },
-    samantha: { im:42, co:92, re:55, bo:96, di:12, lo:58 },
-    charlotte:{ im:58, co:55, re:92, bo:48, di:95, lo:34 },
-    miranda:  { im:44, co:38, re:80, bo:70, di:26, lo:95 },
+    A: { im:95, co:24, re:22, bo:45, di:52, lo:15 },
+    B: { im:42, co:92, re:55, bo:96, di:12, lo:58 },
+    D: { im:58, co:55, re:92, bo:48, di:95, lo:34 },
+    E: { im:44, co:38, re:80, bo:70, di:26, lo:95 },
   };
 
   const ROUNDS = [
-    { no:"Round 1", title:"The Mind", sub:"How you think, argue, and take the world in. This is where openness shows itself." },
-    { no:"Round 2", title:"The Wallet", sub:"Impulse, order, and what you do when something you didn't plan for is right in front of you." },
-    { no:"Round 3", title:"The Night", sub:"Where your battery charges, and what your sense of humor is actually for." },
-    { no:"Round 4", title:"The Friction", sub:"Someone crosses a line. Politeness, compassion, and the exact shape of your conflict." },
-    { no:"Round 5", title:"The Blow", sub:"Bad news lands. This is your neuroticism — its flavor, its calibration, its recovery." },
-    { no:"Round 6", title:"The Update", sub:"Values, and the rarest trait of all: what it actually takes to change your mind." },
+    { no:"Round 1", title:"The Mind", sub:"How you think and take the world in. Openness shows itself here." },
+    { no:"Round 2", title:"The Wallet", sub:"Impulse and order — what you do with something you didn't plan for." },
+    { no:"Round 3", title:"The Night", sub:"Where your battery charges, and what your humor is actually for." },
+    { no:"Round 4", title:"The Friction", sub:"Someone crosses a line. The exact shape of how you handle it." },
+    { no:"Round 5", title:"The Blow", sub:"Bad news lands. Your composure — its flavor and its recovery." },
+    { no:"Round 6", title:"The Update", sub:"Values, and the rarest tell: what it takes to change your mind." },
   ];
 
-  // Each option: t text, r round index, d meter deltas, tell?, tag?{k,v}, own(intended type, for balance only)
+  // Options carry only meter deltas + optional tag/read. No character labels.
   const QUESTIONS = [
-    // ---- Round 1: The Mind ----
-    { r:0, q:"You're describing a person you just met. What actually comes out of your mouth?", sub:"First instinct, not the edited version.",
+    // Round 1 — The Mind
+    { r:0, q:"You're explaining a tricky idea to a friend. You reach for…", sub:"",
       opts:[
-        { t:"A metaphor — “she's like a Sunday that thinks it's a Monday.”", d:{im:18,lo:-12}, tell:"You reach for image before analysis. A genuinely divergent, associative mind.", own:"carrie" },
-        { t:"A crisp read of what they want and how they'll get it.", d:{lo:16,bo:6,im:-6}, own:"samantha" },
-        { t:"Whether they seemed proper, put-together, doing things the right way.", d:{di:14,re:8,im:-4}, own:"charlotte" },
-        { t:"A skeptical footnote — “seemed nice. We'll see.”", d:{lo:14,co:-8,di:-6}, tell:"Optimism treated as an error to be corrected. Trust set low by default.", own:"miranda" },
+        { t:"an analogy — some vivid image that makes it click", d:{im:16,lo:-10}, read:"You reach for image before analysis — a divergent, associative mind." },
+        { t:"the facts, laid out clearly, one step at a time", d:{lo:18,di:-4}, read:"You argue from evidence, point by point. You reason the way you argue." },
+        { t:"the confident version, and you just keep moving", d:{bo:12,co:8,im:-4} },
+        { t:"the proper, by-the-book way it's supposed to be explained", d:{di:12,re:8,im:-4} },
       ]},
-    { r:0, q:"An argument breaks out. How do you actually win it?", sub:"",
+    { r:0, q:"A friend swears something is true. Your first instinct is to…", sub:"",
       opts:[
-        { t:"Reframes, analogies, a better story. Never evidence.", d:{im:16,lo:-14}, tell:"You argue in images, not logic. Persuasion by association.", own:"carrie" },
-        { t:"I demand the evidence and dismantle the errors, point by point.", d:{lo:20,di:-6}, tell:"You reason the way you argue — analytical, sequential, evidence-demanding.", own:"miranda" },
-        { t:"I say the blunt, unsayable thing first and let the room laugh.", d:{bo:16,di:-14,co:6}, own:"samantha" },
-        { t:"I don't “win.” I keep the peace, then bring it up sideways later.", d:{di:10,bo:-10,co:-4}, tag:{k:"conflict",v:"avoid"}, own:"charlotte" },
+        { t:"go with whether it feels right", d:{im:12,lo:-12} },
+        { t:"ask where they got it and look for the holes", d:{lo:18,co:-6}, read:"Optimistic claims register as things to be checked. Trust set low by default." },
+        { t:"not care much either way — life's short", d:{bo:8,co:10,re:-6} },
+        { t:"believe it, if someone you trust stands behind it", d:{di:12,re:4,im:-2} },
       ]},
-    { r:0, q:"You walk into a room you've never been in. The first thing you clock is…", sub:"",
+    { r:0, q:"Walking into a room you've never been in, the first thing you notice is…", sub:"",
       opts:[
-        { t:"The light, the mood, the story the space is quietly telling.", d:{im:16,lo:-8}, own:"carrie" },
-        { t:"Whether it's tasteful, correct, done properly.", d:{di:12,re:6,im:2}, own:"charlotte" },
-        { t:"The room's energy — and the most interesting person in it.", d:{bo:14,co:8,im:-6}, own:"samantha" },
-        { t:"What's overpriced, pretentious, or trying too hard about it.", d:{lo:10,co:-6,di:-6}, own:"miranda" },
-      ]},
-
-    // ---- Round 2: The Wallet ----
-    { r:1, q:"$500 you didn't plan to spend is burning a hole. The shoes are perfect.", sub:"",
-      opts:[
-        { t:"Already wearing them. I'll look at the finances… never.", d:{re:-20,im:8,co:-4}, tell:"Low deliberation, and threat-detection that ignores the practical. Diagnostic.", own:"carrie" },
-        { t:"Bought — I earned it, my money, my terms.", d:{re:-4,bo:12,co:8}, tell:"Impulse indulged, but bounded. Licensed hedonism inside a well-run system.", own:"samantha" },
-        { t:"I'd agonize, then buy the sensible version instead.", d:{re:14,di:8,im:-2}, own:"charlotte" },
-        { t:"The math says no. I close the tab.", d:{re:18,lo:10,co:-2}, own:"miranda" },
-      ]},
-    { r:1, q:"Be honest about the state of your home right now.", sub:"",
-      opts:[
-        { t:"A beautiful, curated mess I'd call “a mood.”", d:{im:12,re:-10}, own:"carrie" },
-        { t:"Immaculate. Everything has a correct and permanent place.", d:{re:18,di:12,im:-2}, tell:"Conscientiousness loaded on orderliness. Routines, etiquette, follow-through.", own:"charlotte" },
-        { t:"Takeout boxes and chaos — but my work is absolutely airtight.", d:{re:6,lo:10,di:-8,im:-4}, tell:"Not tidiness — discipline where it counts. Industriousness over orderliness.", own:"miranda" },
-        { t:"Minimal, controlled, expensive. Curated like my image.", d:{re:10,bo:8,co:6}, own:"samantha" },
+        { t:"the light, the mood, the feeling of the place", d:{im:16,lo:-8} },
+        { t:"whether it's tasteful and done properly", d:{di:12,re:6,im:2} },
+        { t:"the energy — and the most interesting person in it", d:{bo:14,co:8,im:-6} },
+        { t:"what's overdone or trying too hard about it", d:{lo:10,co:-6,di:-6}, read:"You clock what's overdone before what's lovely — a critical eye, always on." },
       ]},
 
-    // ---- Round 3: The Night ----
-    { r:2, q:"It's 9pm. The ideal version of tonight is…", sub:"",
+    // Round 2 — The Wallet
+    { r:1, q:"Something you didn't plan to buy is right in front of you, and it's perfect.", sub:"",
       opts:[
-        { t:"A room full of new people I get to charge straight through.", d:{bo:20,co:10,im:2}, tell:"Approach-motivated to an almost physiological degree. Where others deliberate, you move.", own:"samantha" },
-        { t:"One good audience — even an audience of one.", d:{bo:4,im:10,co:-4}, tell:"You don't need a crowd. You need to be witnessed.", own:"carrie" },
-        { t:"Takeout and TV, alone, blissfully off-duty.", d:{bo:-18,di:-4,lo:4}, tell:"Verbally dominant, but solitude is what restores you. High-assertiveness introvert.", own:"miranda" },
-        { t:"A small, proper dinner with the people I trust most.", d:{di:12,bo:-4,re:6}, own:"charlotte" },
+        { t:"It's already yours. You'll deal with the money… later. Or never.", d:{re:-20,im:8,co:-4}, read:"Low deliberation, and a threat-radar tuned away from the practical." },
+        { t:"Bought. You earned it, no guilt, moving on.", d:{re:-4,bo:12,co:8}, read:"Impulse indulged, but bounded — appetite inside a well-run system." },
+        { t:"You agonize, then get the sensible version instead.", d:{re:14,di:8,im:-2} },
+        { t:"The budget says no. You close the tab.", d:{re:18,lo:10,co:-2} },
       ]},
-    { r:2, q:"Your sense of humor, told on you, is…", sub:"What are your jokes actually doing?",
+    { r:1, q:"Be honest about the state of your space right now.", sub:"",
       opts:[
-        { t:"Self-deprecating — I get the first laugh at my own expense.", d:{im:8,di:6,co:-8}, tag:{k:"humor",v:"affiliative"}, tell:"Self-deprecation that preempts criticism and quietly invites reassurance.", own:"carrie" },
-        { t:"Filthy and offensive, on purpose, to disarm the room first.", d:{bo:14,di:-12,co:6}, tag:{k:"humor",v:"aggressive"}, tell:"You say the unsayable first — converting judgment into laughter you control.", own:"samantha" },
-        { t:"Dry and deflationary — I exist to puncture pretense.", d:{lo:12,di:-6,co:-2}, tag:{k:"humor",v:"dry"}, tell:"Teasing is your affection channel. Emotionally blunt, sentimentally shy.", own:"miranda" },
-        { t:"Honestly? I'm earnest. I don't really hide behind the joke.", d:{di:10,im:-2,re:6}, tag:{k:"humor",v:"earnest"}, own:"charlotte" },
-      ]},
-
-    // ---- Round 4: The Friction ----
-    { r:3, q:"Someone crosses a line. Your negative feeling…", sub:"",
-      opts:[
-        { t:"Leaks out sideways — a dig here, a pointed silence there.", d:{im:6,di:-4,co:-8}, tag:{k:"conflict",v:"passive"}, tell:"Passive-aggression: what conflict looks like in someone who can't tolerate confrontation.", own:"carrie" },
-        { t:"Escalates on the spot. Insulted, I come back harder.", d:{bo:16,di:-10,co:6}, tag:{k:"conflict",v:"fight"}, tell:"Your stress response is fight, never freeze.", own:"samantha" },
-        { t:"Gets stored… and stored… and then detonates all at once.", d:{di:6,co:-12,re:-4}, tag:{k:"conflict",v:"suppress"}, tell:"You're a suppressor. It doesn't leak — it stores, then detonates.", own:"charlotte" },
-        { t:"Converts to sarcasm somewhere on the way out.", d:{lo:8,di:-8,co:-2}, tag:{k:"conflict",v:"sarcasm"}, own:"miranda" },
-      ]},
-    { r:3, q:"A friend keeps taking and never reciprocating. You…", sub:"",
-      opts:[
-        { t:"Keep score, and eventually call out the imbalance directly.", d:{lo:10,di:-6,bo:6}, tell:"A fairness grievance, not cruelty. The group's strongest justice orientation.", own:"miranda" },
-        { t:"Show up for them anyway. I don't keep a ledger on people I love.", d:{co:8,di:-4,bo:6}, tell:"Low politeness, high compassion — the rare, specific combination.", own:"samantha" },
-        { t:"Feel hurt, say nothing. I really don't want to make a scene.", d:{di:8,bo:-10,co:-6}, own:"carrie" },
-        { t:"Quietly judge the breach of decorum and file it away.", d:{di:14,im:-4}, tell:"Judgment is what high politeness does to rule-breakers.", own:"charlotte" },
+        { t:"a beautiful mess you'd call “a mood”", d:{im:12,re:-10} },
+        { t:"immaculate — everything has a place and it's in it", d:{re:18,di:12,im:-2}, read:"Order as a value: routines, follow-through, a place for everything." },
+        { t:"cluttered and chaotic — but your actual work is airtight", d:{re:6,lo:10,di:-8,im:-4}, read:"Not tidiness — discipline where it counts. Output over neatness." },
+        { t:"minimal, spare, deliberately controlled", d:{re:10,bo:8,co:6} },
       ]},
 
-    // ---- Round 5: The Blow ----
-    { r:4, q:"A text goes unanswered all day. There's also a real, boring problem — a bill, your taxes. Which one eats you?", sub:"",
+    // Round 3 — The Night
+    { r:2, q:"Your ideal Friday night is…", sub:"",
       opts:[
-        { t:"The text. Obviously. The bill can wait forever.", d:{co:-16,im:8,re:-6}, tell:"Threat-detection calibrated entirely to relational signals, not practical ones.", own:"carrie" },
-        { t:"Neither, really. I've metabolized both by lunch.", d:{co:18,bo:6}, tell:"Low neuroticism as a superpower — and it isn't performance.", own:"samantha" },
-        { t:"The bill I can handle — it's being judged that undoes me.", d:{re:8,di:8,co:-4}, tell:"Neuroticism that's evaluation-specific: calm in a crisis, wrecked by social failure.", own:"charlotte" },
-        { t:"I already assumed the worst about the text. Consider it confirmed.", d:{co:-8,lo:8,di:-6}, tell:"Pessimistic explanatory style: bad events just confirm the model.", own:"miranda" },
+        { t:"a big room full of new people to charge through", d:{bo:20,co:10,im:2}, read:"Approach-motivated. Where others deliberate, you move." },
+        { t:"one good person who really gets you", d:{bo:4,im:10,co:-4} },
+        { t:"alone, off-duty, blissfully quiet", d:{bo:-18,di:-4,lo:4}, read:"At ease in a room when you want to be, but solitude is what restores you." },
+        { t:"a small, easy dinner with your trusted few", d:{di:12,bo:-4,re:6} },
+      ]},
+    { r:2, q:"In a tense moment, your sense of humor tends to be…", sub:"What are your jokes actually doing?",
+      opts:[
+        { t:"self-deprecating — you get the first laugh at yourself", d:{im:8,di:6,co:-8}, tag:{k:"humor",v:"affiliative"} },
+        { t:"bold and a little shocking, to break the tension first", d:{bo:14,di:-12,co:6}, tag:{k:"humor",v:"aggressive"} },
+        { t:"dry and deadpan, quietly puncturing the drama", d:{lo:12,di:-6,co:-2}, tag:{k:"humor",v:"dry"} },
+        { t:"honestly, absent — you stay sincere and earnest", d:{di:10,im:-2,re:6}, tag:{k:"humor",v:"earnest"} },
+      ]},
+
+    // Round 4 — The Friction
+    { r:3, q:"Someone genuinely gets under your skin. The feeling…", sub:"",
+      opts:[
+        { t:"leaks out sideways — a comment, a cooler silence", d:{im:6,di:-4,co:-8}, tag:{k:"conflict",v:"passive"} },
+        { t:"comes out fast and direct, right in the moment", d:{bo:16,di:-10,co:6}, tag:{k:"conflict",v:"fight"} },
+        { t:"gets held in… and held… then bursts out all at once later", d:{di:6,co:-12,re:-4}, tag:{k:"conflict",v:"suppress"} },
+        { t:"turns into a dry, cutting remark", d:{lo:8,di:-8,co:-2}, tag:{k:"conflict",v:"sarcasm"} },
+      ]},
+    { r:3, q:"A friend keeps leaning on you and rarely returns the favor. You…", sub:"",
+      opts:[
+        { t:"notice the imbalance and name it, plainly", d:{lo:10,di:-6,bo:6}, read:"A fairness read, not cruelty — a strong justice streak underneath." },
+        { t:"keep showing up anyway; you don't keep score on people you love", d:{co:8,di:-4,bo:6} },
+        { t:"feel hurt but stay quiet to keep the peace", d:{di:8,bo:-10,co:-6} },
+        { t:"quietly lose a little respect for the lapse", d:{di:14,im:-4} },
+      ]},
+
+    // Round 5 — The Blow
+    { r:4, q:"A message sits unanswered all day. There's also a dull, overdue admin task. Which one nags more?", sub:"",
+      opts:[
+        { t:"the unanswered message, by a mile", d:{co:-16,im:8,re:-6}, read:"Threat-detection calibrated to relational signals over practical ones." },
+        { t:"neither, really — you shrug both off by lunch", d:{co:18,bo:6}, read:"Low neuroticism, doing its quiet and genuine work." },
+        { t:"the admin you can handle; it's being judged that stings", d:{re:8,di:8,co:-4} },
+        { t:"you'd already assumed the worst about the message anyway", d:{co:-8,lo:8,di:-6}, read:"A pessimistic explanatory style — the worst, pre-assumed." },
       ]},
     { r:4, q:"Something genuinely goes wrong. In the first hour, you…", sub:"",
       opts:[
-        { t:"Ruminate. Spiral. Replay it on a loop I can't switch off.", d:{co:-14,im:6}, own:"carrie" },
-        { t:"Reframe it on the spot and keep moving. Onward.", d:{co:16,bo:8}, own:"samantha" },
-        { t:"Hold it together, run the logistics — and crumble only later, with my people.", d:{re:10,di:6,co:-6}, own:"charlotte" },
-        { t:"Go quiet, dry, and grimly practical about the damage.", d:{lo:10,co:-6,di:-2}, own:"miranda" },
+        { t:"replay it on a loop you can't switch off", d:{co:-14,im:6} },
+        { t:"reframe it and keep moving", d:{co:16,bo:8} },
+        { t:"hold it together, handle the logistics, fall apart later", d:{re:10,di:6,co:-6} },
+        { t:"go quiet, dry, and grimly practical", d:{lo:10,co:-6,di:-2} },
       ]},
 
-    // ---- Round 6: The Update ----
-    { r:5, q:"You change your mind when…", sub:"This one's the rarest tell of all.",
+    // Round 6 — The Update
+    { r:5, q:"You'll actually change your mind when…", sub:"The rarest tell of all.",
       opts:[
-        { t:"A feeling shifts. My gut reroutes and I follow it.", d:{im:12,lo:-10,co:-2}, tag:{k:"plasticity",v:"feeling"}, own:"carrie" },
-        { t:"Someone I trust gives me the permission to.", d:{di:10,re:4,im:-2}, tag:{k:"plasticity",v:"permission"}, own:"charlotte" },
-        { t:"Honestly? Rarely. I know what I like and I keep it.", d:{bo:10,co:8,re:4}, tag:{k:"plasticity",v:"rarely"}, own:"samantha" },
-        { t:"The evidence forces me to. Slowly, grudgingly — but really.", d:{lo:16,re:6}, tag:{k:"plasticity",v:"evidence"}, tell:"The highest behavioral plasticity of the four. You actually update.", own:"miranda" },
+        { t:"a feeling shifts and you follow it", d:{im:12,lo:-10,co:-2}, tag:{k:"plasticity",v:"feeling"} },
+        { t:"someone you trust nudges you toward it", d:{di:10,re:4,im:-2}, tag:{k:"plasticity",v:"permission"} },
+        { t:"rarely — you know what you like and you keep it", d:{bo:10,co:8,re:4}, tag:{k:"plasticity",v:"rarely"} },
+        { t:"the evidence leaves you no honest choice", d:{lo:16,re:6}, tag:{k:"plasticity",v:"evidence"} },
       ]},
-    { r:5, q:"Which “obviously right” thing would you die on the hill for?", sub:"",
+    { r:5, q:"The thing you'd argue is just “obviously” true:", sub:"",
       opts:[
-        { t:"That the story matters more than the facts.", d:{im:16,lo:-12}, own:"carrie" },
-        { t:"That you should chase what you want, with no apology.", d:{bo:14,di:-10,co:6}, own:"samantha" },
-        { t:"That there's a right way to do things, and it genuinely matters.", d:{di:16,re:10,im:-4}, own:"charlotte" },
-        { t:"That fair is fair, and the double standard is the real crime.", d:{lo:12,di:-2,bo:6}, tell:"You hold yourself to the standards you impose. That's the tell.", own:"miranda" },
+        { t:"a good story matters more than the bare facts", d:{im:16,lo:-12} },
+        { t:"you should chase what you want, no apologies", d:{bo:14,di:-10,co:6} },
+        { t:"there's a right way to do things, and it matters", d:{di:16,re:10,im:-4} },
+        { t:"fairness is everything; the double standard is the real crime", d:{lo:12,di:-2,bo:6}, read:"You hold yourself to the standards you impose on everyone else." },
       ]},
   ];
 
-  // Deep facet-level profiles.
   const PROFILES = {
-    carrie: {
+    A: {
       tag:"High openness · low orderliness",
       head:"The metaphor mind — built for experience, hopeless at maintenance.",
       body:[
-        "Your dominant cluster is high openness in nearly every facet — aesthetics, ideas, fantasy, feeling. You experience the world through metaphor and association rather than analysis; when you argue you almost never reach for evidence, you reach for images and reframes. It's a genuinely divergent mind, with openness's shadow attached: a weak boundary between fantasy and assessment. You don't evaluate people, apartments, or purchases so much as <em>audition them for the story</em>.",
-        "Your neuroticism is high but specific — not generalized worry, but rumination and emotional lability. An unreturned call can consume your week while an objectively serious problem like debt barely registers. That inversion is diagnostic: your threat-detection system is calibrated entirely to <em>relational</em> signals, not practical ones.",
-        "And your conscientiousness isn't uniform. Your industriousness is actually decent — you produce, you hit deadlines, you sustain a career. What's low is orderliness and deliberation: impulse purchases, chaotic finances, decisions made on feeling and justified afterward. You're a low-deliberation, high-output person — exactly the profile that thrives in creative work and drowns in life admin.",
-        "Socially you're an attention-oriented ambivert: you don't need a crowd, you need an audience, even an audience of one. Your most under-noticed trait is conflict avoidance masked as wit — you rarely state a need or grievance directly. You joke, you hint, you write about it.",
+        "Your dominant cluster is high openness in nearly every facet — aesthetics, ideas, fantasy, feeling. You experience the world through metaphor and association rather than analysis; when you argue you almost never reach for evidence, you reach for images and reframes. It's a genuinely divergent mind, with openness's shadow attached: a weak boundary between fantasy and assessment. You don't so much evaluate people, places, or purchases as <em>audition them for the story</em>.",
+        "Your neuroticism is high but specific — not generalized worry, but rumination and emotional lability. An unreturned message can consume your week while an objectively serious problem barely registers. That inversion is diagnostic: your threat-detection is calibrated entirely to <em>relational</em> signals, not practical ones.",
+        "Your conscientiousness isn't uniform. Your industriousness is actually decent — you produce, you meet the deadline, you sustain the work. What's low is orderliness and deliberation: impulse buys, chaotic admin, decisions made on feeling and justified afterward. You're a low-deliberation, high-output person — the profile that thrives in creative work and drowns in life maintenance.",
+        "Socially you're an attention-oriented ambivert: you don't need a crowd, you need an audience — even an audience of one. Your most under-noticed trait is conflict avoidance masked as wit: you rarely state a need or a grievance directly. You joke, you hint, you write around it.",
       ],
     },
-    samantha: {
+    B: {
       tag:"Extraversion maxed · neuroticism near zero",
       head:"Approach in human form — appetite inside a very well-run system.",
       body:[
-        "Yours is the clearest temperament of the four: extremely high extraversion across every facet — assertiveness, excitement-seeking, gregariousness, positive emotionality. You're approach-motivated to an almost physiological degree. Where others deliberate, you move. Your baseline mood is genuinely elevated, and it isn't performance — low neuroticism is your superpower. Rejection, embarrassment, aging: things that would hospitalize other people emotionally, you metabolize by the afternoon. Your stress response is fight, never freeze.",
-        "Your agreeableness is low in style — blunt, competitive, allergic to politeness norms — but here's the nuance: your <em>compassion</em> runs far higher than your <em>politeness</em>. You'll say the crude, tactless thing, and you'll also be the first to show up, the last to judge, the only one who never moralizes about anyone else's choices. Low politeness, high loyalty is a rare, specific combination — it's why you read as abrasive to strangers and utterly safe to intimates.",
-        "Cognitively you're concrete and pragmatic — low openness to ideas and fantasy, but high openness to <em>experience</em> in the literal sense: novelty, sensation, transgression. You don't theorize about life, you consume it. And your conscientiousness is deceptively high where it matters — you build things, run them, negotiate ruthlessly, manage your image with discipline. The impulsivity is real but bounded: licensed hedonism that never actually threatens your business or your autonomy.",
-        "Your humor is aggressive and sexual, used offensively — you disarm a room by saying the unsayable first, converting potential judgment into laughter you control.",
+        "Yours is the clearest temperament of the four: extremely high extraversion across every facet — assertiveness, excitement-seeking, gregariousness, positive emotionality. You're approach-motivated to an almost physiological degree. Where others deliberate, you move. Your baseline mood is genuinely elevated, and it isn't performance — low neuroticism is your superpower. Rejection, embarrassment, a bad day: things that would flatten other people, you metabolize by the afternoon. Your stress response is fight, never freeze.",
+        "Your agreeableness is low in style — blunt, competitive, allergic to politeness norms — but here's the nuance: your <em>compassion</em> runs far higher than your <em>politeness</em>. You'll say the tactless thing, and you'll also be the first to show up and the last to judge. Low politeness, high loyalty is a rare, specific combination — it's why you read as abrasive to strangers and utterly safe to intimates.",
+        "Cognitively you're concrete and pragmatic — low openness to ideas and fantasy, but high openness to <em>experience</em> in the literal sense: novelty, sensation, the untried. You don't theorize about life, you consume it. And your conscientiousness is deceptively high where it counts — you build things, run them, manage yourself with discipline. The impulsivity is real but bounded: licensed indulgence that never actually threatens the system you've built.",
+        "Your humor is bold and disarming, used offensively — you break a room open by saying the unsayable first, converting potential judgment into laughter you control.",
       ],
     },
-    charlotte: {
+    D: {
       tag:"Conscientiousness + agreeableness · in the politeness-and-order key",
       head:"An executor whose operating system occasionally throws contradictory instructions.",
       body:[
-        "You're a textbook high-conscientiousness, high-agreeableness profile — but the facet structure is where you get interesting. Your conscientiousness is loaded on orderliness, dutifulness, and self-discipline: routines, etiquette, plans, follow-through. Your agreeableness is loaded on politeness and compliance more than raw compassion. You're deeply kind, but your kindness is <em>rule-shaped</em> — generous in the ways one is supposed to be generous, warm in the ways decorum permits. It's why you can be, at once, the sweetest and the most judgmental person in the room: judgment is simply what high politeness does to rule-breakers.",
+        "You're a textbook high-conscientiousness, high-agreeableness profile — but the facet structure is where you get interesting. Your conscientiousness is loaded on orderliness, dutifulness, and self-discipline: routines, etiquette, plans, follow-through. Your agreeableness is loaded on politeness and compliance more than raw compassion. You're deeply kind, but your kindness is <em>rule-shaped</em> — generous in the ways one is supposed to be. It's why you can be, at once, the sweetest and the most quietly judgmental person in the room: judgment is simply what high politeness does to rule-breakers.",
         "Your openness is low on ideas and values — you resist arguments that challenge your framework — but high on aesthetics. Your neuroticism is moderate and evaluation-specific: calm in an actual emergency, undone by social failure or a broken timeline. And you're a suppressor. Your negative emotion doesn't leak gradually or convert to sarcasm; it stores, and then it detonates.",
         "Two traits go chronically underrated in you. First, persistence — you have the highest frustration tolerance of the four in pursuit of a goal. Second, decisiveness inside your value system: when a choice aligns with your principles you act faster than anyone. Your indecision only appears when two rules conflict. You're not weak-willed — you're an executor whose operating system occasionally throws contradictory instructions.",
       ],
     },
-    miranda: {
+    E: {
       tag:"Industriousness + skepticism · the analytic engine",
       head:"The only one who actually updates on evidence.",
       body:[
-        "Your core is high conscientiousness of the <em>industriousness and deliberation</em> type — not tidiness (your place can be takeout and chaos), but work discipline, planning, and risk assessment. Paired with it is the group's highest trait skepticism: low agreeableness expressed as low compliance and low trust rather than low compassion. You argue as a default social mode, play devil's advocate reflexively, and treat optimistic claims as errors to be corrected. It's a genuinely critical cognitive style — analytical, sequential, evidence-demanding — and you're the only one of the four who reasons the way she argues.",
+        "Your core is high conscientiousness of the <em>industriousness and deliberation</em> type — not tidiness (your place can be chaos), but work discipline, planning, and risk assessment. Paired with it is the group's highest trait skepticism: low agreeableness expressed as low compliance and low trust rather than low compassion. You argue as a default social mode, play devil's advocate reflexively, and treat optimistic claims as errors to be corrected. It's a genuinely critical cognitive style — analytical, sequential, evidence-demanding — and you're the only one of the four who reasons the way she argues.",
         "Your neuroticism is real but almost entirely internalized as irritability and pessimism rather than anxiety. You don't worry forward — you pre-conclude negatively and call it realism. Good events you attribute to luck; bad events confirm the model. It's protective and self-limiting in equal measure.",
-        "Your introversion gets missed because you're socially competent and verbally dominant — but note the recovery pattern: social effort costs you, solitude restores you. You're a low-gregariousness, high-assertiveness introvert: comfortable commanding a room, depleted by inhabiting one. Your humor is the group's driest, and it doubles as your affection channel — you tease the people you love because directness of feeling embarrasses you.",
+        "Your introversion gets missed because you're socially competent and verbally dominant — but note the recovery pattern: social effort costs you, solitude restores you. You're a low-gregariousness, high-assertiveness introvert: comfortable commanding a room, depleted by inhabiting one. Your humor is the driest of the four, and it doubles as your affection channel — you tease the people you love because directness of feeling embarrasses you.",
         "Your most distinctive trait is principled fairness. Beneath the cynicism sits the strongest justice orientation of the four — you call out double standards, keep score of reciprocity, and hold yourself to the standards you impose. And you have the highest behavioral plasticity: the only one who changes her mind in response to evidence. Slow, grudging, but real.",
       ],
     },
@@ -450,14 +450,13 @@
 
   const HUMOR = {
     affiliative:{ k:"Humor style", v:"Affiliative & self-deprecating — the laugh that preempts criticism and invites reassurance." },
-    aggressive: { k:"Humor style", v:"Aggressive & sexual — you say the unsayable first and control the laughter." },
+    aggressive: { k:"Humor style", v:"Bold & disarming — you say the unsayable first and control the laughter." },
     dry:        { k:"Humor style", v:"Dry & deflationary — teasing as an affection channel." },
     earnest:    { k:"Humor style", v:"Earnest — you don't hide behind the joke." },
   };
   const CONFLICT = {
-    avoid:   { k:"Conflict style", v:"Avoidant — you keep the peace and raise it sideways, later." },
-    passive: { k:"Conflict style", v:"Passive-aggressive — the dig, the pointed silence." },
-    fight:   { k:"Conflict style", v:"Fight response — insulted, you escalate on the spot." },
+    passive: { k:"Conflict style", v:"Passive — the dig, the pointed silence; you'd rather not confront." },
+    fight:   { k:"Conflict style", v:"Fight response — it comes out fast and direct, in the moment." },
     suppress:{ k:"Conflict style", v:"Suppressor — it stores quietly, then it detonates." },
     sarcasm: { k:"Conflict style", v:"Sarcasm — grievance, filtered dry." },
   };
@@ -467,19 +466,19 @@
     rarely:    { k:"What moves you", v:"You rarely change — you know what you like." },
     evidence:  { k:"What moves you", v:"You change with evidence — slow, grudging, and real." },
   };
-  // fallbacks per type if the player never hit a tagged option
   const DEFAULT_TAGS = {
-    carrie:   { humor:"affiliative", conflict:"avoid",    plasticity:"feeling" },
-    samantha: { humor:"aggressive",  conflict:"fight",    plasticity:"rarely" },
-    charlotte:{ humor:"earnest",     conflict:"suppress", plasticity:"permission" },
-    miranda:  { humor:"dry",         conflict:"sarcasm",  plasticity:"evidence" },
+    A:{ humor:"affiliative", conflict:"passive",  plasticity:"feeling" },
+    B:{ humor:"aggressive",  conflict:"fight",    plasticity:"rarely" },
+    D:{ humor:"earnest",     conflict:"suppress", plasticity:"permission" },
+    E:{ humor:"dry",         conflict:"sarcasm",  plasticity:"evidence" },
   };
 
   // ---------- state ----------
   let idx = 0;
   let meters = { im:50, co:50, re:50, bo:50, di:50, lo:50 };
   const answers = new Array(QUESTIONS.length).fill(null);
-  const chosenTags = {};              // {humor:'dry', conflict:..., plasticity:...}
+  const chosenTags = {};
+  const chosenReads = {};   // keyed by question index
   let locked = false;
   let shownRound = -1;
 
@@ -490,7 +489,7 @@
     $(screen).classList.add("active");
     window.scrollTo({ top:0, behavior:"smooth" });
   }
-  function escapeHtml(s){ return s.replace(/[&<>"']/g, c=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c])); }
+  function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
 
   function buildMeterPanel(){
     const g = $("mGrid"); g.innerHTML = "";
@@ -512,7 +511,7 @@
         const el = $("d_"+m.k);
         el.textContent = (d>0?"+":"") + d;
         el.className = "delta " + (d>0?"up":"down") + " show";
-        setTimeout(()=>{ el.classList.remove("show"); }, 1300);
+        setTimeout(()=>{ el.classList.remove("show"); }, 1200);
       }
     });
   }
@@ -533,140 +532,129 @@
 
   function render(){
     const item = QUESTIONS[idx];
-    const roundName = ROUNDS[item.r].title;
-    $("stepLabel").textContent = "Round " + (item.r+1) + " · " + roundName;
+    $("stepLabel").textContent = "Round " + (item.r+1) + " · " + ROUNDS[item.r].title;
     $("countLabel").textContent = (idx+1) + " / " + QUESTIONS.length;
     $("barFill").style.width = (idx / QUESTIONS.length * 100) + "%";
     $("qText").textContent = item.q;
     $("qSub").textContent = item.sub || "";
     $("qSub").style.display = item.sub ? "block" : "none";
-    $("mHint").textContent = "";
 
+    const order = shuffle(item.opts.map((_,i)=>i));
     const box = $("opts"); box.innerHTML = "";
-    item.opts.forEach((o,i)=>{
+    order.forEach(oi=>{
+      const o = item.opts[oi];
       const b = document.createElement("button");
-      b.className = "opt" + (answers[idx]===i ? " selected" : "");
+      b.className = "opt" + (answers[idx]===oi ? " selected" : "");
       b.textContent = o.t;
-      b.onclick = ()=>choose(i);
+      b.dataset.oi = oi;
+      b.onclick = ()=>choose(oi);
       box.appendChild(b);
     });
-    $("tell").classList.remove("show");
     $("backBtn").disabled = idx === 0;
     locked = false;
   }
 
   function applyDeltas(d, sign){
     const eff = {};
-    for (const k in d){ const v = d[k]*sign; meters[k] = clamp(meters[k]+v); eff[k]=d[k]; }
+    for (const k in d){ meters[k] = clamp(meters[k] + d[k]*sign); eff[k]=d[k]; }
     return eff;
   }
 
-  function choose(i){
+  function choose(oi){
     if (locked) return;
     locked = true;
+    const item = QUESTIONS[idx];
 
-    // undo a previous answer on this question (if navigating back and re-answering)
-    if (answers[idx] !== null){
-      applyDeltas(QUESTIONS[idx].opts[answers[idx]].d, -1);
-    }
-    answers[idx] = i;
-    const opt = QUESTIONS[idx].opts[i];
+    if (answers[idx] !== null) applyDeltas(item.opts[answers[idx]].d, -1);
+    answers[idx] = oi;
+    const opt = item.opts[oi];
     const eff = applyDeltas(opt.d, +1);
     if (opt.tag) chosenTags[opt.tag.k] = opt.tag.v;
+    if (opt.read) chosenReads[idx] = opt.read; else delete chosenReads[idx];
 
-    // paint selection
-    const nodes = $("opts").children;
-    for (let n=0;n<nodes.length;n++){ nodes[n].classList.toggle("selected", n===i); nodes[n].disabled = true; }
+    $("opts").querySelectorAll(".opt").forEach(n=>{ n.disabled = true; n.classList.toggle("selected", +n.dataset.oi === oi); });
     paintMeters(true, eff);
 
-    const advance = ()=>{
+    setTimeout(()=>{
       idx++;
       if (idx >= QUESTIONS.length){ analyze(); return; }
-      if (maybeRoundIntro()) return;   // round card handles re-render on continue
+      if (maybeRoundIntro()) return;
       render();
-    };
-
-    if (opt.tell){
-      $("tellText").textContent = " " + opt.tell;
-      $("tell").classList.add("show");
-      setTimeout(advance, 1750);
-    } else {
-      setTimeout(advance, 520);
-    }
+    }, 600);
   }
 
-  function enterRound(){
-    show("quiz");
-    render();
-  }
+  function enterRound(){ show("quiz"); render(); }
 
   function back(){
     if (idx===0) return;
-    // stepping back one question; if that question starts a round we don't replay the card
     idx--;
-    // if we cross a round boundary going back, keep shownRound in sync so we don't re-show
     shownRound = QUESTIONS[idx].r;
     show("quiz");
     render();
   }
 
   // ---------- scoring ----------
-  function distances(){
-    const out = {};
-    for (const key in ARCHETYPE){
-      let sum = 0;
-      METERS.forEach(m=>{ const diff = meters[m.k]-ARCHETYPE[key][m.k]; sum += diff*diff; });
-      out[key] = Math.sqrt(sum);
+  // Each type is a direction in trait space; we project the player onto it and
+  // standardize against the neutral-play distribution (MU/SD, calibrated by
+  // simulation) so every type's basin is the same size — no type is easier to
+  // land, which is what keeps it from being gamed toward a favorite.
+  const MU = { A:-6.18, B:12.75, D:20.41, E:26.98 };
+  const SD = { A:25.07, B:26.80, D:24.02, E:21.07 };
+  const UNIT = (function(){
+    const u = {};
+    for (const c in ARCHETYPE){
+      let s = 0; const v = {};
+      METERS.forEach(m=>{ v[m.k] = ARCHETYPE[c][m.k]-50; s += v[m.k]*v[m.k]; });
+      s = Math.sqrt(s); METERS.forEach(m=>{ v[m.k] /= s; });
+      u[c] = v;
     }
-    return out;
+    return u;
+  })();
+  function zscores(){
+    const z = {};
+    for (const c in ARCHETYPE){
+      let s = 0; METERS.forEach(m=>{ s += (meters[m.k]-50)*UNIT[c][m.k]; });
+      z[c] = (s - MU[c]) / SD[c];
+    }
+    return z;
   }
-  function blend(dist){
-    // inverse-distance weighting -> percentages
-    const eps = 8;
-    const w = {}; let tot = 0;
-    for (const k in dist){ w[k] = 1/(dist[k]+eps); tot += w[k]; }
-    const pct = {};
-    for (const k in w){ pct[k] = w[k]/tot; }
+  function blend(z){
+    const T = 0.9; const w = {}; let tot = 0;
+    for (const c in z){ w[c] = Math.exp(z[c]*T); tot += w[c]; }
+    const pct = {}; for (const c in w){ pct[c] = w[c]/tot; }
     return pct;
   }
 
   function analyze(){
     show("analyzing");
-    const dist = distances();
-    const ranked = Object.keys(dist).sort((a,b)=>dist[a]-dist[b]);
-    // little theatrical cycle through names then land on winner
-    const seq = ["carrie","samantha","charlotte","miranda","charlotte","samantha", ranked[0], ranked[0], ranked[0]];
+    const z = zscores();
+    const ranked = Object.keys(z).sort((a,b)=>z[b]-z[a]);
+    const seq = ["A","B","D","E","D","B", ranked[0], ranked[0], ranked[0]];
     let step = 0;
     const el = $("anName");
     const timer = setInterval(()=>{
       const k = seq[step];
-      el.textContent = C[k].name;
-      el.style.color = C[k].color;
+      el.textContent = C[k].name; el.style.color = C[k].color;
       step++;
-      if (step >= seq.length){
-        clearInterval(timer);
-        setTimeout(()=>renderResult(ranked, dist), 450);
-      }
+      if (step >= seq.length){ clearInterval(timer); setTimeout(()=>renderResult(ranked, z), 450); }
     }, 190);
   }
 
-  function renderResult(ranked, dist){
-    const winner = ranked[0], runner = ranked[1];
+  function renderResult(ranked, z){
+    const winner = ranked[0];
     const p = PROFILES[winner];
-    const pct = blend(dist);
+    const pct = blend(z);
 
     $("rName").textContent = C[winner].name;
     $("rName").style.color = C[winner].color;
     $("rTag").textContent = p.tag;
     $("rHead").textContent = "“" + p.head + "”";
 
-    // blend bar
     const mix = $("rMix"); mix.innerHTML = "";
     const leg = $("rLegend"); leg.innerHTML = "";
     ranked.forEach(k=>{
       const span = document.createElement("span");
-      span.style.width = (pct[k]*100)+"%";
-      span.style.background = C[k].color;
+      span.style.width = (pct[k]*100)+"%"; span.style.background = C[k].color;
       mix.appendChild(span);
     });
     ranked.forEach(k=>{
@@ -676,10 +664,17 @@
       leg.appendChild(s);
     });
 
-    // profile prose
     $("rBody").innerHTML = p.body.map(t=>"<p>"+t+"</p>").join("");
 
-    // badges — use the player's actual tagged answers, fall back to type default
+    // "What you gave off" — from the player's own answers, revealed only now
+    const reads = Object.keys(chosenReads).map(Number).sort((a,b)=>a-b).map(k=>chosenReads[k]);
+    if (reads.length){
+      $("readsCard").style.display = "";
+      $("rReads").innerHTML = reads.map(r=>'<li><span class="eye">▸</span><span>'+r+'</span></li>').join("");
+    } else {
+      $("readsCard").style.display = "none";
+    }
+
     const tags = Object.assign({}, DEFAULT_TAGS[winner], chosenTags);
     const bx = $("rBadges"); bx.innerHTML = "";
     [HUMOR[tags.humor], CONFLICT[tags.conflict], PLASTICITY[tags.plasticity]].forEach(b=>{
@@ -689,7 +684,6 @@
       bx.appendChild(el);
     });
 
-    // profile meters: you (fill) vs archetype (mark)
     const pmBox = $("rMeters"); pmBox.innerHTML = "";
     METERS.forEach(m=>{
       const you = Math.round(meters[m.k]);
@@ -703,7 +697,7 @@
       requestAnimationFrame(()=>setTimeout(()=>{ row.querySelector("i").style.width = you+"%"; }, 100));
     });
 
-    window._res = { winner, runner, pct };
+    window._res = { winner, pct };
     show("result");
   }
 
@@ -711,7 +705,6 @@
     const r = window._res; if (!r) return;
     const p = PROFILES[r.winner];
     const tags = Object.assign({}, DEFAULT_TAGS[r.winner], chosenTags);
-    const line = k => k.charAt(0).toUpperCase()+k.slice(1);
     const text =
       "The Read → I'm "+C[r.winner].name+"\n"+
       p.tag+"\n"+
@@ -732,8 +725,8 @@
     meters = { im:50, co:50, re:50, bo:50, di:50, lo:50 };
     for (let i=0;i<answers.length;i++) answers[i]=null;
     for (const k in chosenTags) delete chosenTags[k];
+    for (const k in chosenReads) delete chosenReads[k];
     buildMeterPanel();
-    // show round 1 intro then the first question
     maybeRoundIntro();
   }
   function restart(){ show("intro"); }
